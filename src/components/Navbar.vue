@@ -12,28 +12,15 @@
             Log In
         </button>
     </nav>
-    <LoginForm v-if="showForm" @closeForm="closeLoginForm"/>
 </template>
 
 <script>
-import LoginForm from "./LoginForm.vue";
-
 export default {
     name: "Navbar",
-    components: {
-        LoginForm,
-    },
-    data() {
-        return {
-            showForm: false,
-        };
-    },
+    emits: ["showLoginForm"],
     methods: {
         showLoginForm() {
-            this.showForm = true;
-        },
-        closeLoginForm() {
-            this.showForm = false;
+            this.$emit("showLoginForm");
         },
     },
 };
