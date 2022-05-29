@@ -1,8 +1,13 @@
 <template>
     <Navbar @showLoginForm="showLoginForm" />
-    <HomepageMain />
+    <!--CCM stands for ChooseClassModal-->
+    <HomepageMain @showCCM="showChooseClassModal" />
     <teleport to="#modals">
-        <LoginForm v-if="visibleLoginForm" @closeForm="closeLoginForm" />
+        <LoginForm v-if="visibleLoginForm" @closeModal="closeLoginForm" />
+        <ChooseClass
+            v-if="visibleChooseClassModal"
+            @closeModal="closeChooseClassModal"
+        />
     </teleport>
     <!-- <nav>
     <router-link to="/">Home</router-link> |
@@ -15,13 +20,15 @@
 import Navbar from "./components/Navbar.vue";
 import HomepageMain from "./components/HomepageMain.vue";
 import LoginForm from "./components/LoginForm.vue";
+import ChooseClass from "./components/ChooseClass.vue"
 
 export default {
     name: "App",
-    components: { Navbar, HomepageMain, LoginForm },
+    components: { Navbar, HomepageMain, LoginForm , ChooseClass},
     data() {
         return {
             visibleLoginForm: false,
+            visibleChooseClassModal: false,
         };
     },
     methods: {
@@ -30,6 +37,14 @@ export default {
         },
         closeLoginForm() {
             this.visibleLoginForm = false;
+        },
+        showChooseClassModal() {
+            this.visibleChooseClassModal = true;
+            console.log(this.visibleChooseClassModal )
+        },
+        closeChooseClassModal() {
+            this.visibleChooseClassModal = false;
+            console.log(this.visibleChooseClassModal )
         },
     },
 };

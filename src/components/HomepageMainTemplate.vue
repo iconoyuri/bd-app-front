@@ -12,7 +12,8 @@
                 <button type="button" class="btn btn-outline-dark">
                     Choose a room
                 </button>
-                <button type="button" class="btn btn-outline-dark">
+                <!--CCM stands for ChooseClassModal-->
+                <button @click="showCCM" type="button" class="btn btn-outline-dark">
                     Choose a class
                 </button>
                 <slot name="buttons"></slot>
@@ -24,7 +25,14 @@
 <script>
 export default {
     name: "HomepageMainTemplate",
-    props: ['title', 'paragraph']
+    props: ['title', 'paragraph'],
+    emits: ["showCCM"],
+    // CCM stands for ChooseClassModal
+    methods: {
+        showCCM(){
+            this.$emit("showCCM")
+        }
+    }
 }
 </script>
 

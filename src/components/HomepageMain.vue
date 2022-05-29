@@ -26,10 +26,12 @@
             </button></template
         >
     </HomepageMainTemplate>
+    <!--CCM stands for ChooseClassModal-->
     <HomepageMainTemplate
         v-else
         :title="usersTexts.title"
         :paragraph="usersTexts.paragraph"
+        @showCCM="showCCM"
     />
 </template>
 
@@ -39,6 +41,7 @@ import HomepageMainTemplate from "./HomepageMainTemplate.vue";
 export default {
     name: "HomepageMain",
     components: { HomepageMainTemplate },
+    emits: ["showCCM"],
     data() {
         return {
             teacherLogged: false,
@@ -59,6 +62,11 @@ export default {
                     "Master the platform, generate all planings, modify the ones you want",
             },
         };
+    },
+    methods: {
+        showCCM() {
+            this.$emit("showCCM");
+        },
     },
 };
 </script>
