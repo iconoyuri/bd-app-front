@@ -1,18 +1,18 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
-import AboutView from '../views/AboutView.vue'
+import ClassTimetableView from '../views/ClassTimetableView.vue'
 
 const routes = [
   {
     path: '/',
     name: 'home',
-    component: null
+    component: HomeView
   },
   {
-    path: '/about',
-    name: 'about',
-    component: null
-  }
+    path: '/class/:code',
+    name: 'classview',
+    component: ClassTimetableView
+  },
 ]
 
 const router = createRouter({
