@@ -3,9 +3,20 @@
         v-if="teacherLogged"
         :title="teacherTexts.title"
         :paragraph="teacherTexts.paragraph"
+        @showCCM="showCCM"
+        @showCRM="showCRM"
     >
         <template v-slot:buttons>
-            <button type="button" class="btn btn-dark">My timetable</button>
+            <router-link
+                :to="{
+                    name: 'teachertableview',
+                    params: {
+                        matricule: teacher.matricule,
+                    },
+                }"
+            >
+                <button type="button" class="btn btn-dark">My timetable</button>
+            </router-link>
             <button type="button" class="btn btn-dark">
                 Plan an activity
             </button></template
@@ -15,6 +26,8 @@
         v-else-if="adminLogged"
         :title="adminTexts.title"
         :paragraph="adminTexts.paragraph"
+        @showCCM="showCCM"
+        @showCRM="showCRM"
     >
         <template v-slot:buttons>
             <button type="button" class="btn btn-dark">Datas Insertion</button>
@@ -47,7 +60,12 @@ export default {
     data() {
         return {
             teacherLogged: false,
-            adminLogged: false,
+            adminLogged: true,
+            teacher: {
+                matricule: "19M2222",
+                nom: "Uriel Melie",
+                code_filiere: "INF",
+            },
             usersTexts: {
                 title: "The automation of the timetable consultation",
                 paragraph:
