@@ -8,7 +8,7 @@
 
 <script>
 import Navbar from "./components/Navbar.vue";
-import LoginForm from "./components/LoginForm.vue";
+import LoginForm from "./components/Modals/LoginForm.vue";
 
 export default {
     name: "App",

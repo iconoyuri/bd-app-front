@@ -25,9 +25,10 @@
 
 <script>
 import HomepageMain from "../components/HomepageMain.vue";
-import ChooseClass from "../components/ChooseClass.vue";
-import ChooseRoom from "../components/ChooseRoom.vue";
-import DataInsertion from "../components/DataInsertion.vue";
+import ChooseClass from "../components/Modals/ChooseClass.vue";
+import ChooseRoom from "../components/Modals/ChooseRoom.vue";
+import DataInsertion from "../components/Modals/DataInsertion.vue";
+
 export default {
     name: "HomeView",
     components: { HomepageMain, ChooseClass, ChooseRoom, DataInsertion },

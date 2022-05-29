@@ -9,7 +9,7 @@
         <template v-slot:buttons>
             <router-link
                 :to="{
-                    name: 'teachertableview',
+                    name: 'workshopview',
                     params: {
                         matricule: teacher.matricule,
                     },
@@ -34,9 +34,11 @@
             <button @click="showDIM" type="button" class="btn btn-dark">
                 Datas Insertion
             </button>
-            <button type="button" class="btn btn-primary">
-                Build timetable
-            </button>
+            <router-link to="">
+                <button type="button" class="btn btn-primary">
+                    Build timetable
+                </button>
+            </router-link>
             <button type="button" class="btn btn-dark">
                 Plan an activity
             </button></template

@@ -2,7 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import ClassTableView from '../views/ClassTableView.vue'
 import RoomTableView from '../views/RoomTableView.vue'
-import TeacherTableView from '../views/TeacherTableView.vue'
+import WorkshopView from '../views/WorkshopView.vue'
 
 const routes = [
   {
@@ -22,8 +22,8 @@ const routes = [
   },
   {
     path: '/table/teacher/:matricule',
-    name: 'teachertableview',
-    component: TeacherTableView
+    name: 'workshopview',
+    component: WorkshopView
   },
 ]
 

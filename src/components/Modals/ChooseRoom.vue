@@ -19,7 +19,7 @@
 </template>
 
 <script>
-import ModalWindow from "./ModalWindow.vue";
+import ModalWindow from "../ModalWindow.vue";
 
 export default {
     name: "ChooseRoom",
