@@ -1,6 +1,7 @@
 <template>
     <div @click.self="closePane" class="curtain hidden" ref="curtain">
         <div class="pane">
+            <h1 class="title">{{title}}</h1>
             <slot>
                 Lorem ipsum dolor sit amet consectetur adipisicing elit.
                 Recusandae cumque fugit expedita molestias excepturi? Omnis nisi
@@ -18,6 +19,7 @@ export default {
     name: "ModalWindow",
     components: { CloseButton },
     emits: ["closePane"],
+    props: ["title"],
     mounted() {
         setTimeout(() => this.$refs.curtain.classList.remove("hidden"), 100);
     },
@@ -55,7 +57,7 @@ export default {
     max-width: 850px;
     min-width: 18rem;
     max-height: 650px;
-    overflow: auto;
+    overflow: hidden auto;
     opacity: 1;
     transform: translateY(0);
     transition: opacity 0.3s, transform 0.2s;
@@ -67,5 +69,8 @@ export default {
 .curtain.hidden .pane {
     opacity: 0;
     transform: translateY(3rem);
+}
+.title {
+    margin: 1rem 0 3rem 0;
 }
 </style>

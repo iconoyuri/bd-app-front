@@ -1,6 +1,5 @@
 <template>
-    <ModalWindow @closePane="closeForm">
-        <h1 class="title">Log to your account</h1>
+    <ModalWindow @closePane="closeForm" title="Log to your account">
         <form>
             <div class="form-group">
                 <label for="exampleInputEmail1">Login</label>
@@ -35,7 +34,7 @@
 import ModalWindow from "./ModalWindow.vue";
 export default {
     name: "LoginForm",
-    emits: ["closeForm"],
+    emits: ["closeModal"],
     components: { ModalWindow },
     data() {
         return {
@@ -45,7 +44,7 @@ export default {
     },
     methods: {
         closeForm() {
-            this.$emit("closeForm");
+            this.$emit("closeModal");
         },
         sendCredentials() {
             axios.defaults.baseURL =
@@ -68,9 +67,6 @@ export default {
 <style scoped>
 * {
     font-family: calibri;
-}
-h1 {
-    margin: 1rem 0 3rem 0;
 }
 form {
     font-size: 1.1rem;
