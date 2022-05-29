@@ -5,19 +5,28 @@
             <button
                 class="btn btn-secondary path"
                 v-for="path in paths"
-                :key="path"
+                :key="path.code"
                 @click="showClasses(path)"
             >
-                {{ path }}
+                {{ path.nom }}
             </button>
         </div>
         <div v-if="visiblePath" class="container">
             <h3 style="margin-top: 1.5rem">{{ visiblePath }} classes</h3>
             <div class="classes">
-                <article class="class" v-for="classe in classes" :key="classe">
-                    <i class="fa-solid fa-book"></i>
-                    <p>{{ classe }}</p>
-                </article>
+                <div class="class" v-for="classe in classes" :key="classe.code">
+                    <router-link
+                        :to="{
+                            name: 'classview',
+                            params: { code: classe.code },
+                        }"
+                    >
+                        <article>
+                            <i class="fa-solid fa-book"></i>
+                            <p>{{ classe.code }}</p>
+                        </article>
+                    </router-link>
+                </div>
             </div>
         </div>
     </ModalWindow>
@@ -35,27 +44,38 @@ export default {
             title: "Choose a class",
             visiblePath: "",
             paths: [
-                "Computer science",
-                "Biochemistry",
-                "Physics",
-                "Mathematics",
+                {
+                    code: "INF",
+                    nom: "Informatique",
+                },
+                {
+                    code: "BIOS",
+                    nom: "Biosciences",
+                },
+                {
+                    code: "GEOS",
+                    nom: "Géosciences",
+                },
             ],
             classes: [
-                "INF L3",
-                "INF L3",
-                "INF L3",
-                "INF L3",
-                "BIOS L3",
-                "BIOS L3",
-                "BIOS L3",
-                "BIOS L3",
-                "BIOS L3",
-                "GEOS L3",
-                "GEOS L3",
-                "GEOS L3",
-                "GEOS L3",
-                "GEOS L3",
-                "GEOS L3",
+                {
+                    code: "INF L3",
+                    effectif: 0,
+                    niveau: 3,
+                    code_filiere: "INF",
+                },
+                {
+                    code: "BIOS L3",
+                    effectif: 0,
+                    niveau: 3,
+                    code_filiere: "INF",
+                },
+                {
+                    code: "GEOS L3",
+                    effectif: 0,
+                    niveau: 3,
+                    code_filiere: "INF",
+                },
             ],
         };
     },
@@ -64,7 +84,7 @@ export default {
             this.$emit("closeModal");
         },
         showClasses(path) {
-            this.visiblePath = path;
+            this.visiblePath = path.nom;
         },
     },
 };
@@ -89,7 +109,7 @@ export default {
     flex-wrap: wrap;
     gap: 1rem;
 }
-.class {
+.class article {
     display: flex;
     width: 10rem;
     height: 10rem;
