@@ -30,7 +30,10 @@
         @showCRM="showCRM"
     >
         <template v-slot:buttons>
-            <button type="button" class="btn btn-dark">Datas Insertion</button>
+            <!--CCM stands for DataInsertionModal-->
+            <button @click="showDIM" type="button" class="btn btn-dark">
+                Datas Insertion
+            </button>
             <button type="button" class="btn btn-primary">
                 Build timetable
             </button>
@@ -56,7 +59,7 @@ import HomepageMainTemplate from "./HomepageMainTemplate.vue";
 export default {
     name: "HomepageMain",
     components: { HomepageMainTemplate },
-    emits: ["showCCM"],
+    emits: ["showCCM", "showCRM", "showDIM"],
     data() {
         return {
             teacherLogged: false,
@@ -89,6 +92,9 @@ export default {
         },
         showCRM() {
             this.$emit("showCRM");
+        },
+        showDIM() {
+            this.$emit("showDIM");
         },
     },
 };

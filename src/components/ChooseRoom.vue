@@ -22,7 +22,7 @@
 import ModalWindow from "./ModalWindow.vue";
 
 export default {
-    name: "ChooseClass",
+    name: "ChooseRoom",
     components: { ModalWindow },
     emits: ["closeModal"],
     data() {
