@@ -55,8 +55,9 @@ export default {
             params.append("password", this.password);
             axios
                 .post("/login", params)
-                .then((e) => {
-                    console.log(e);
+                .then((response) => {
+
+                    console.log(response.data.user);
                 })
                 .catch((e) => console.log(e));
         },

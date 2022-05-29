@@ -17,7 +17,7 @@
                 <div class="class" v-for="classe in classes" :key="classe.code">
                     <router-link
                         :to="{
-                            name: 'classview',
+                            name: 'classtableview',
                             params: { code: classe.code },
                         }"
                     >

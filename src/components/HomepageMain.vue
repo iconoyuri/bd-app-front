@@ -27,11 +27,13 @@
         >
     </HomepageMainTemplate>
     <!--CCM stands for ChooseClassModal-->
+    <!--It is the modal window for class choosing-->
     <HomepageMainTemplate
         v-else
         :title="usersTexts.title"
         :paragraph="usersTexts.paragraph"
         @showCCM="showCCM"
+        @showCRM="showCRM"
     />
 </template>
 
@@ -66,6 +68,9 @@ export default {
     methods: {
         showCCM() {
             this.$emit("showCCM");
+        },
+        showCRM() {
+            this.$emit("showCRM");
         },
     },
 };

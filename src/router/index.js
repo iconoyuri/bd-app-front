@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
-import ClassTimetableView from '../views/ClassTimetableView.vue'
+import ClassTableView from '../views/ClassTableView.vue'
+import RoomTableView from '../views/RoomTableView.vue'
 
 const routes = [
   {
@@ -9,9 +10,14 @@ const routes = [
     component: HomeView
   },
   {
-    path: '/class/:code',
-    name: 'classview',
-    component: ClassTimetableView
+    path: '/table/class/:code',
+    name: 'classtableview',
+    component: ClassTableView
+  },
+  {
+    path: '/table/room/:code',
+    name: 'roomtableview',
+    component: RoomTableView
   },
 ]
 

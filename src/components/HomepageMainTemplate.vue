@@ -1,5 +1,5 @@
 <template>
-  <main>
+    <main>
         <div class="center">
             <h1>{{ title }}</h1>
             <p>
@@ -9,11 +9,20 @@
         <div class="options">
             <h1>Let's Start with</h1>
             <div class="buttons">
-                <button type="button" class="btn btn-outline-dark">
+                <!--CCM stands for ChooseRoomModal-->
+                <button
+                    @click="showCRM"
+                    type="button"
+                    class="btn btn-outline-dark"
+                >
                     Choose a room
                 </button>
                 <!--CCM stands for ChooseClassModal-->
-                <button @click="showCCM" type="button" class="btn btn-outline-dark">
+                <button
+                    @click="showCCM"
+                    type="button"
+                    class="btn btn-outline-dark"
+                >
                     Choose a class
                 </button>
                 <slot name="buttons"></slot>
@@ -25,15 +34,19 @@
 <script>
 export default {
     name: "HomepageMainTemplate",
-    props: ['title', 'paragraph'],
+    props: ["title", "paragraph"],
     emits: ["showCCM"],
-    // CCM stands for ChooseClassModal
     methods: {
-        showCCM(){
-            this.$emit("showCCM")
-        }
-    }
-}
+        // CCM stands for ChooseClassModal
+        showCCM() {
+            this.$emit("showCCM");
+        },
+        // CRM stands for ChooseRoomModal
+        showCRM() {
+            this.$emit("showCRM");
+        },
+    },
+};
 </script>
 
 <style>
