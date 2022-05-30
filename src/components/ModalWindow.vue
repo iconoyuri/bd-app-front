@@ -1,7 +1,7 @@
 <template>
     <div @click.self="closePane" class="curtain hidden" ref="curtain">
         <div class="pane">
-            <h1 class="title">{{title}}</h1>
+            <h1 class="title">{{ title }}</h1>
             <slot>
                 Lorem ipsum dolor sit amet consectetur adipisicing elit.
                 Recusandae cumque fugit expedita molestias excepturi? Omnis nisi
@@ -71,6 +71,12 @@ export default {
     transform: translateY(3rem);
 }
 .title {
-    margin: 1rem 0 3rem 0;
+    margin: 0rem 0 2rem 0;
+}
+
+@media screen and (max-width: 760px) {
+    .pane {
+        padding: 1.5rem;
+    }
 }
 </style>
