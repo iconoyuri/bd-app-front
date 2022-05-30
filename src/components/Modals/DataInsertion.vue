@@ -15,7 +15,7 @@
                 </ul>
             </nav>
             <div class="right">
-
+                <RootInsertionForm :formtype="formtype" />
             </div>
         </div>
     </ModalWindow>
@@ -23,10 +23,11 @@
 
 <script>
 import ModalWindow from "../ModalWindow.vue";
+import RootInsertionForm from "../Insertionforms/RootInsertionForm.vue";
 
 export default {
     name: "DataInsertion",
-    components: { ModalWindow },
+    components: { ModalWindow, RootInsertionForm },
     emits: ["closeModal"],
     data() {
         return {
@@ -35,36 +36,45 @@ export default {
                 {
                     title: "Days",
                     visible: true,
+                    formtype: "daysform",
                 },
                 {
                     title: "Session types",
                     visible: false,
+                    formtype: "sessionform",
                 },
                 {
                     title: "Class levels",
                     visible: false,
+                    formtype: "levelsform",
                 },
                 {
                     title: "Paths",
                     visible: false,
+                    formtype: "pathsform",
                 },
                 {
                     title: "Teachers",
                     visible: false,
+                    formtype: "teacherform",
                 },
                 {
                     title: "Rooms",
                     visible: false,
+                    formtype: "roomsform",
                 },
                 {
                     title: "Classes",
                     visible: false,
+                    formtype: "classesform",
                 },
                 {
                     title: "Courses",
                     visible: false,
+                    formtype: "coursesform",
                 },
             ],
+            formtype: "daysform",
         };
     },
     methods: {
@@ -73,8 +83,10 @@ export default {
         },
         setActiveOption(title) {
             Array.from(this.options).forEach((option) => {
-                if (option.title === title) option.visible = true;
-                else option.visible = false;
+                if (option.title === title) {
+                    option.visible = true;
+                    this.formtype = option.formtype;
+                } else option.visible = false;
             });
         },
     },
