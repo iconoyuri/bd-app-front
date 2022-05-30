@@ -35,7 +35,7 @@
 export default {
     name: "HomepageMainTemplate",
     props: ["title", "paragraph"],
-    emits: ["showCCM"],
+    emits: ["showCCM", "showCRM", "showDIM"],
     methods: {
         // CCM stands for ChooseClassModal
         showCCM() {
