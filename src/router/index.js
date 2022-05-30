@@ -2,7 +2,8 @@ import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import ClassTableView from '../views/ClassTableView.vue'
 import RoomTableView from '../views/RoomTableView.vue'
-import WorkshopView from '../views/WorkshopView.vue'
+import TeacherWorkshopView from '../views/TeacherWorkshopView.vue'
+import AdminWorkshopView from '../views/AdminWorkshopView.vue'
 
 const routes = [
   {
@@ -21,9 +22,14 @@ const routes = [
     component: RoomTableView
   },
   {
-    path: '/table/teacher/:matricule',
-    name: 'workshopview',
-    component: WorkshopView
+    path: '/workshop/teacher/:matricule',
+    name: 'teacherworkshopview',
+    component: TeacherWorkshopView
+  },
+  {
+    path: '/workshop/admin/',
+    name: 'adminworkshopview',
+    component: AdminWorkshopView
   },
 ]
 

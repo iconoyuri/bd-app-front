@@ -9,7 +9,7 @@
         <template v-slot:buttons>
             <router-link
                 :to="{
-                    name: 'workshopview',
+                    name: 'teacherworkshopview',
                     params: {
                         matricule: teacher.matricule,
                     },
@@ -30,11 +30,15 @@
         @showCRM="showCRM"
     >
         <template v-slot:buttons>
-            <!--CCM stands for DataInsertionModal-->
+            <!--DIM stands for DataInsertionModal-->
             <button @click="showDIM" type="button" class="btn btn-dark">
                 Datas Insertion
             </button>
-            <router-link to="">
+            <router-link
+                :to="{
+                    name: 'adminworkshopview',
+                }"
+            >
                 <button type="button" class="btn btn-primary">
                     Build timetable
                 </button>
