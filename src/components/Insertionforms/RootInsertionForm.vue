@@ -1,12 +1,14 @@
 <template>
-    <ClassesForm v-if="formtype === 'classesform'" />
-    <CoursesForm v-if="formtype === 'coursesform'" />
-    <DaysForm v-if="formtype === 'daysform'" />
-    <LevelsForm v-if="formtype === 'levelsform'" />
-    <PathsForm v-if="formtype === 'pathsform'" />
-    <RoomsForm v-if="formtype === 'roomsform'" />
-    <SessionForm v-if="formtype === 'sessionform'" />
-    <TeacherForm v-if="formtype === 'teacherform'" />
+    <form>
+        <ClassesForm v-if="formtype === 'classesform'" />
+        <CoursesForm v-if="formtype === 'coursesform'" />
+        <DaysForm v-if="formtype === 'daysform'" />
+        <LevelsForm v-if="formtype === 'levelsform'" />
+        <PathsForm v-if="formtype === 'pathsform'" />
+        <RoomsForm v-if="formtype === 'roomsform'" />
+        <SessionForm v-if="formtype === 'sessionform'" />
+        <TeacherForm v-if="formtype === 'teacherform'" />
+    </form>
 </template>
 
 <script>

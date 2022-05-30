@@ -109,7 +109,8 @@ export default {
     overflow: hidden;
 }
 .right {
-    padding: 0 1rem;
+    position: relative;
+    padding: 1rem;
     border-bottom: 1px solid #ddd;
     border-right: 1px solid #ddd;
     border-radius: 0 0 7px 0;
