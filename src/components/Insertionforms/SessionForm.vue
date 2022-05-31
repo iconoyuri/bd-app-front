@@ -1,8 +1,20 @@
-<template>SessionForm</template>
+<template>
+
+</template>
 
 <script>
 export default {
     name: "SessionForm",
+    data(){
+        return {
+            sessions: [
+                {
+                    nom: "TD",
+                    duree: ""
+                }
+            ]
+        }
+    }
 };
 </script>
 

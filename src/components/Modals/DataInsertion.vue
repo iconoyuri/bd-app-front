@@ -15,6 +15,7 @@
                 </ul>
             </nav>
             <div class="right">
+                
                 <RootInsertionForm :formtype="formtype" />
             </div>
         </div>
@@ -33,11 +34,11 @@ export default {
         return {
             title: "Data Insertion",
             options: [
-                {
-                    title: "Days",
-                    visible: true,
-                    formtype: "daysform",
-                },
+                // {
+                //     title: "Days",
+                //     visible: true,
+                //     formtype: "daysform",
+                // },
                 {
                     title: "Session types",
                     visible: false,
@@ -74,7 +75,7 @@ export default {
                     formtype: "coursesform",
                 },
             ],
-            formtype: "daysform",
+            formtype: "sessionform",
         };
     },
     methods: {

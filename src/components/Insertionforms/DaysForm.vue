@@ -65,6 +65,9 @@ ul {
     list-style-type: none;
     font-size: 1.2rem;
 }
+ul li{
+    user-select: none;
+}
 input {
     margin-right: 0.5rem;
 }

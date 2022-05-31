@@ -2,12 +2,7 @@
     <div @click.self="closePane" class="curtain hidden" ref="curtain">
         <div class="pane">
             <h1 class="title">{{ title }}</h1>
-            <slot>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Recusandae cumque fugit expedita molestias excepturi? Omnis nisi
-                quibusdam, repudiandae rem quae iure tenetur numquam corporis
-                suscipit enim cum reprehenderit ex minima.
-            </slot>
+            <slot> </slot>
             <CloseButton @click="closePane" />
         </div>
     </div>
