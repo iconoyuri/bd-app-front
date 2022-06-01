@@ -2,7 +2,7 @@
     <div @click.self="closePane" class="curtain hidden" ref="curtain">
         <div class="pane">
             <h1 class="title">{{ title }}</h1>
-            <slot> </slot>
+            <slot></slot>
             <CloseButton @click="closePane" />
         </div>
     </div>
@@ -13,15 +13,14 @@ import CloseButton from "./CloseButton.vue";
 export default {
     name: "ModalWindow",
     components: { CloseButton },
-    emits: ["closePane"],
     props: ["title"],
     mounted() {
-        setTimeout(() => this.$refs.curtain.classList.remove("hidden"), 100);
+        setTimeout(() => this.$refs.curtain.classList.remove("hidden"), 50);
     },
     methods: {
         closePane() {
             this.$refs.curtain.classList.add("hidden");
-            setTimeout(() => this.$emit("closePane"), 200);
+            setTimeout(() => this.$router.push({ name: "home" }), 200);
         },
     },
 };

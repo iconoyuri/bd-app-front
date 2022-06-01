@@ -1,28 +1,22 @@
 <template>
     <nav class="navbar navbar-light">
-        <span
-            ><i class="fa-solid fa-calendar-days"></i>
-            <span class="app-name">MyTimetable</span></span
-        >
-        <button
-            class="btn btn-outline-dark my-2 my-sm-0"
-            type="submit"
-            @click="showLoginForm"
-        >
-            Log In
-        </button>
+        <router-link :to="{ name: 'home' }">
+            <span>
+                <i class="fa-solid fa-calendar-days"></i>
+                <span class="app-name">MyTimetable</span>
+            </span>
+        </router-link>
+        <router-link :to="{ name: 'login' }">
+            <button class="btn btn-outline-dark my-2 my-sm-0" type="submit">
+                Log In
+            </button>
+        </router-link>
     </nav>
 </template>
 
 <script>
 export default {
     name: "Navbar",
-    emits: ["showLoginForm"],
-    methods: {
-        showLoginForm() {
-            this.$emit("showLoginForm");
-        },
-    },
 };
 </script>
 

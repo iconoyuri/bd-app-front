@@ -15,9 +15,10 @@
                 :nom="session.nom"
                 :duree="session.duree"
                 :key="session.nom"
+                :modificationlock="modificationlock"
                 @refresh="loadSessions"
                 @start-modify="turnModifyStateOn"
-                @end-modify="turnAddingStateOff"
+                @end-modify="turnModifyStateOff"
             />
             <SessionLineForm
                 v-if="addLineVisible"
@@ -42,8 +43,8 @@
 </template>
 
 <script>
-import SessionLineForm from "../SessionLineForm.vue";
-import SessionLine from "../SessionLine.vue";
+import SessionLineForm from "./InsertionComponents/SessionLine/SessionLineForm.vue";
+import SessionLine from "./InsertionComponents/SessionLine/SessionLine.vue";
 
 export default {
     name: "SessionForm",
@@ -52,6 +53,7 @@ export default {
         return {
             addLineVisible: false,
             addBtnVisible: true,
+            modificationlock: false,
             sessions: [
                 {
                     nom: "TD",
@@ -83,6 +85,11 @@ export default {
         turnModifyStateOn() {
             this.turnAddingStateOff();
             this.hideAddBtn();
+            this.modificationlock = true;
+        },
+        turnModifyStateOff() {
+            this.turnAddingStateOff();
+            this.modificationlock = false;
         },
         addSession() {},
         hideInputForm() {

@@ -1,8 +1,8 @@
-<template>PathsForm</template>
+<template>LevelsForm</template>
 
 <script>
 export default {
-    name: "PathsForm",
+    name: "LevelForm",
 };
 </script>
 

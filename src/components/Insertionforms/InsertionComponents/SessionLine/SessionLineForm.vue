@@ -1,6 +1,6 @@
 <template>
     <tr>
-        <td colspan="3" class="form-line">
+        <td colspan="3" @dblclick.self="abort" class="form-line">
             <label for="session-line-form-name">Session type</label>
             <input
                 type="text"
@@ -18,7 +18,7 @@
                 v-model="duration"
                 required
             />
-            <div class="buttons">
+            <div class="buttons" @dblclick.self="abort">
                 <button
                     @click.prevent="validate"
                     class="btn btn-outline-success"
@@ -38,32 +38,32 @@ export default {
     name: "SessionLineForm",
     props: {
         duration: {
-            default: "00:00",
+            default: "02:00",
         },
         session: {
             default: "",
         },
-        forupdate: {
+        purposeIsUpdate: {
             default: false,
         },
     },
     emits: ["abort", "refresh"],
     data() {
         return {
-            defaultSession: "",
+            backupSession: "",
         };
     },
     mounted() {
         // For Session update
         // Saving the session type identifier for put request
-        if (this.forupdate) this.defaultSession = this.session;
+        if (this.purposeIsUpdate) this.backupSession = this.session;
     },
     methods: {
         abort() {
             this.$emit("abort");
         },
         validate() {
-            if (this.forupdate) this.update();
+            if (this.purposeIsUpdate) this.update();
             else this.post();
             this.$emit("refresh", this.session, this.duration);
         },
@@ -78,7 +78,8 @@ export default {
         update() {
             console.log(
                 "Updating session : " +
-                    this.defaultSession + " Set name : " +
+                    this.backupSession +
+                    " Set name : " +
                     " Duration : " +
                     this.duration
             );

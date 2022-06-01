@@ -1,31 +1,15 @@
 <template>
-    <Navbar @showLoginForm="showLoginForm" />
-    <teleport to="#modals">
-        <LoginForm v-if="visibleLoginForm" @closeModal="closeLoginForm" />
-    </teleport>
-    <router-view />
+    <Navbar/>
+    <router-view></router-view>
 </template>
 
 <script>
 import Navbar from "./components/Navbar.vue";
-import LoginForm from "./components/Modals/LoginForm.vue";
 
 export default {
     name: "App",
-    components: { Navbar, LoginForm },
-    data() {
-        return {
-            visibleLoginForm: false,
-        };
-    },
-    methods: {
-        showLoginForm() {
-            this.visibleLoginForm = true;
-        },
-        closeLoginForm() {
-            this.visibleLoginForm = false;
-        },
-    },
+    components: { Navbar },
+    
 };
 </script>
 

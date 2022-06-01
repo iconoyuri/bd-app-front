@@ -1,8 +1,8 @@
-<template>LevelsForm</template>
+<template>RoomsForm</template>
 
 <script>
 export default {
-    name: "LevelsForm",
+    name: "RoomForm",
 };
 </script>
 

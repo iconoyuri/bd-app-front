@@ -34,7 +34,6 @@
 import ModalWindow from "../ModalWindow.vue";
 export default {
     name: "LoginForm",
-    emits: ["closeModal"],
     components: { ModalWindow },
     data() {
         return {
@@ -43,9 +42,6 @@ export default {
         };
     },
     methods: {
-        closeForm() {
-            this.$emit("closeModal");
-        },
         sendCredentials() {
             axios.defaults.baseURL =
                 "https://time-table-app-g14.herokuapp.com/";
@@ -56,7 +52,6 @@ export default {
             axios
                 .post("/login", params)
                 .then((response) => {
-
                     console.log(response.data.user);
                 })
                 .catch((e) => console.log(e));

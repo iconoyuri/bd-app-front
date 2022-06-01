@@ -1,63 +1,81 @@
 <template>
-    <!--CCM stands for ChooseClassModal-->
-    <!--CRM stands for ChooseRoomModal-->
-    <!--DIM stands for DataInsertionModal-->
     <HomepageMain
-        @showCCM="showChooseClassModal"
-        @showCRM="showChooseRoomModal"
-        @showDIM="showDataInsertionModal"
+        v-if="teacherLogged"
+        :title="teacherTexts.title"
+        :paragraph="teacherTexts.paragraph"
+    >
+        <template v-slot:buttons>
+            <router-link
+                :to="{
+                    name: 'teacherworkshop',
+                    params: {
+                        matricule: teacher.matricule,
+                    },
+                }"
+            >
+                <button type="button" class="btn btn-dark">My timetable</button>
+            </router-link>
+            <button type="button" class="btn btn-dark">Plan an activity</button>
+        </template>
+    </HomepageMain>
+    <HomepageMain
+        v-else-if="adminLogged"
+        :title="adminTexts.title"
+        :paragraph="adminTexts.paragraph"
+    >
+        <template v-slot:buttons>
+            <router-link :to="{ name: 'datainsertion' }">
+                <button type="button" class="btn btn-dark">
+                    Datas Insertion
+                </button>
+            </router-link>
+            <router-link :to="{ name: 'adminworkshop' }">
+                <button type="button" class="btn btn-primary">
+                    Build timetable
+                </button>
+            </router-link>
+            <button type="button" class="btn btn-dark">Plan an activity</button>
+        </template>
+    </HomepageMain>
+    <HomepageMain
+        v-else
+        :title="usersTexts.title"
+        :paragraph="usersTexts.paragraph"
     />
-    <teleport to="#modals">
-        <ChooseClass
-            v-if="visibleChooseClassModal"
-            @closeModal="closeChooseClassModal"
-        />
-        <ChooseRoom
-            v-if="visibleChooseRoomModal"
-            @closeModal="closeChooseRoomModal"
-        />
-        <DataInsertion
-            v-if="visibleDataInsertionModal"
-            @closeModal="closeDataInsertionModal"
-        />
-    </teleport>
+    <router-view></router-view>
 </template>
 
 <script>
 import HomepageMain from "../components/HomepageMain.vue";
-import ChooseClass from "../components/Modals/ChooseClass.vue";
-import ChooseRoom from "../components/Modals/ChooseRoom.vue";
-import DataInsertion from "../components/Modals/DataInsertion.vue";
 
 export default {
     name: "HomeView",
-    components: { HomepageMain, ChooseClass, ChooseRoom, DataInsertion },
+    components: { HomepageMain },
     data() {
         return {
-            visibleChooseClassModal: false,
-            visibleChooseRoomModal: false,
-            visibleDataInsertionModal: false,
+            teacherLogged: false,
+            adminLogged: true,
+            teacher: {
+                matricule: "19M2222",
+                nom: "Uriel Melie",
+                code_filiere: "INF",
+            },
+            usersTexts: {
+                title: "The automation of the timetable consultation",
+                paragraph:
+                    "Use our app and consult the timetable of any class of your choice. One unique condition, it may be one of the Yaounde I university ;)",
+            },
+            teacherTexts: {
+                title: "The activity programming faster than never ever",
+                paragraph:
+                    "Use our app and consult your personal timetable or your collegues ones. Plan your own activities and insert it in the general planning.",
+            },
+            adminTexts: {
+                title: "Welcome back, Administrator",
+                paragraph:
+                    "Master the platform, generate all planings, modify the ones you want",
+            },
         };
-    },
-    methods: {
-        showChooseClassModal() {
-            this.visibleChooseClassModal = true;
-        },
-        closeChooseClassModal() {
-            this.visibleChooseClassModal = false;
-        },
-        showChooseRoomModal() {
-            this.visibleChooseRoomModal = true;
-        },
-        closeChooseRoomModal() {
-            this.visibleChooseRoomModal = false;
-        },
-        showDataInsertionModal() {
-            this.visibleDataInsertionModal = true;
-        },
-        closeDataInsertionModal() {
-            this.visibleDataInsertionModal = false;
-        },
     },
 };
 </script>

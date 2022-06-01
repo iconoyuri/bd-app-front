@@ -1,5 +1,9 @@
 <template>
-    <tr v-if="!modificationFormVisible" @dblclick="startModify" class="line">
+    <tr
+        v-if="!modificationFormVisible"
+        @dblclick="startModify"
+        :class="{ line: true, modifiable: !modificationlock }"
+    >
         <td class="type">{{ session }}</td>
         <td class="duration">
             {{ duration }}
@@ -19,15 +23,25 @@
         @abort="endModify"
         :session="session"
         :duration="duration"
-        :forupdate="true"
+        :purposeIsUpdate="true"
     />
 </template>
 
 <script>
-import SessionLineForm from "./SessionLineForm.vue";
+import SessionLineForm from "../../../Insertionforms/InsertionComponents/SessionLine/SessionLineForm.vue";
 export default {
     name: "SessionLine",
-    props: ["nom", "duree"],
+    props: {
+        nom: {
+            default: "",
+        },
+        duree: {
+            default: "02:00",
+        },
+        modificationlock: {
+            default: false,
+        },
+    },
     emits: ["start-modify", "end-modify", "refresh"],
     components: { SessionLineForm },
     data() {
@@ -39,6 +53,7 @@ export default {
     },
     methods: {
         startModify() {
+            if (this.modificationlock) return;
             this.modificationFormVisible = true;
             this.$emit("start-modify");
         },
@@ -53,7 +68,12 @@ export default {
             this.endModify();
         },
         deleteSession() {
-            console.log("Deleting Session : " + this.session + " Duration : " + this.duration);
+            console.log(
+                "Deleting Session : " +
+                    this.session +
+                    " Duration : " +
+                    this.duration
+            );
             this.$emit("refresh");
         },
     },
@@ -79,5 +99,11 @@ button {
 }
 button i {
     font-size: 0.8em;
+}
+tr.modifiable:hover {
+    background-color: rgb(232, 236, 255);
+}
+tr.modifiable:active {
+    background-color: rgb(214, 221, 255);
 }
 </style>

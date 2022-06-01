@@ -4,8 +4,6 @@
         sans-serif;
     user-select: none;
 }
-
-
 body,
 #app {
     margin: 0;
@@ -13,7 +11,14 @@ body,
     width: 100vw;
     min-height: 100vh;
 }
-#app{
+#app {
     display: grid;
     grid-template-rows: 5rem 1fr;
+}
+a {
+    color: initial !important;
+    text-decoration: none !important;
+}
+a:hover {
+    color: initial !important;
 }

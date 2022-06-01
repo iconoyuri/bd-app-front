@@ -1,109 +1,67 @@
 <template>
-    <HomepageMainTemplate
-        v-if="teacherLogged"
-        :title="teacherTexts.title"
-        :paragraph="teacherTexts.paragraph"
-        @showCCM="showCCM"
-        @showCRM="showCRM"
-    >
-        <template v-slot:buttons>
-            <router-link
-                :to="{
-                    name: 'teacherworkshopview',
-                    params: {
-                        matricule: teacher.matricule,
-                    },
-                }"
-            >
-                <button type="button" class="btn btn-dark">My timetable</button>
-            </router-link>
-            <button type="button" class="btn btn-dark">
-                Plan an activity
-            </button></template
-        >
-    </HomepageMainTemplate>
-    <HomepageMainTemplate
-        v-else-if="adminLogged"
-        :title="adminTexts.title"
-        :paragraph="adminTexts.paragraph"
-        @showCCM="showCCM"
-        @showCRM="showCRM"
-    >
-        <template v-slot:buttons>
-            <!--DIM stands for DataInsertionModal-->
-            <button @click="showDIM" type="button" class="btn btn-dark">
-                Datas Insertion
-            </button>
-            <router-link
-                :to="{
-                    name: 'adminworkshopview',
-                }"
-            >
-                <button type="button" class="btn btn-primary">
-                    Build timetable
-                </button>
-            </router-link>
-            <button type="button" class="btn btn-dark">
-                Plan an activity
-            </button></template
-        >
-    </HomepageMainTemplate>
-    <!--CCM stands for ChooseClassModal-->
-    <!--It is the modal window for class choosing-->
-    <HomepageMainTemplate
-        v-else
-        :title="usersTexts.title"
-        :paragraph="usersTexts.paragraph"
-        @showCCM="showCCM"
-        @showCRM="showCRM"
-    />
+    <main>
+        <div class="center">
+            <h1>{{ title }}</h1>
+            <p>
+                {{ paragraph }}
+            </p>
+        </div>
+        <div class="options">
+            <h1>Let's Start with</h1>
+            <div class="buttons">
+                <router-link :to="{ name: 'chooseroom' }">
+                    <button type="button" class="btn btn-outline-dark">
+                        Choose a room
+                    </button>
+                </router-link>
+
+                <router-link :to="{ name: 'chooseclass' }">
+                    <button type="button" class="btn btn-outline-dark">
+                        Choose a class
+                    </button>
+                </router-link>
+                <slot name="buttons"></slot>
+            </div>
+        </div>
+    </main>
 </template>
 
 <script>
-import HomepageMainTemplate from "./HomepageMainTemplate.vue";
-
 export default {
     name: "HomepageMain",
-    components: { HomepageMainTemplate },
-    emits: ["showCCM", "showCRM", "showDIM"],
-    data() {
-        return {
-            teacherLogged: false,
-            adminLogged: true,
-            teacher: {
-                matricule: "19M2222",
-                nom: "Uriel Melie",
-                code_filiere: "INF",
-            },
-            usersTexts: {
-                title: "The automation of the timetable consultation",
-                paragraph:
-                    "Use our app and consult the timetable of any class of your choice. One unique condition, it may be one of the Yaounde I university ;)",
-            },
-            teacherTexts: {
-                title: "The activity programming faster than never ever",
-                paragraph:
-                    "Use our app and consult your personal timetable or your collegues ones. Plan your own activities and insert it in the general planning.",
-            },
-            adminTexts: {
-                title: "Welcome back, Administrator",
-                paragraph:
-                    "Master the platform, generate all planings, modify the ones you want",
-            },
-        };
-    },
-    methods: {
-        showCCM() {
-            this.$emit("showCCM");
-        },
-        showCRM() {
-            this.$emit("showCRM");
-        },
-        showDIM() {
-            this.$emit("showDIM");
-        },
-    },
+    props: ["title", "paragraph"],
 };
 </script>
 
-<style></style>
+<style scoped>
+main {
+    width: 100%;
+    height: 100%;
+}
+main,
+.center {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.center h1 {
+    font-size: 4rem;
+    max-width: 80%;
+}
+.center p {
+    font-size: 1.8rem;
+    max-width: 85%;
+}
+.options {
+    margin-top: 2rem;
+}
+.buttons {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    max-width: 30rem;
+    gap: 1rem;
+}
+</style>

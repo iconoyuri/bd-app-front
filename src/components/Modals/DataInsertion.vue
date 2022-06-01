@@ -1,22 +1,25 @@
 <template>
-    <ModalWindow @closePane="closePane" :title="title">
+    <ModalWindow :title="title">
         <div class="split-pane">
             <nav class="left">
                 <ul>
-                    <li
+                    <router-link
                         v-for="option in options"
+                        :to="{ name: option.formtype }"
                         :key="option.title"
-                        :class="{ active: option.visible }"
-                        @click="setActiveOption(option.title)"
                     >
-                        <i class="fas fa-times"></i>
-                        <span>{{ option.title }}</span>
-                    </li>
+                        <li
+                            :class="{ active: option.visible }"
+                            @click="setActiveOption(option.title)"
+                        >
+                            <i class="fas fa-times"></i>
+                            <span>{{ option.title }}</span>
+                        </li>
+                    </router-link>
                 </ul>
             </nav>
             <div class="right">
-                
-                <RootInsertionForm :formtype="formtype" />
+                <router-view></router-view>
             </div>
         </div>
     </ModalWindow>
@@ -24,12 +27,10 @@
 
 <script>
 import ModalWindow from "../ModalWindow.vue";
-import RootInsertionForm from "../Insertionforms/RootInsertionForm.vue";
 
 export default {
     name: "DataInsertion",
-    components: { ModalWindow, RootInsertionForm },
-    emits: ["closeModal"],
+    components: { ModalWindow },
     data() {
         return {
             title: "Data Insertion",
@@ -47,12 +48,12 @@ export default {
                 {
                     title: "Class levels",
                     visible: false,
-                    formtype: "levelsform",
+                    formtype: "levelform",
                 },
                 {
                     title: "Paths",
                     visible: false,
-                    formtype: "pathsform",
+                    formtype: "pathform",
                 },
                 {
                     title: "Teachers",
@@ -62,26 +63,26 @@ export default {
                 {
                     title: "Rooms",
                     visible: false,
-                    formtype: "roomsform",
+                    formtype: "roomform",
                 },
                 {
                     title: "Classes",
                     visible: false,
-                    formtype: "classesform",
+                    formtype: "classeform",
                 },
                 {
                     title: "Courses",
                     visible: false,
-                    formtype: "coursesform",
+                    formtype: "courseform",
                 },
             ],
             formtype: "sessionform",
         };
     },
+    mounted() {
+        this.$router.push({ name: "sessionform" });
+    },
     methods: {
-        closePane() {
-            this.$emit("closeModal");
-        },
         setActiveOption(title) {
             Array.from(this.options).forEach((option) => {
                 if (option.title === title) {

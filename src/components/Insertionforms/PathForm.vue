@@ -1,8 +1,8 @@
-<template>RoomsForm</template>
+<template>PathsForm</template>
 
 <script>
 export default {
-    name: "RoomsForm",
+    name: "PathForm",
 };
 </script>
 
