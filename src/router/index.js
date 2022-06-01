@@ -4,6 +4,8 @@ import ClassTableView from '../views/ClassTableView.vue'
 import RoomTableView from '../views/RoomTableView.vue'
 import TeacherWorkshopView from '../views/TeacherWorkshopView.vue'
 import AdminWorkshopView from '../views/AdminWorkshopView.vue'
+// import DataInsertion from '../components/Modals/DataInsertion.vue'
+// import DaysForm from '../components/nInsertionforms/DaysForm.vue'
 
 const routes = [
   {
@@ -26,6 +28,16 @@ const routes = [
     name: 'teacherworkshopview',
     component: TeacherWorkshopView
   },
+  // {
+  //   path: '',
+  //   name: '',
+  //   component: DataInsertion,
+  //   children: {
+  //     path: '/days',
+  //     name: 'daysform',
+  //     component: DaysForm
+  //   }
+  // },
   {
     path: '/workshop/admin/',
     name: 'adminworkshopview',

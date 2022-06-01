@@ -41,7 +41,7 @@ export default {
                 // },
                 {
                     title: "Session types",
-                    visible: false,
+                    visible: true,
                     formtype: "sessionform",
                 },
                 {
@@ -110,12 +110,13 @@ export default {
     overflow: hidden;
 }
 .right {
+    /* width: 100%; */
     position: relative;
-    padding: 1rem;
+    padding: 0 1rem 1rem;
     border-bottom: 1px solid #ddd;
     border-right: 1px solid #ddd;
     border-radius: 0 0 7px 0;
-    min-width: 20rem;
+    /* min-width: 22rem; */
 }
 nav ul {
     list-style-type: none;
