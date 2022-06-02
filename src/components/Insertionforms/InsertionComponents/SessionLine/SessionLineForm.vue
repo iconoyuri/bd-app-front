@@ -38,7 +38,7 @@ export default {
     name: "SessionLineForm",
     props: {
         duration: {
-            default: "02:00",
+            default: "02:00:00",
         },
         session: {
             default: "",
@@ -65,7 +65,6 @@ export default {
         validate() {
             if (this.purposeIsUpdate) this.update();
             else this.post();
-            this.$emit("refresh", this.session, this.duration);
         },
         post() {
             console.log(
@@ -74,6 +73,15 @@ export default {
                     " Duration : " +
                     this.duration
             );
+            this.axios
+                .post("/course_type", {
+                    nom: this.session,
+                    duree: this.duration,
+                })
+                .then(() => {
+                    this.$emit("refresh");
+                })
+                .catch((e) => console.log(e));
         },
         update() {
             console.log(
@@ -83,6 +91,23 @@ export default {
                     " Duration : " +
                     this.duration
             );
+            this.axios
+                .put(
+                    "/course_type",
+                    {
+                        nom: this.session,
+                        duree: this.duration,
+                    },
+                    {
+                        params: {
+                            nom: this.backupSession,
+                        },
+                    }
+                )
+                .then(() => {
+                    this.$emit("refresh", this.session, this.duration);
+                })
+                .catch((e) => console.log(e));
         },
     },
 };

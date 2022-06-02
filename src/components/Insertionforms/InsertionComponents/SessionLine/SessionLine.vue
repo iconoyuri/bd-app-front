@@ -64,7 +64,7 @@ export default {
         loadSession(session, duration) {
             this.session = session;
             this.duration = duration;
-            console.log("POST => loading modified session");
+            console.log("PUT => loading modified session");
             this.endModify();
         },
         deleteSession() {
@@ -74,7 +74,13 @@ export default {
                     " Duration : " +
                     this.duration
             );
-            this.$emit("refresh");
+            this.axios
+                .delete("/course_type", {
+                    params: { nom: this.session },
+                })
+                .then(() => {
+                    this.$emit("refresh");
+                });
         },
     },
 };

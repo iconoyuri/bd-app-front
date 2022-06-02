@@ -54,16 +54,7 @@ export default {
             addLineVisible: false,
             addBtnVisible: true,
             modificationlock: false,
-            sessions: [
-                {
-                    nom: "TD",
-                    duree: "00:00",
-                },
-                {
-                    nom: "MAGISTRAL",
-                    duree: "00:00",
-                },
-            ],
+            sessions: [],
         };
     },
     mounted() {
@@ -71,8 +62,14 @@ export default {
     },
     methods: {
         loadSessions() {
-            this.turnAddingStateOff();
             console.log("Sessions Loading");
+            this.turnAddingStateOff();
+            this.axios
+                .get("/course_type")
+                .then((response) => {
+                    this.sessions = response.data;
+                })
+                .catch((e) => console.log(e));
         },
         turnAddingStateOn() {
             this.showInputForm();
