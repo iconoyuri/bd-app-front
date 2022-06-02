@@ -53,8 +53,6 @@ export default {
     components: { HomepageMain },
     data() {
         return {
-            teacherLogged: false,
-            adminLogged: true,
             teacher: {
                 matricule: "19M2222",
                 nom: "Uriel Melie",
@@ -76,6 +74,14 @@ export default {
                     "Master the platform, generate all planings, modify the ones you want",
             },
         };
+    },
+    computed: {
+        teacherLogged() {
+            return this.$store.getters.userIsTeacher;
+        },
+        adminLogged() {
+            return this.$store.getters.userIsAdmin;
+        },
     },
 };
 </script>

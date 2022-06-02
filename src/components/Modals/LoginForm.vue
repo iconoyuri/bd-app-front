@@ -1,5 +1,5 @@
 <template>
-    <ModalWindow @closePane="closeForm" title="Log to your account">
+    <ModalWindow title="Log to your account" ref="pane">
         <form>
             <div class="form-group">
                 <label for="exampleInputEmail1">Login</label>
@@ -9,6 +9,7 @@
                     aria-describedby="emailHelp"
                     placeholder="Enter login"
                     v-model="login"
+                    required
                 />
             </div>
             <div class="form-group">
@@ -18,6 +19,7 @@
                     class="form-control"
                     placeholder="Password"
                     v-model="password"
+                    required
                 />
             </div>
             <button
@@ -43,16 +45,21 @@ export default {
     },
     methods: {
         sendCredentials() {
-            axios.defaults.baseURL =
-                "https://time-table-app-g14.herokuapp.com/";
-
             let params = new URLSearchParams();
             params.append("username", this.login);
             params.append("password", this.password);
-            axios
+            this.axios
                 .post("/login", params)
                 .then((response) => {
-                    console.log(response.data.user);
+                    // console.log(response.data);
+                    this.$store.commit("saveUser", response.data);
+
+                    this.axios.defaults.headers.common = {
+                        Authorization: `bearer ${this.$store.getters.getAccessToken}`,
+                    };
+                    this.$refs.pane.closePane();
+                    // this.$refs.curtain.classList.add("hidden");
+                    // setTimeout(() => this.$router.push({ name: "home" }), 200);
                 })
                 .catch((e) => console.log(e));
         },
