@@ -6,7 +6,7 @@
                 class="btn btn-secondary path"
                 v-for="path in paths"
                 :key="path.code"
-                @click="showClasses(path)"
+                @click="showClasses(path.code)"
             >
                 {{ path.nom }}
             </button>
@@ -43,48 +43,39 @@ export default {
         return {
             title: "Choose a class",
             visiblePath: "",
-            paths: [
-                {
-                    code: "INF",
-                    nom: "Informatique",
-                },
-                {
-                    code: "BIOS",
-                    nom: "Biosciences",
-                },
-                {
-                    code: "GEOS",
-                    nom: "Géosciences",
-                },
-            ],
-            classes: [
-                {
-                    code: "INF L3",
-                    effectif: 0,
-                    niveau: 3,
-                    code_filiere: "INF",
-                },
-                {
-                    code: "BIOS L3",
-                    effectif: 0,
-                    niveau: 3,
-                    code_filiere: "INF",
-                },
-                {
-                    code: "GEOS L3",
-                    effectif: 0,
-                    niveau: 3,
-                    code_filiere: "INF",
-                },
-            ],
+            requestPath: {
+                path: "/path",
+                class: "/class",
+            },
+            paths: [],
+            classes: [],
         };
     },
+    mounted() {
+        this.getDatas();
+    },
     methods: {
+        getDatas() {
+            this.axios
+                .get(this.requestPath.path + "/all")
+                .then((response) => {
+                    this.paths = response.data;
+                })
+                .catch((e) => console.log(e));
+        },
         closePane() {
             this.$emit("closeModal");
         },
-        showClasses(path) {
-            this.visiblePath = path.nom;
+        showClasses(pathCode) {
+            this.visiblePath = pathCode.nom;
+            this.axios
+                .get(this.requestPath.class + "/all", {
+                    params: { code: pathCode },
+                })
+                .then((response) => {
+                    this.classes = response.data;
+                })
+                .catch((e) => console.log(e));
         },
     },
 };

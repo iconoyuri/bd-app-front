@@ -28,23 +28,22 @@ export default {
     data() {
         return {
             title: "Select a room",
-            rooms: [
-                {
-                    code: "AIII",
-                    effectif: 0,
-                },
-                {
-                    code: "AII",
-                    effectif: 0,
-                },
-                {
-                    code: "AI",
-                    effectif: 0,
-                },
-            ],
+            requestPath: "/room",
+            rooms: [],
         };
     },
+    mounted() {
+        this.getDatas();
+    },
     methods: {
+        getDatas() {
+            this.axios
+                .get(this.requestPath + "/all")
+                .then((response) => {
+                    this.rooms = response.data;
+                })
+                .catch((e) => console.log(e));
+        },
         closePane() {
             this.$emit("closeModal");
         },
