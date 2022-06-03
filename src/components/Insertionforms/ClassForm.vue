@@ -1,5 +1,5 @@
 <template>
-    <h2>Insert Levels</h2>
+    <h2>Insert Classes</h2>
 
     <table class="table">
         <thead class="thead-dark">

@@ -1,5 +1,5 @@
 <template>
-    <h2>Insert rooms</h2>
+    <h2>Insert Rooms</h2>
 
     <table class="table">
         <thead class="thead-dark">

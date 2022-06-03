@@ -1,5 +1,5 @@
 <template>
-    <h2>Insert paths</h2>
+    <h2>Insert Paths</h2>
 
     <table class="table">
         <thead class="thead-dark">

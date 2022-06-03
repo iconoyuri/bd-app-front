@@ -48,8 +48,9 @@ export default {
     margin: 0 1rem;
     border-radius: 12px;
     box-shadow: 0 0 10px #0003;
-    max-width: 850px;
+    max-width: 700px;
     min-width: 18rem;
+    width: 100%;
     max-height: 650px;
     overflow: hidden auto;
     opacity: 1;

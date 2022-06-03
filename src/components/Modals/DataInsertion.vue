@@ -54,15 +54,15 @@ export default {
                     requestPath: "",
                 },
                 {
-                    title: "Teachers",
-                    visible: false,
-                    formtype: "teacherform",
-                    requestPath: "",
-                },
-                {
                     title: "Rooms",
                     visible: false,
                     formtype: "roomform",
+                    requestPath: "",
+                },
+                {
+                    title: "Teachers",
+                    visible: false,
+                    formtype: "teacherform",
                     requestPath: "",
                 },
                 {

@@ -1,5 +1,5 @@
 <template>
-    <h2>Insert sessions types</h2>
+    <h2>Insert Sessions Types</h2>
 
     <table class="table">
         <thead class="thead-dark">
