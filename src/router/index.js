@@ -13,7 +13,7 @@ import LevelForm from "../components/Insertionforms/LevelForm.vue";
 import PathForm from "../components/Insertionforms/PathForm.vue";
 import TeacherForm from "../components/Insertionforms/TeacherForm.vue";
 import RoomForm from "../components/Insertionforms/RoomForm.vue";
-import ClasseForm from "../components/Insertionforms/ClassForm.vue";
+import ClassForm from "../components/Insertionforms/ClassForm.vue";
 import CourseForm from "../components/Insertionforms/CourseForm.vue";
 
 const routes = [
@@ -68,9 +68,9 @@ const routes = [
                         component: RoomForm,
                     },
                     {
-                        path: "classes",
-                        name: "classeform",
-                        component: ClasseForm,
+                        path: "class",
+                        name: "classform",
+                        component: ClassForm,
                     },
                     {
                         path: "courses",

@@ -5,8 +5,8 @@
                 <ul>
                     <router-link
                         v-for="option in options"
-                        :to="{ name: option.formtype }"
                         :key="option.title"
+                        :to="{ name: option.formtype }"
                     >
                         <li
                             :class="{ active: option.visible }"
@@ -35,45 +35,47 @@ export default {
         return {
             title: "Data Insertion",
             options: [
-                // {
-                //     title: "Days",
-                //     visible: true,
-                //     formtype: "daysform",
-                // },
                 {
                     title: "Session types",
                     visible: true,
                     formtype: "sessionform",
+                    requestPath: "/course_type",
                 },
                 {
-                    title: "Class levels",
+                    title: "Class Levels",
                     visible: false,
                     formtype: "levelform",
+                    requestPath: "",
                 },
                 {
                     title: "Paths",
                     visible: false,
                     formtype: "pathform",
+                    requestPath: "",
                 },
                 {
                     title: "Teachers",
                     visible: false,
                     formtype: "teacherform",
+                    requestPath: "",
                 },
                 {
                     title: "Rooms",
                     visible: false,
                     formtype: "roomform",
+                    requestPath: "",
                 },
                 {
                     title: "Classes",
                     visible: false,
-                    formtype: "classeform",
+                    formtype: "classform",
+                    requestPath: "",
                 },
                 {
                     title: "Courses",
                     visible: false,
                     formtype: "courseform",
+                    requestPath: "",
                 },
             ],
             formtype: "sessionform",

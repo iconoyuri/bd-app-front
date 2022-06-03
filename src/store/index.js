@@ -17,9 +17,11 @@ const store = createStore({
             state.access_token = sessionStorage.getItem("access_token");
             state.token_type = sessionStorage.getItem("token_type");
         },
-        logout() {
+        logout(state) {
             sessionStorage.clear();
-            console.log("Logged out");
+            state.user_type = ""
+            state.access_token = ""
+            state.token_type = ""
         },
     },
     getters: {
@@ -27,7 +29,8 @@ const store = createStore({
             return getters.userIsAdmin || getters.userIsTeacher;
         },
         userIsAdmin(state) {
-            return state.user_type == "administrateur";
+            // return state.user_type == "administrateur";
+            return true;
         },
         userIsTeacher(state) {
             return state.user_type == "enseignant";

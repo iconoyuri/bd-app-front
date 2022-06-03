@@ -4,51 +4,38 @@
         @dblclick="startModify"
         :class="{ line: true, modifiable: !modificationlock }"
     >
-        <td class="type">{{ session }}</td>
-        <td class="duration">
-            {{ duration }}
-        </td>
+        <slot></slot>
         <td>
             <button
-                @click.prevent="deleteSession"
+                @click.prevent="$emit('delete')"
                 class="btn btn-outline-danger"
             >
                 <i class="fa-solid fa-trash-can"></i>
             </button>
         </td>
     </tr>
-    <SessionLineForm
+    <LineForm
         v-if="modificationFormVisible"
-        @refresh="loadSession"
-        @abort="endModify"
-        :session="session"
-        :duration="duration"
-        :purposeIsUpdate="true"
-    />
+        @stageChanges="commit"
+        @abortChanges="endModify"
+    >
+        <slot name="inputs"></slot>
+    </LineForm>
 </template>
 
 <script>
-import SessionLineForm from "../../../Insertionforms/InsertionComponents/SessionLine/SessionLineForm.vue";
+import LineForm from "./LineForm.vue";
 export default {
-    name: "SessionLine",
     props: {
-        nom: {
-            default: "",
-        },
-        duree: {
-            default: "02:00",
-        },
         modificationlock: {
             default: false,
         },
     },
-    emits: ["start-modify", "end-modify", "refresh"],
-    components: { SessionLineForm },
+    emits: ["start-modify", "end-modify", "update", "delete"],
+    components: { LineForm },
     data() {
         return {
             modificationFormVisible: false,
-            session: this.nom,
-            duration: this.duree,
         };
     },
     methods: {
@@ -61,26 +48,9 @@ export default {
             this.modificationFormVisible = false;
             this.$emit("end-modify");
         },
-        loadSession(session, duration) {
-            this.session = session;
-            this.duration = duration;
-            console.log("PUT => loading modified session");
+        commit() {
+            this.$emit("update");
             this.endModify();
-        },
-        deleteSession() {
-            console.log(
-                "Deleting Session : " +
-                    this.session +
-                    " Duration : " +
-                    this.duration
-            );
-            this.axios
-                .delete("/course_type", {
-                    params: { nom: this.session },
-                })
-                .then(() => {
-                    this.$emit("refresh");
-                });
         },
     },
 };

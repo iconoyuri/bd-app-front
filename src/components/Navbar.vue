@@ -49,7 +49,7 @@ export default {
                 })
                 .then(() => {});
             this.$store.commit("logout");
-            location.reload();
+            this.$router.push("/")
         },
     },
     computed: {

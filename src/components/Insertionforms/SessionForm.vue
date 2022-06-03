@@ -4,28 +4,11 @@
     <table class="table">
         <thead class="thead-dark">
             <tr>
-                <th scope="col">Type</th>
+                <th scope="col">Name</th>
                 <th scope="col">Duration</th>
                 <th scope="col"></th>
             </tr>
         </thead>
-        <tbody>
-            <SessionLine
-                v-for="session in sessions"
-                :nom="session.nom"
-                :duree="session.duree"
-                :key="session.nom"
-                :modificationlock="modificationlock"
-                @refresh="loadSessions"
-                @start-modify="turnModifyStateOn"
-                @end-modify="turnModifyStateOff"
-            />
-            <SessionLineForm
-                v-if="addLineVisible"
-                @refresh="loadSessions"
-                @abort="turnAddingStateOff"
-            />
-        </tbody>
         <tfoot>
             <tr v-if="addBtnVisible">
                 <td></td>
@@ -39,39 +22,135 @@
                 </td>
             </tr>
         </tfoot>
+        <tbody>
+            <Line
+                v-for="session in entries"
+                :key="session"
+                :modificationlock="modificationlock"
+                @update="updateEntry(session)"
+                @delete="deleteEntry(session)"
+                @start-modify="turnModifyStateOn(session)"
+                @end-modify="turnModifyStateOff"
+            >
+                <td class="type">{{ session.nom }}</td>
+                <td class="type">{{ session.duree }}</td>
+
+                <!--  -->
+                <template v-slot:inputs>
+                    <label for="line-form-name">Session type</label>
+                    <input
+                        type="text"
+                        placeholder="Session type"
+                        v-model="cache.nom"
+                        class="form-control"
+                        required
+                        id="line-form-name"
+                    />
+
+                    <label for="line-form-name">Duration</label>
+                    <input
+                        type="time"
+                        v-model="cache.duree"
+                        class="form-control"
+                        required
+                        id="line-form-name"
+                    />
+                </template>
+            </Line>
+            <!--Here we follow the git vocabulary (stage)-->
+            <LineForm
+                v-if="addLineVisible"
+                @stageChanges="postCache"
+                @abortChanges="turnAddingStateOff"
+            >
+                <label for="line-form-name">Session type</label>
+                <input
+                    type="text"
+                    placeholder="Session type"
+                    v-model="cache.code"
+                    class="form-control"
+                    required
+                    id="line-form-name"
+                />
+
+                <label for="line-form-name">Duration</label>
+                <input
+                    type="time"
+                    v-model="cache.duree"
+                    class="form-control"
+                    required
+                    id="line-form-name"
+                />
+            </LineForm>
+        </tbody>
     </table>
 </template>
 
 <script>
-import SessionLineForm from "./InsertionComponents/SessionLine/SessionLineForm.vue";
-import SessionLine from "./InsertionComponents/SessionLine/SessionLine.vue";
+import LineForm from "../Lines/LineForm.vue";
+import Line from "../Lines/Line.vue";
 
 export default {
-    name: "SessionForm",
-    components: { SessionLineForm, SessionLine },
+    components: { LineForm, Line },
     data() {
         return {
             addLineVisible: false,
             addBtnVisible: true,
             modificationlock: false,
-            sessions: [],
+            requestPath: "/session",
+            cache: {},
+            entries: [],
         };
     },
     mounted() {
-        this.loadSessions();
+        this.getDatas();
     },
     methods: {
-        loadSessions() {
-            console.log("Sessions Loading");
+        getDatas() {
             this.turnAddingStateOff();
             this.axios
-                .get("/course_type")
+                .get(this.requestPath + "/all")
                 .then((response) => {
-                    this.sessions = response.data;
+                    this.entries = response.data;
                 })
                 .catch((e) => console.log(e));
         },
+        postCache() {
+            this.axios
+                .post(this.requestPath, this.cache)
+                .then(() => {
+                    this.getDatas();
+                })
+                .catch((e) => console.log(e));
+        },
+        updateEntry(entry) {
+            this.axios
+                .put(this.requestPath, this.cache, {
+                    params: { nom: entry.nom },
+                })
+                .then(() => {
+                    entry = this.cache;
+                })
+                .catch((e) => console.log(e));
+        },
+        deleteEntry(entry) {
+            this.axios
+                .delete(this.requestPath, {
+                    params: { nom: entry.nom },
+                })
+                .then(() => {
+                    this.entries = this.deleteLine(entry);
+                });
+        },
+        backupEntry(entry) {
+            this.cache = { ...entry };
+        },
+        wipeCache() {
+            this.cache = {};
+        },
         turnAddingStateOn() {
+            this.wipeCache();
+            //
             this.showInputForm();
             this.hideAddBtn();
         },
@@ -79,7 +158,9 @@ export default {
             this.hideInputForm();
             this.showAddBtn();
         },
-        turnModifyStateOn() {
+        turnModifyStateOn(entry) {
+            this.backupEntry(entry);
+            //
             this.turnAddingStateOff();
             this.hideAddBtn();
             this.modificationlock = true;
@@ -88,7 +169,6 @@ export default {
             this.turnAddingStateOff();
             this.modificationlock = false;
         },
-        addSession() {},
         hideInputForm() {
             this.addLineVisible = false;
         },
@@ -102,10 +182,19 @@ export default {
             this.addBtnVisible = true;
         },
     },
+    computed: {
+        deleteLine(entry) {
+            return this.entries.filter((e) => e != entry);
+        },
+    },
 };
 </script>
 
 <style scoped>
+.table {
+    border-radius: 7px 0 0 0;
+    overflow: hidden;
+}
 .table td {
     text-transform: capitalize;
 }
