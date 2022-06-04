@@ -1,14 +1,20 @@
 <template>
     <h2>Insert Classes</h2>
-
+    <p>
+        Note : Les classes sont automatiquement générées à partir des niveaux et des
+        filières
+    </p>
     <table class="table">
         <thead class="thead-dark">
             <tr>
                 <th scope="col">Code</th>
+                <!-- <th scope="col">Niveau</th>
+                <th scope="col">Filiere</th> -->
+                <th scope="col">Effectif</th>
                 <th scope="col"></th>
             </tr>
         </thead>
-        <tfoot>
+        <!-- <tfoot>
             <tr v-if="addBtnVisible">
                 <td></td>
                 <td class="buttons" colspan="2">
@@ -20,47 +26,85 @@
                     </button>
                 </td>
             </tr>
-        </tfoot>
+        </tfoot> -->
         <tbody>
             <Line
-                v-for="level in entries"
-                :key="level"
+                v-for="classe in entries"
+                :key="classe"
                 :modificationlock="modificationlock"
-                @update="updateEntry(level)"
-                @delete="deleteEntry(level)"
-                @start-modify="turnModifyStateOn(level)"
+                @update="updateEntry(classe)"
+                @delete="deleteEntry(classe)"
+                @start-modify="turnModifyStateOn(classe)"
                 @end-modify="turnModifyStateOff"
             >
-                <td class="type">{{ level.code }}</td>
+                <td class="type">{{ classe.code }}</td>
+                <td class="type">{{ classe.effectif }}</td>
                 <!--  -->
                 <template v-slot:inputs>
-                    <label for="line-form-name">Level code</label>
+                    <label for="line-form-1">Class code</label>
                     <input
                         type="text"
-                        placeholder="Level code"
+                        placeholder="Class code"
                         v-model="cache.code"
                         class="form-control"
                         required
-                        id="line-form-name"
+                        id="line-form-1"
+                        disabled
+                    />
+                    <label for="line-form-2">Effectif</label>
+                    <input
+                        type="number"
+                        placeholder="Effectif"
+                        v-model="cache.effectif"
+                        class="form-control"
+                        required
+                        id="line-form-2"
                     />
                 </template>
             </Line>
             <!--Here we follow the git vocabulary (stage)-->
-            <LineForm
+            <!-- <LineForm
                 v-if="addLineVisible"
                 @stageChanges="postCache"
                 @abortChanges="turnAddingStateOff"
             >
-                <label for="line-form-name">Level code</label>
+                <label for="line-form">Class code</label>
                 <input
                     type="text"
-                    placeholder="Level code"
+                    placeholder="Class code"
                     v-model="cache.code"
                     class="form-control"
                     required
-                    id="line-form-name"
+                    id="line-form"
                 />
-            </LineForm>
+                <label for="line-form">Class code</label>
+                <input
+                    type="text"
+                    placeholder="Class code"
+                    v-model="cache.code"
+                    class="form-control"
+                    required
+                    id="line-form"
+                />
+                <label for="line-form">Class code</label>
+                <input
+                    type="text"
+                    placeholder="Class code"
+                    v-model="cache.code"
+                    class="form-control"
+                    required
+                    id="line-form"
+                />
+                <label for="line-form">Effectif</label>
+                <input
+                    type="number"
+                    placeholder="Effectif"
+                    v-model="cache.effectif"
+                    class="form-control"
+                    required
+                    id="line-form"
+                />
+            </LineForm> -->
         </tbody>
     </table>
 </template>
@@ -76,10 +120,8 @@ export default {
             addLineVisible: false,
             addBtnVisible: true,
             modificationlock: false,
-            requestPath: "/level",
-            cache: {
-                code: "",
-            },
+            requestPath: "/class",
+            cache: {},
             entries: [],
         };
     },
