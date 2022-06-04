@@ -37,23 +37,23 @@
 
                 <!--  -->
                 <template v-slot:inputs>
-                    <label for="line-form-name">Session type</label>
+                    <label for="line-form-1">Session type</label>
                     <input
                         type="text"
                         placeholder="Session type"
                         v-model="cache.nom"
                         class="form-control"
                         required
-                        id="line-form-name"
+                        id="line-form-1"
                     />
 
-                    <label for="line-form-name">Duration</label>
+                    <label for="line-form-2">Duration</label>
                     <input
                         type="time"
                         v-model="cache.duree"
                         class="form-control"
                         required
-                        id="line-form-name"
+                        id="line-form-2"
                     />
                 </template>
             </Line>
@@ -63,23 +63,23 @@
                 @stageChanges="postCache"
                 @abortChanges="turnAddingStateOff"
             >
-                <label for="line-form-name">Session type</label>
+                <label for="line-form-1">Session type</label>
                 <input
                     type="text"
                     placeholder="Session type"
-                    v-model="cache.code"
+                    v-model="cache.nom"
                     class="form-control"
                     required
-                    id="line-form-name"
+                    id="line-form-1"
                 />
 
-                <label for="line-form-name">Duration</label>
+                <label for="line-form-2">Duration</label>
                 <input
                     type="time"
                     v-model="cache.duree"
                     class="form-control"
                     required
-                    id="line-form-name"
+                    id="line-form-2"
                 />
             </LineForm>
         </tbody>
@@ -97,7 +97,7 @@ export default {
             addLineVisible: false,
             addBtnVisible: true,
             modificationlock: false,
-            requestPath: "/session",
+            requestPath: "/course_type",
             cache: {},
             entries: [],
         };

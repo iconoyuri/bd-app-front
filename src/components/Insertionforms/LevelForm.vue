@@ -34,14 +34,14 @@
                 <td class="type">{{ level.code }}</td>
                 <!--  -->
                 <template v-slot:inputs>
-                    <label for="line-form-name">Level code</label>
+                    <label for="line-form">Level code</label>
                     <input
                         type="text"
                         placeholder="Level code"
                         v-model="cache.code"
                         class="form-control"
                         required
-                        id="line-form-name"
+                        id="line-form"
                     />
                 </template>
             </Line>
@@ -51,14 +51,14 @@
                 @stageChanges="postCache"
                 @abortChanges="turnAddingStateOff"
             >
-                <label for="line-form-name">Level code</label>
+                <label for="line-form">Level code</label>
                 <input
                     type="text"
                     placeholder="Level code"
                     v-model="cache.code"
                     class="form-control"
                     required
-                    id="line-form-name"
+                    id="line-form"
                 />
             </LineForm>
         </tbody>

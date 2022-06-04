@@ -37,24 +37,24 @@
 
                 <!--  -->
                 <template v-slot:inputs>
-                    <label for="line-form-name">Path code</label>
+                    <label for="line-form-1">Path code</label>
                     <input
                         type="text"
                         placeholder="Path code"
                         v-model="cache.code"
                         class="form-control"
                         required
-                        id="line-form-name"
+                        id="line-form-1"
                     />
 
-                    <label for="line-form-name">Path name</label>
+                    <label for="line-form-2">Path name</label>
                     <input
                         type="text"
                         placeholder="Path name"
                         v-model="cache.nom"
                         class="form-control"
                         required
-                        id="line-form-name"
+                        id="line-form-2"
                     />
                 </template>
             </Line>
@@ -64,25 +64,25 @@
                 @stageChanges="postCache"
                 @abortChanges="turnAddingStateOff"
             >
-                <label for="line-form-name">Path code</label>
-                <input
-                    type="text"
-                    placeholder="Path code"
-                    v-model="cache.code"
-                    class="form-control"
-                    required
-                    id="line-form-name"
-                />
+                    <label for="line-form-1">Path code</label>
+                    <input
+                        type="text"
+                        placeholder="Path code"
+                        v-model="cache.code"
+                        class="form-control"
+                        required
+                        id="line-form-1"
+                    />
 
-                <label for="line-form-name">Path name</label>
-                <input
-                    type="text"
-                    placeholder="Path name"
-                    v-model="cache.nom"
-                    class="form-control"
-                    required
-                    id="line-form-name"
-                />
+                    <label for="line-form-2">Path name</label>
+                    <input
+                        type="text"
+                        placeholder="Path name"
+                        v-model="cache.nom"
+                        class="form-control"
+                        required
+                        id="line-form-2"
+                    />
             </LineForm>
         </tbody>
     </table>
@@ -99,7 +99,7 @@ export default {
             addLineVisible: false,
             addBtnVisible: true,
             modificationlock: false,
-            requestPath: "/path",
+            requestPath: "/filiere",
             cache: {},
             entries: [],
         };

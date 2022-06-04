@@ -37,24 +37,24 @@
 
                 <!--  -->
                 <template v-slot:inputs>
-                    <label for="line-form-name">room code</label>
+                    <label for="line-form-1">room code</label>
                     <input
                         type="text"
                         placeholder="Room code"
                         v-model="cache.code"
                         class="form-control"
                         required
-                        id="line-form-name"
+                        id="line-form-1"
                     />
 
-                    <label for="line-form-name">Capacity</label>
+                    <label for="line-form-2">Capacity</label>
                     <input
                         type="number"
                         placeholder="Capacity"
                         v-model="cache.effectif"
                         class="form-control"
                         required
-                        id="line-form-name"
+                        id="line-form-2"
                     />
                 </template>
             </Line>
@@ -64,24 +64,24 @@
                 @stageChanges="postCache"
                 @abortChanges="turnAddingStateOff"
             >
-                <label for="line-form-name">room code</label>
+                <label for="line-form-1">room code</label>
                 <input
                     type="text"
                     placeholder="Room code"
                     v-model="cache.code"
                     class="form-control"
                     required
-                    id="line-form-name"
+                    id="line-form-1"
                 />
 
-                <label for="line-form-name">Capacity</label>
+                <label for="line-form-2">Capacity</label>
                 <input
                     type="number"
                     placeholder="Capacity"
                     v-model="cache.effectif"
                     class="form-control"
                     required
-                    id="line-form-name"
+                    id="line-form-2"
                 />
             </LineForm>
         </tbody>
