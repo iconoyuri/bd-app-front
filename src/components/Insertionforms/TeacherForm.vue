@@ -4,12 +4,17 @@
     <table class="table">
         <thead class="thead-dark">
             <tr>
-                <th scope="col">Code</th>
+                <th scope="col">Matricule</th>
+                <th scope="col">Name</th>
+                <th scope="col">Email</th>
+                <th scope="col">Path</th>
                 <th scope="col"></th>
             </tr>
         </thead>
         <tfoot>
             <tr v-if="addBtnVisible">
+                <td></td>
+                <td></td>
                 <td></td>
                 <td class="buttons" colspan="2">
                     <button
@@ -23,26 +28,57 @@
         </tfoot>
         <tbody>
             <Line
-                v-for="level in entries"
-                :key="level"
+                v-for="teacher in entries"
+                :key="teacher"
                 :modificationlock="modificationlock"
-                @update="updateEntry(level)"
-                @delete="deleteEntry(level)"
-                @start-modify="turnModifyStateOn(level)"
+                @update="updateEntry(teacher)"
+                @delete="deleteEntry(teacher)"
+                @start-modify="turnModifyStateOn(teacher)"
                 @end-modify="turnModifyStateOff"
             >
-                <td class="type">{{ level.code }}</td>
+                <td class="type">{{ teacher.matricule }}</td>
+                <td class="type">{{ teacher.nom }}</td>
+                <td class="type">{{ teacher.email }}</td>
+                <td class="type">{{ teacher.code_filiere }}</td>
                 <!--  -->
                 <template v-slot:inputs>
-                    <label for="line-form-name">Level code</label>
+                    <label for="line-form-1">Teacher matricule</label>
                     <input
                         type="text"
-                        placeholder="Level code"
-                        v-model="cache.code"
+                        placeholder="teacher matricule"
+                        v-model="cache.matricule"
                         class="form-control"
                         required
-                        id="line-form-name"
+                        id="line-form-1"
                     />
+                    <label for="line-form-2">Teacher name</label>
+                    <input
+                        type="text"
+                        placeholder="Teacher Name"
+                        v-model="cache.nom"
+                        class="form-control"
+                        required
+                        id="line-form-2"
+                    />
+                    <label for="line-form-3">Teacher email</label>
+                    <input
+                        type="email"
+                        placeholder="teacher email"
+                        v-model="cache.email"
+                        class="form-control"
+                        required
+                        id="line-form-3"
+                    />
+                    <label for="line-form-4">Teacher path</label>
+                    <select class="form-control" v-model="cache.code_filiere" id="line-form-4">
+                        <option
+                            v-for="path in paths"
+                            :key="path.code"
+                            :value="path.code"
+                        >
+                            {{ path.nom }}
+                        </option>
+                    </select>
                 </template>
             </Line>
             <!--Here we follow the git vocabulary (stage)-->
@@ -51,15 +87,43 @@
                 @stageChanges="postCache"
                 @abortChanges="turnAddingStateOff"
             >
-                <label for="line-form-name">Level code</label>
+                <label for="line-form-1">Teacher matricule</label>
                 <input
                     type="text"
-                    placeholder="Level code"
-                    v-model="cache.code"
+                    placeholder="teacher matricule"
+                    v-model="cache.matricule"
                     class="form-control"
                     required
-                    id="line-form-name"
+                    id="line-form-1"
                 />
+                <label for="line-form-2">Teacher name</label>
+                <input
+                    type="text"
+                    placeholder="Teacher Name"
+                    v-model="cache.nom"
+                    class="form-control"
+                    required
+                    id="line-form-2"
+                />
+                <label for="line-form-3">Teacher email</label>
+                <input
+                    type="email"
+                    placeholder="teacher email"
+                    v-model="cache.email"
+                    class="form-control"
+                    required
+                    id="line-form-3"
+                />
+                <label for="line-form-4">Teacher path</label>
+                <select class="form-control" v-model="cache.code_filiere" id="line-form-4">
+                    <option
+                        v-for="path in paths"
+                        :key="path.code"
+                        :value="path.code"
+                    >
+                        {{ path.nom }}
+                    </option>
+                </select>
             </LineForm>
         </tbody>
     </table>
@@ -76,21 +140,32 @@ export default {
             addLineVisible: false,
             addBtnVisible: true,
             modificationlock: false,
-            requestPath: "/level",
-            cache: {
-                code: "",
+            requestPath: {
+                teacher: "/teacher",
+                paths: "/filiere",
             },
+            cache: {},
             entries: [],
+            paths: [],
         };
     },
     mounted() {
+        this.getPaths();
         this.getDatas();
     },
     methods: {
+        getPaths() {
+            this.axios
+                .get(this.requestPath.paths + "/all")
+                .then((response) => {
+                    this.paths = response.data;
+                })
+                .catch((e) => console.log(e));
+        },
         getDatas() {
             this.turnAddingStateOff();
             this.axios
-                .get(this.requestPath + "/all")
+                .get(this.requestPath.teacher + "/all")
                 .then((response) => {
                     this.entries = response.data;
                 })
@@ -98,7 +173,7 @@ export default {
         },
         postCache() {
             this.axios
-                .post(this.requestPath, this.cache)
+                .post(this.requestPath.teacher, this.cache)
                 .then(() => {
                     this.getDatas();
                 })
@@ -106,7 +181,7 @@ export default {
         },
         updateEntry(entry) {
             this.axios
-                .put(this.requestPath, this.cache, {
+                .put(this.requestPath.teacher, this.cache, {
                     params: {
                         code: entry.code,
                     },
@@ -118,7 +193,7 @@ export default {
         },
         deleteEntry(entry) {
             this.axios
-                .delete(this.requestPath, {
+                .delete(this.requestPath.teacher, {
                     params: { code: entry.code },
                 })
                 .then(() => {
