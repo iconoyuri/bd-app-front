@@ -5,6 +5,8 @@ const store = createStore({
         user_type: sessionStorage.getItem("user_type"),
         access_token: sessionStorage.getItem("access_token"),
         token_type: sessionStorage.getItem("token_type"),
+        // teacher_matricule: sessionStorage.getItem("teacher_matricule"),
+        teacher_matricule: "14KDG23",
         backend_domain: "https://time-table-app-g14.herokuapp.com",
     },
     mutations: {
@@ -17,11 +19,17 @@ const store = createStore({
             state.access_token = sessionStorage.getItem("access_token");
             state.token_type = sessionStorage.getItem("token_type");
         },
+        saveTeacherMatricule(state, { matricule }) {
+            sessionStorage.setItem("teacher_matricule", matricule);
+            state.teacher_matricule =
+                sessionStorage.getItem("teacher_matricule");
+        },
         logout(state) {
             sessionStorage.clear();
-            state.user_type = ""
-            state.access_token = ""
-            state.token_type = ""
+            state.user_type = "";
+            state.access_token = "";
+            state.token_type = "";
+            state.teacher_matricule = "";
         },
     },
     getters: {
@@ -29,14 +37,18 @@ const store = createStore({
             return getters.userIsAdmin || getters.userIsTeacher;
         },
         userIsAdmin(state) {
-            // return state.user_type == "administrateur";
-            return true;
+            // return true;
+            return state.user_type == "administrateur";
         },
         userIsTeacher(state) {
+            return true;
             return state.user_type == "enseignant";
         },
         getAccessToken(state) {
             return state.access_token;
+        },
+        getTeacherMatricule(state) {
+            return state.teacher_matricule;
         },
     },
 });

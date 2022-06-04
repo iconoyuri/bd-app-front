@@ -15,7 +15,13 @@
             <div v-else class="user-options">
                 <router-link
                     v-if="teacherLogged"
-                    :to="{ name: 'teacherworkshop' }"
+                    :to="{
+                        name: 'teacherworkshop',
+                        params: {
+                            matricule:
+                                this.$store.getters.getTeacherMatricule,
+                        },
+                    }"
                 >
                     <i class="fa-solid fa-chalkboard-user"></i>
                 </router-link>
@@ -49,7 +55,7 @@ export default {
                 })
                 .then(() => {});
             this.$store.commit("logout");
-            this.$router.push("/")
+            this.$router.push("/");
         },
     },
     computed: {

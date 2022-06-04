@@ -9,7 +9,7 @@
                 :to="{
                     name: 'teacherworkshop',
                     params: {
-                        matricule: teacher.matricule,
+                        matricule: this.$store.getters.getTeacherMatricule,
                     },
                 }"
             >
