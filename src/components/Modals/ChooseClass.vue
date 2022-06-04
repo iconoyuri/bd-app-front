@@ -33,7 +33,7 @@
 </template>
 
 <script>
-import ModalWindow from "../ModalWindow.vue";
+import ModalWindow from "../assets/ModalWindow.vue";
 
 export default {
     name: "ChooseClass",
@@ -44,7 +44,7 @@ export default {
             title: "Choose a class",
             visiblePath: "",
             requestPath: {
-                path: "/path",
+                path: "/filiere",
                 class: "/class",
             },
             paths: [],
