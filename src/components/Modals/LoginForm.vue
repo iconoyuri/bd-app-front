@@ -33,7 +33,7 @@
 </template>
 
 <script>
-import ModalWindow from "../ModalWindow.vue";
+import ModalWindow from "../assets/ModalWindow.vue";
 export default {
     name: "LoginForm",
     components: { ModalWindow },
@@ -51,15 +51,21 @@ export default {
             this.axios
                 .post("/login", params)
                 .then((response) => {
-                    // console.log(response.data);
                     this.$store.commit("saveUser", response.data);
-
                     this.axios.defaults.headers.common = {
                         Authorization: `bearer ${this.$store.getters.getAccessToken}`,
                     };
+                    if (response.data.user == "enseignant") {
+                        // Fetching teacher profile
+                        this.axios
+                            .get("/teacher/profile")
+                            .then((response) => {
+                                this.$store.commit("saveTeacherMatricule", response.data);
+                            })
+                            .catch((e) => console.log(e));
+                    }
+
                     this.$refs.pane.closePane();
-                    // this.$refs.curtain.classList.add("hidden");
-                    // setTimeout(() => this.$router.push({ name: "home" }), 200);
                 })
                 .catch((e) => console.log(e));
         },
