@@ -5,9 +5,19 @@ const store = createStore({
         user_type: sessionStorage.getItem("user_type"),
         access_token: sessionStorage.getItem("access_token"),
         token_type: sessionStorage.getItem("token_type"),
-        // teacher_matricule: sessionStorage.getItem("teacher_matricule"),
-        teacher_matricule: "14KDG23",
+        teacher_matricule: sessionStorage.getItem("teacher_matricule"),
+        // teacher_matricule: "14KDG23",
         backend_domain: "https://time-table-app-g14.herokuapp.com",
+        requestPaths: {
+            classe: "/class",
+            course: "/course",
+            level: "/level",
+            path: "/filiere",
+            room: "/room",
+            session: "/course_type",
+            teacher: "/teacher",
+            speciality: "/speciality",
+        }
     },
     mutations: {
         saveUser(state, { access_token, token_type, user }) {
@@ -41,7 +51,7 @@ const store = createStore({
             return state.user_type == "administrateur";
         },
         userIsTeacher(state) {
-            return true;
+            // return true;
             return state.user_type == "enseignant";
         },
         getAccessToken(state) {
@@ -50,6 +60,12 @@ const store = createStore({
         getTeacherMatricule(state) {
             return state.teacher_matricule;
         },
+        getRequestPaths(state){
+            return state.requestPaths
+        }
+        // getDataInsetionCache(){
+        //     return state.insertionCache
+        // }
     },
 });
 export default store;
