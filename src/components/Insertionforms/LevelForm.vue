@@ -3,6 +3,7 @@
         header="Insert Levels"
         :requestPath="requestPath.level"
         :cache="cache"
+        ref="injector"
         @update="updateEntry"
         @delete="deleteEntry"
         @wipeCache="wipeCache"
@@ -39,22 +40,22 @@ export default {
     methods: {
         updateEntry(entry) {
             this.axios
-                .put(this.requestPath, this.cache, {
+                .put(this.$refs.injector.requestPath, this.cache, {
                     params: { code: entry.code },
                 })
                 .then(() => {
                     // entry = this.cache;
-                    this.getDatas();
+                    this.$refs.injector.getDatas();
                 })
                 .catch((e) => console.log(e));
         },
         deleteEntry(entry) {
             this.axios
-                .delete(this.requestPath, {
+                .delete(this.$refs.injector.requestPath, {
                     params: { code: entry.code },
                 })
                 .then(() => {
-                    this.entries = this.deleteLine(entry);
+                    this.$refs.injector.deleteLine(entry);
                 });
         },
         backupEntry(entry) {

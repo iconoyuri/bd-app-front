@@ -135,12 +135,12 @@ export default {
         showAddBtn() {
             this.addBtnVisible = true;
         },
-    },
-    computed: {
         deleteLine(entry) {
-            return this.entries.filter((e) => e != entry);
+            this.entries = this.entries.filter((e) => e != entry);
         },
     },
+    computed: {
+        },
 };
 </script>
 

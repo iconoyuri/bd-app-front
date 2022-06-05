@@ -3,6 +3,7 @@
         header="Insert Sessions Types"
         :requestPath="requestPath.session"
         :cache="cache"
+        ref="injector"
         @update="updateEntry"
         @delete="deleteEntry"
         @wipeCache="wipeCache"
@@ -51,22 +52,22 @@ export default {
     methods: {
         updateEntry(entry) {
             this.axios
-                .put(this.requestPath, this.cache, {
+                .put(this.$refs.injector.requestPath, this.cache, {
                     params: { nom: entry.nom },
                 })
                 .then(() => {
                     // entry = this.cache;
-                    this.getDatas();
+                    this.$refs.injector.getDatas();
                 })
                 .catch((e) => console.log(e));
         },
         deleteEntry(entry) {
             this.axios
-                .delete(this.requestPath, {
+                .delete(this.$refs.injector.requestPath, {
                     params: { nom: entry.nom },
                 })
                 .then(() => {
-                    this.entries = this.deleteLine(entry);
+                    this.$refs.injector.deleteLine(entry);
                 });
         },
         backupEntry(entry) {

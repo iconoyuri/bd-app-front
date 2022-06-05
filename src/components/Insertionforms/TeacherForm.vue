@@ -3,6 +3,7 @@
         header="Insert Teachers"
         :requestPath="requestPath.teacher"
         :cache="cache"
+        ref="injector"
         @update="updateEntry"
         @delete="deleteEntry"
         @wipeCache="wipeCache"
@@ -86,22 +87,22 @@ export default {
         },
         updateEntry(entry) {
             this.axios
-                .put(this.requestPath, this.cache, {
+                .put(this.$refs.injector.requestPath, this.cache, {
                     params: { matricule: entry.matricule },
                 })
                 .then(() => {
                     // entry = this.cache;
-                    this.getDatas();
+                    this.$refs.injector.getDatas();
                 })
                 .catch((e) => console.log(e));
         },
         deleteEntry(entry) {
             this.axios
-                .delete(this.requestPath, {
+                .delete(this.$refs.injector.requestPath, {
                     params: { matricule: entry.matricule },
                 })
                 .then(() => {
-                    this.entries = this.deleteLine(entry);
+                    this.$refs.injector.deleteLine(entry);
                 });
         },
         backupEntry(entry) {
