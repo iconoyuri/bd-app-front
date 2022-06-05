@@ -22,6 +22,10 @@
                     required
                 />
             </div>
+            <p v-if="accountNotFound" class="error-message">
+                <i class="fa-solid fa-circle-exclamation"></i> Your login or your password is
+                invalid
+            </p>
             <button
                 class="btn btn-dark btn-lg btn-block"
                 @click.prevent="sendCredentials"
@@ -41,6 +45,7 @@ export default {
         return {
             login: "",
             password: "",
+            accountNotFound: false,
         };
     },
     methods: {
@@ -60,20 +65,32 @@ export default {
                         this.axios
                             .get("/teacher/profile")
                             .then((response) => {
-                                this.$store.commit("saveTeacherMatricule", response.data);
+                                this.$store.commit(
+                                    "saveTeacherMatricule",
+                                    response.data
+                                );
                             })
-                            .catch((e) => console.log(e));
+                            // .catch((e) => console.log(e));
                     }
 
                     this.$refs.pane.closePane();
                 })
-                .catch((e) => console.log(e));
+                .catch((e) => {
+                    if (e.response.status === 404) {
+                        this.accountNotFound = true;
+                    }
+                });
         },
     },
 };
 </script>
 
 <style scoped>
+.error-message {
+    color: red;
+    font-size: 0.8em;
+    text-align: center;
+}
 * {
     font-family: calibri;
 }
