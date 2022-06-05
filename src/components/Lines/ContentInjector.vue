@@ -39,7 +39,7 @@
             </Line>
             <!--Here we follow the git vocabulary (stage)-->
             <LineForm
-                v-if="addLineVisible"
+                v-if="addingEnabled && addLineVisible"
                 :cellsNb="lakingCells"
                 @stageChanges="postCache"
                 @abortChanges="turnAddingStateOff"
@@ -55,7 +55,7 @@ import LineForm from "./LineForm.vue";
 import Line from "./Line.vue";
 export default {
     emits: ["wipeCache", "backupEntry"],
-    props: ["header", "cache", "requestPath"],
+    props: ["header", "cache", "requestPath", "addingEnabled"],
     components: { LineForm, Line },
     data() {
         return {

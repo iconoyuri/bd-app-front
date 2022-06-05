@@ -3,6 +3,7 @@
         header="Insert Classes"
         :requestPath="requestPath"
         :cache="cache"
+        :addingEnabled="false"
         @wipeCache="wipeCache"
         @backupEntry="backupEntry"
     >
