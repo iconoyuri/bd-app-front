@@ -90,8 +90,9 @@
             <label for="line-form-7">Course Class</label>
             <select
                 class="form-control"
-                v-model="cache.code_filiere"
+                v-model="cache.code_classe"
                 id="line-form-7"
+                @change="getSpecialities(cache.code_classe)"
             >
                 <option
                     v-for="classe in classes"
@@ -106,7 +107,7 @@
             >
             <select
                 class="form-control"
-                v-model="cache.code_filiere"
+                v-model="cache.id_specialite"
                 id="line-form-8"
             >
                 <option
