@@ -18,6 +18,7 @@
         v-if="modificationFormVisible"
         @stageChanges="commit"
         @abortChanges="endModify"
+        :cellsNb="cellsNb"
     >
         <slot name="inputs"></slot>
     </LineForm>
@@ -29,6 +30,9 @@ export default {
     props: {
         modificationlock: {
             default: false,
+        },
+        cellsNb: {
+            default: 3,
         },
     },
     emits: ["start-modify", "end-modify", "update", "delete"],

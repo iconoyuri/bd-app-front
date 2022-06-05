@@ -1,6 +1,6 @@
 <template>
     <tr>
-        <td colspan="3" @dblclick.self="abort" class="form-line">
+        <td :colspan="cellsNb + 1" @dblclick.self="abort" class="form-line">
             <slot></slot>
             <div class="buttons" @dblclick.self="abort">
                 <!--Here we follow the git vocabulary (stage)-->
@@ -24,6 +24,7 @@
 <script>
 export default {
     emits: ["abortChanges", "stageChanges"],
+    props: ["cellsNb"]
 };
 </script>
 
