@@ -14,6 +14,7 @@ import PathForm from "../components/Insertionforms/PathForm.vue";
 import TeacherForm from "../components/Insertionforms/TeacherForm.vue";
 import RoomForm from "../components/Insertionforms/RoomForm.vue";
 import ClassForm from "../components/Insertionforms/ClassForm.vue";
+import SpecialityForm from "../components/Insertionforms/SpecialityForm.vue";
 import CourseForm from "../components/Insertionforms/CourseForm.vue";
 
 const routes = [
@@ -37,47 +38,52 @@ const routes = [
                 name: "chooseroom",
                 component: ChooseRoom,
             },
+        ],
+    },
+    {
+        path: "/insertion",
+        name: "datainsertion",
+        component: DataInsertion,
+        children: [
             {
-                path: "/insertion",
-                name: "datainsertion",
-                component: DataInsertion,
-                children: [
-                    {
-                        path: "sessions",
-                        name: "sessionform",
-                        component: SessionForm,
-                    },
-                    {
-                        path: "levels",
-                        name: "levelform",
-                        component: LevelForm,
-                    },
-                    {
-                        path: "paths",
-                        name: "pathform",
-                        component: PathForm,
-                    },
-                    {
-                        path: "teachers",
-                        name: "teacherform",
-                        component: TeacherForm,
-                    },
-                    {
-                        path: "rooms",
-                        name: "roomform",
-                        component: RoomForm,
-                    },
-                    {
-                        path: "class",
-                        name: "classform",
-                        component: ClassForm,
-                    },
-                    {
-                        path: "courses",
-                        name: "courseform",
-                        component: CourseForm,
-                    },
-                ],
+                path: "sessions",
+                name: "sessionform",
+                component: SessionForm,
+            },
+            {
+                path: "levels",
+                name: "levelform",
+                component: LevelForm,
+            },
+            {
+                path: "paths",
+                name: "pathform",
+                component: PathForm,
+            },
+            {
+                path: "teachers",
+                name: "teacherform",
+                component: TeacherForm,
+            },
+            {
+                path: "rooms",
+                name: "roomform",
+                component: RoomForm,
+            },
+            {
+                path: "class",
+                name: "classform",
+                component: ClassForm,
+            },
+            {
+                path: "speciality",
+                name: "specialityform",
+                component: SpecialityForm,
+            },
+            {
+                path: "courses",
+                name: "courseform",
+                component: CourseForm,
             },
         ],
     },

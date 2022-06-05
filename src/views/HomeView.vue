@@ -24,6 +24,7 @@
         :paragraph="adminTexts.paragraph"
     >
         <template v-slot:buttons>
+            <!-- <p v-for="t in 3" :key="t">t {{ test[t] }}</p> -->
             <router-link :to="{ name: 'datainsertion' }">
                 <button type="button" class="btn btn-dark">
                     Datas Insertion
@@ -53,6 +54,11 @@ export default {
     components: { HomepageMain },
     data() {
         return {
+            // test: {
+            //     a: "jfdk",
+            //     b: "jfsd",
+            //     c: "jfdsq",
+            // },
             teacher: {
                 matricule: "19M2222",
                 nom: "Uriel Melie",

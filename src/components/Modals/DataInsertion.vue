@@ -1,5 +1,8 @@
 <template>
-    <ModalWindow :title="title">
+    <!-- <ModalWindow :title="title"> -->
+    <!-- <p>test</p> -->
+    <div class="">
+        <!-- <h1>Data Insertion</h1> -->
         <div class="split-pane">
             <nav class="left">
                 <ul>
@@ -7,22 +10,24 @@
                         v-for="option in options"
                         :key="option.title"
                         :to="{ name: option.formtype }"
+                        :class="{ active: option.visible }"
                     >
-                        <li
-                            :class="{ active: option.visible }"
-                            @click="setActiveOption(option.title)"
-                        >
+                        <li @click="setActiveOption(option.title)">
                             <i class="fas fa-times"></i>
                             <span>{{ option.title }}</span>
                         </li>
                     </router-link>
+                    <a href="">
+                        <li></li>
+                    </a>
                 </ul>
             </nav>
             <div class="right">
                 <router-view></router-view>
             </div>
         </div>
-    </ModalWindow>
+    </div>
+    <!-- </ModalWindow> -->
 </template>
 
 <script>
@@ -72,6 +77,12 @@ export default {
                     requestPath: "",
                 },
                 {
+                    title: "Specialities",
+                    visible: false,
+                    formtype: "specialityform",
+                    requestPath: "",
+                },
+                {
                     title: "Courses",
                     visible: false,
                     formtype: "courseform",
@@ -98,58 +109,97 @@ export default {
 </script>
 
 <style scoped>
+nav {
+    margin: 0;
+    padding: 0;
+}
+h1 {
+    padding: 0;
+}
 .split-pane {
     width: 100%;
     height: 100%;
-    display: grid;
-    grid-template-columns: 10rem 1fr;
-    overflow: auto;
+    background-color: inherit;
+    display: flex;
 }
 .left {
     border: none;
-    border-right: 1px solid #ddd;
-    border-top: 1px solid #ddd;
-    border-radius: 0px 7px 0 0;
+    /* border-right: 1px solid #ddd; */
+    /* border-top: 1px solid #ddd; */
+    flex-shrink: 0;
+    width: 13rem;
     overflow: hidden;
+    background-color: inherit;
 }
 .right {
-    /* width: 100%; */
+    width: 100%;
     position: relative;
     padding: 0 1rem 1rem;
-    border-bottom: 1px solid #ddd;
-    border-right: 1px solid #ddd;
-    border-radius: 0 0 7px 0;
-    /* min-width: 22rem; */
+    background-color: white;
 }
 nav ul {
     list-style-type: none;
+    background-color: #bbb;
+
+    background: var(--bg-grey-color-2); /* Old browsers */
+    background: -moz-linear-gradient(
+        left,
+        var(--bg-grey-color-2) 0%,
+        #fff 100%
+    ); /* FF3.6-15 */
+    background: -webkit-linear-gradient(
+        left,
+        var(--bg-grey-color-2) 0%,
+        #fff 100%
+    ); /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(
+        to right,
+        var(--bg-grey-color-2) 0%,
+        #fff 100%
+    ); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='var(--bg-grey-color)', endColorstr='#fff',GradientType=1 ); /* IE6-9 */
     padding: 0;
+    margin: 0;
 }
 nav ul li {
-    padding: 0.5rem;
-    border-bottom: 1px solid #ddd;
+    padding: 0.8rem;
     width: 100%;
     display: flex;
     gap: 0.7rem;
     align-items: center;
-    transition: background-color 0.2s, color 0.2s;
     user-select: none;
 }
-nav ul li:hover,
-nav ul li.active {
-    background-color: rgb(60, 60, 60);
-    color: white;
+nav ul a {
+    background-color: var(--bg-dark-color);
+    transition: background-color 0.2s, color 0.2s;
 }
-nav ul li.active {
+nav ul a:nth-last-of-type() {
+    background: red;
+    pointer-events: none;
+}
+nav ul a:hover {
+    background-color: var(--transparent-dark-color);
+}
+nav ul a.active {
+    background-color: initial;
+}
+nav ul a.active li {
+    /* background-color: var(--bg-grey-color); */
+    color: var(--bg-dark-color);
     font-weight: bold;
+}
+nav ul a.active + a > li {
+    border-radius: 0 8px 0 0;
+    overflow: hidden;
+}
+nav ul li {
+    background: inherit;
+    color: var(--bg-grey-color);
 }
 nav ul li i {
     font-size: 1.5em;
 }
 @media screen and (max-width: 760px) {
-    .split-pane {
-        grid-template-columns: 7rem 1fr;
-    }
     nav ul li i {
         font-size: 1.1em;
     }
