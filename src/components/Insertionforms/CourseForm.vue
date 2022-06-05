@@ -1,8 +1,10 @@
 <template>
     <ContentInjector
         header="Insert Courses"
-        :requestPath="requestPath"
+        :requestPath="requestPath.course"
         :cache="cache"
+        @update="updateEntry"
+        @delete="deleteEntry"
         @wipeCache="wipeCache"
         @backupEntry="backupEntry"
     >
@@ -38,7 +40,7 @@
             />
             <label for="line-form-3">Course semester</label>
             <input
-                type="email"
+                type="number"
                 placeholder="Course semester"
                 v-model="cache.semestre"
                 class="form-control"
@@ -130,14 +132,7 @@ export default {
     components: { ContentInjector },
     data() {
         return {
-            requestPath: "/course",
-            auxRequestPath: {
-                session: "/",
-                teacher: "/",
-                classe: "/",
-                speciality: "/",
-                paths: "/paths",
-            },
+            requestPath: this.$store.state.requestPaths,
             cache: {},
             sessions: [],
             teachers: [],
@@ -152,25 +147,25 @@ export default {
     methods: {
         getAuxDatas() {
             this.axios
-                .get(this.auxRequestPath.paths + "/all")
+                .get(this.requestPath.path + "/all")
                 .then((response) => {
                     this.paths = response.data;
                 })
                 .catch((e) => console.log(e));
             this.axios
-                .get(this.auxRequestPath.session + "/all")
+                .get(this.requestPath.session + "/all")
                 .then((response) => {
                     this.sessions = response.data;
                 })
                 .catch((e) => console.log(e));
             this.axios
-                .get(this.auxRequestPath.teacher + "/all")
+                .get(this.requestPath.teacher + "/all")
                 .then((response) => {
                     this.teachers = response.data;
                 })
                 .catch((e) => console.log(e));
             this.axios
-                .get(this.auxRequestPath.classe + "/all")
+                .get(this.requestPath.classe + "/all")
                 .then((response) => {
                     this.classes = response.data;
                 })
@@ -178,13 +173,33 @@ export default {
         },
         getSpecialities(classCode) {
             this.axios
-                .get(this.auxRequestPath.speciality + "/all", {
+                .get(this.requestPath.speciality + "/all", {
                     params: { code: classCode },
                 })
                 .then((response) => {
                     this.specialities = response.data;
                 })
                 .catch((e) => console.log(e));
+        },
+        updateEntry(entry) {
+            this.axios
+                .put(this.requestPath, this.cache, {
+                    params: { code: entry.code },
+                })
+                .then(() => {
+                    // entry = this.cache;
+                    this.getDatas();
+                })
+                .catch((e) => console.log(e));
+        },
+        deleteEntry(entry) {
+            this.axios
+                .delete(this.requestPath, {
+                    params: { code: entry.code },
+                })
+                .then(() => {
+                    this.entries = this.deleteLine(entry);
+                });
         },
         backupEntry(entry) {
             this.cache = { ...entry };

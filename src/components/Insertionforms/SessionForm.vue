@@ -1,8 +1,10 @@
 <template>
     <ContentInjector
         header="Insert Sessions Types"
-        :requestPath="requestPath"
+        :requestPath="requestPath.session"
         :cache="cache"
+        @update="updateEntry"
+        @delete="deleteEntry"
         @wipeCache="wipeCache"
         @backupEntry="backupEntry"
     >
@@ -42,11 +44,31 @@ export default {
     components: { ContentInjector },
     data() {
         return {
-            requestPath: "/course_type",
+            requestPath: this.$store.state.requestPaths,
             cache: {},
         };
     },
     methods: {
+        updateEntry(entry) {
+            this.axios
+                .put(this.requestPath, this.cache, {
+                    params: { nom: entry.nom },
+                })
+                .then(() => {
+                    // entry = this.cache;
+                    this.getDatas();
+                })
+                .catch((e) => console.log(e));
+        },
+        deleteEntry(entry) {
+            this.axios
+                .delete(this.requestPath, {
+                    params: { nom: entry.nom },
+                })
+                .then(() => {
+                    this.entries = this.deleteLine(entry);
+                });
+        },
         backupEntry(entry) {
             this.cache = { ...entry };
         },

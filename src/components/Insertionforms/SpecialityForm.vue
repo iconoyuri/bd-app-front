@@ -1,46 +1,53 @@
 <template>
     <ContentInjector
-        header="Insert Classes"
-        :requestPath="requestPath.classe"
+        header="Insert Teachers"
+        :requestPath="requestPath.speciality"
         :cache="cache"
-        :addingEnabled="false"
         @update="updateEntry"
         @delete="deleteEntry"
         @wipeCache="wipeCache"
         @backupEntry="backupEntry"
     >
         <template v-slot:table-headers>
-            <th scope="col">Code</th>
-            <th scope="col">Effectif</th>
+            <th scope="col">Class</th>
+            <th scope="col">Name</th>
+            <th scope="col">Students number</th>
         </template>
-        <!--  -->
         <template v-slot:inputs>
-            <label for="line-form-1">Class code</label>
+            <label for="line-form-1">Select owner class</label>
+            <select
+                class="form-control"
+                v-model="cache.code_filiere"
+                id="line-form-1"
+            >
+                <option
+                    v-for="classe in classes"
+                    :key="classe.code_classe"
+                    :value="classe.code_classe"
+                >
+                    {{ classe.code_classe }}
+                </option>
+            </select>
+            <label for="line-form-2">Speciality name</label>
             <input
                 type="text"
-                placeholder="Class code"
-                v-model="cache.code"
-                class="form-control"
-                required
-                id="line-form-1"
-                disabled
-            />
-            <label for="line-form-2">Effectif</label>
-            <input
-                type="number"
-                placeholder="Effectif"
-                v-model="cache.effectif"
+                placeholder="Speciality name"
+                v-model="cache.nom"
                 class="form-control"
                 required
                 id="line-form-2"
             />
+            <label for="line-form-3">Students number</label>
+            <input
+                type="number"
+                placeholder="Students number"
+                v-model="cache.effectif"
+                class="form-control"
+                required
+                id="line-form-3"
+            />
         </template>
-        <!--  -->
     </ContentInjector>
-    <p>
-        Note : Les classes sont automatiquement générées à partir des niveaux et
-        des filières
-    </p>
 </template>
 
 <script>
@@ -51,14 +58,26 @@ export default {
     data() {
         return {
             requestPath: this.$store.state.requestPaths,
+            classes: [],
             cache: {},
         };
     },
+    mounted() {
+        this.getClasses();
+    },
     methods: {
+        getClasses() {
+            this.axios
+                .get(this.requestPath.classe + "/all")
+                .then((response) => {
+                    this.paths = response.data;
+                })
+                .catch((e) => console.log(e));
+        },
         updateEntry(entry) {
             this.axios
                 .put(this.requestPath, this.cache, {
-                    params: { code: entry.code },
+                    params: { id: entry.id },
                 })
                 .then(() => {
                     // entry = this.cache;
@@ -69,7 +88,7 @@ export default {
         deleteEntry(entry) {
             this.axios
                 .delete(this.requestPath, {
-                    params: { code: entry.code },
+                    params: { id: entry.id },
                 })
                 .then(() => {
                     this.entries = this.deleteLine(entry);

@@ -1,8 +1,10 @@
 <template>
     <ContentInjector
         header="Insert Teachers"
-        :requestPath="requestPath"
+        :requestPath="requestPath.teacher"
         :cache="cache"
+        @update="updateEntry"
+        @delete="deleteEntry"
         @wipeCache="wipeCache"
         @backupEntry="backupEntry"
     >
@@ -65,10 +67,7 @@ export default {
     components: { ContentInjector },
     data() {
         return {
-            requestPath: "/teacher",
-            auxRequestPath: {
-                paths: "/paths",
-            },
+            requestPath: this.$store.state.requestPaths,
             paths: [],
             cache: {},
         };
@@ -79,11 +78,31 @@ export default {
     methods: {
         getPaths() {
             this.axios
-                .get(this.auxRequestPath.paths + "/all")
+                .get(this.requestPath.path + "/all")
                 .then((response) => {
                     this.paths = response.data;
                 })
                 .catch((e) => console.log(e));
+        },
+        updateEntry(entry) {
+            this.axios
+                .put(this.requestPath, this.cache, {
+                    params: { matricule: entry.matricule },
+                })
+                .then(() => {
+                    // entry = this.cache;
+                    this.getDatas();
+                })
+                .catch((e) => console.log(e));
+        },
+        deleteEntry(entry) {
+            this.axios
+                .delete(this.requestPath, {
+                    params: { matricule: entry.matricule },
+                })
+                .then(() => {
+                    this.entries = this.deleteLine(entry);
+                });
         },
         backupEntry(entry) {
             this.cache = { ...entry };

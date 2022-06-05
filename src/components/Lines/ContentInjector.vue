@@ -8,7 +8,7 @@
             </tr>
         </thead>
         <tfoot>
-            <tr v-if="addBtnVisible">
+            <tr v-if="addingEnabled && addBtnVisible">
                 <td v-for="i in lakingCells" :key="i"></td>
                 <td class="buttons" colspan="2">
                     <button
@@ -25,8 +25,8 @@
                 v-for="entry in entries"
                 :key="entry"
                 :modificationlock="modificationlock"
-                @update="updateEntry(entry)"
-                @delete="deleteEntry(entry)"
+                @update="$emit('update', entry)"
+                @delete="$emit('delete', entry)"
                 @start-modify="turnModifyStateOn(entry)"
                 @end-modify="turnModifyStateOff"
             >
@@ -54,8 +54,22 @@
 import LineForm from "./LineForm.vue";
 import Line from "./Line.vue";
 export default {
-    emits: ["wipeCache", "backupEntry"],
+    emits: ["wipeCache", "backupEntry", "update", "delete"],
     props: ["header", "cache", "requestPath", "addingEnabled"],
+    props: {
+        header: {
+            default: "Insertion",
+        },
+        cache: {
+            default: {},
+        },
+        requestPath: {
+            default: "/",
+        },
+        addingEnabled: {
+            default: true,
+        },
+    },
     components: { LineForm, Line },
     data() {
         return {
@@ -87,25 +101,6 @@ export default {
                     this.getDatas();
                 })
                 .catch((e) => console.log(e));
-        },
-        updateEntry(entry) {
-            this.axios
-                .put(this.requestPath, this.cache, {
-                    params: { nom: entry.nom },
-                })
-                .then(() => {
-                    entry = this.cache;
-                })
-                .catch((e) => console.log(e));
-        },
-        deleteEntry(entry) {
-            this.axios
-                .delete(this.requestPath, {
-                    params: { nom: entry.nom },
-                })
-                .then(() => {
-                    this.entries = this.deleteLine(entry);
-                });
         },
         turnAddingStateOn() {
             this.$emit("wipeCache");
@@ -139,6 +134,11 @@ export default {
         },
         showAddBtn() {
             this.addBtnVisible = true;
+        },
+    },
+    computed: {
+        deleteLine(entry) {
+            return this.entries.filter((e) => e != entry);
         },
     },
 };
