@@ -1,8 +1,13 @@
 <template>
     <section>
-        <!-- {{fields}} -->
-        <h3>{{ fields.nom }}</h3>
-        <SessionCell v-for="field in fields.sessions" :key="field" :field="field" />
+        <h4>{{ fields.nom }}</h4>
+        <div class="wrapper">
+            <SessionCell
+                v-for="field in fields.sessions"
+                :key="field"
+                :field="field"
+            />
+        </div>
     </section>
 </template>
 
@@ -24,4 +29,26 @@ export default {
 };
 </script>
 
-<style></style>
+<style scoped>
+section {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+}
+h4 {
+    background-color: var(--bg-dark-color);
+    color: white;
+    text-align: center;
+    border-radius: 7px 0;
+    width: 100%;
+}
+.wrapper {
+    position: absolute;
+    margin-top: 5rem;
+    width: 90%;
+    height: var(--grid-height);
+}
+</style>

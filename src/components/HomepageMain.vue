@@ -9,13 +9,13 @@
         <div class="options">
             <h1>Let's Start with</h1>
             <div class="buttons">
-                <router-link :to="{ name: 'chooseroom' }">
+                <router-link :to="{ name: 'roomtableview' }">
                     <button type="button" class="btn btn-outline-dark">
                         Choose a room
                     </button>
                 </router-link>
 
-                <router-link :to="{ name: 'chooseclass' }">
+                <router-link :to="{ name: 'classtableview' }">
                     <button type="button" class="btn btn-outline-dark">
                         Choose a class
                     </button>

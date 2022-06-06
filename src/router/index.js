@@ -5,8 +5,6 @@ import RoomTableView from "../views/RoomTableView.vue";
 import TeacherWorkshopView from "../views/TeacherWorkshopView.vue";
 import AdminWorkshopView from "../views/AdminWorkshopView.vue";
 import LoginForm from "../components/Modals/LoginForm.vue";
-import ChooseClass from "../components/Modals/ChooseClass.vue";
-import ChooseRoom from "../components/Modals/ChooseRoom.vue";
 import DataInsertion from "../components/Modals/DataInsertion.vue";
 import SessionForm from "../components/Insertionforms/SessionForm.vue";
 import LevelForm from "../components/Insertionforms/LevelForm.vue";
@@ -27,16 +25,6 @@ const routes = [
                 path: "/login",
                 name: "login",
                 component: LoginForm,
-            },
-            {
-                path: "/class",
-                name: "chooseclass",
-                component: ChooseClass,
-            },
-            {
-                path: "/room",
-                name: "chooseroom",
-                component: ChooseRoom,
             },
         ],
     },
@@ -88,12 +76,12 @@ const routes = [
         ],
     },
     {
-        path: "/table/class/:code",
+        path: "/table/class/",
         name: "classtableview",
         component: ClassTableView,
     },
     {
-        path: "/table/room/:code",
+        path: "/table/room/",
         name: "roomtableview",
         component: RoomTableView,
     },

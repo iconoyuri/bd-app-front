@@ -1,10 +1,30 @@
 <template>
     <main>
-        <ColumnDisplayer
-            v-for="daysSessions in weekSessions"
-            :key="daysSessions"
-            :fields="daysSessions"
-        />
+        <div class="grid-background">
+            <div><span>7H</span></div>
+            <div><span>8H</span></div>
+            <div><span>9H</span></div>
+            <div><span>10H</span></div>
+            <div><span>11H</span></div>
+            <div><span>12H</span></div>
+            <div><span>13H</span></div>
+            <div><span>14H</span></div>
+            <div><span>15H</span></div>
+            <div><span>16H</span></div>
+            <div><span>17H</span></div>
+            <div><span>18H</span></div>
+            <div><span>19H</span></div>
+            <div><span>20H</span></div>
+            <div><span>21H</span></div>
+            <div><span>22H</span></div>
+        </div>
+        <div class="columns">
+            <ColumnDisplayer
+                v-for="daysSessions in weekSessions"
+                :key="daysSessions"
+                :fields="daysSessions"
+            />
+        </div>
     </main>
 </template>
 
@@ -26,7 +46,7 @@ export default {
             requestPath: this.$store.state.requestPaths,
             Tactivities: [...this.activities],
             Tcourses: [...this.courses],
-            time0: Date.parse("June 9, 2022 00:00:00"),
+            time0: Date.parse("June 9, 2022 07:00:00"),
             dateRoot: "June 9, 2022 ",
             sessionTypes: [],
             weekSessions: {},
@@ -34,7 +54,6 @@ export default {
     },
     mounted() {
         this.transformCourses();
-        // this.getSessions();
         this.getWeekSessions();
     },
     methods: {
@@ -52,14 +71,6 @@ export default {
                 );
             });
         },
-        // getSessions() {
-        //     this.axios
-        //         .get(this.requestPath.session + "/all")
-        //         .then((response) => {
-        //             this.sessionTypes = response.data;
-        //             this.extract();
-        //         });
-        // },
         getWeekSessions() {
             this.axios.get(this.requestPath.day + "/all").then((response) => {
                 for (let i = 0; i < response.data.length; i++) {
@@ -69,17 +80,6 @@ export default {
                 }
             });
         },
-        // getCoursesPerSessions() {
-        //     this.axios.get(this.requestPath.session + "/all").then((response) => {
-        //         for (let i = 0; i < response.data.length; i++) {
-        //             this.WeekSessions[response.data[i].nom] =
-        //                 response.data[i];
-        //             this.WeekSessions[response.data[i].nom]["courses"] =
-        //                 this.selectDay(this.Tcourses, response.data[i].nom);
-        //         }
-        //         console.log(this.WeekSessions);
-        //     });
-        // },
         positioningValue(time) {
             let numerictime = Date.parse(this.dateRoot + time) - this.time0;
             return numerictime / 10000;
@@ -87,18 +87,6 @@ export default {
         percentPositioningValue(val) {
             return (val * 100) / this.containerHeight;
         },
-        // extractSessions(table) {
-        //     let splitedContent = [];
-        //     this.sessionTypes.forEach((session) => {
-        //         splitedContent.push(this.selectSession(table, session.nom));
-        //     });
-        //     return splitedContent;
-        // },
-        // selectSession(table, sessionName) {
-        //     return table.filter(
-        //         (element) => element.course.nom_seance == sessionName
-        //     );
-        // },
         selectDay(table, dayName) {
             return table.filter(
                 (element) => element.programmation.nom_jour == dayName
@@ -116,4 +104,41 @@ export default {
 };
 </script>
 
-<style></style>
+<style scoped>
+main {
+    --padding-left: 4rem;
+    --grid-height: 40rem;
+    position: relative;
+    padding: 0 var(--padding-left);
+    min-height: 50rem;
+    overflow-x: auto;
+}
+.grid-background {
+    position: absolute;
+    margin-top: 5rem;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: var(--grid-height);
+    opacity: 0.35;
+}
+.grid-background div {
+    width: 100%;
+    height: 100%;
+    border-top: 1px solid #555;
+    padding-left: 1rem;
+}
+.grid-background span {
+    font-size: 0.75rem;
+    font-style: oblique;
+    font-weight: bold;
+}
+.columns {
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(7, minmax(7rem, 1fr));
+    gap: 1rem;
+    height: 100%;
+}
+</style>

@@ -21,9 +21,11 @@ const store = createStore({
             table: {
                 course: {
                     room: "/timetable/course/room/all",
+                    teacher: "/timetable/course/teacher/all"
                 },
                 activity: {
                     room: "/timetable/activity/room/all",
+                    teacher: "/timetable/activity/teacher/all"
                 },
             },
         },

@@ -2,9 +2,43 @@
     <main>
         <header>
             <h1>Classroom timetable</h1>
-            <h4>{{ $route.params.code }}</h4>
+            <form>
+                <div>
+                    <label for="line-form-1">Select a Room</label>
+                    <select
+                        class="form-control"
+                        v-model="selectRoom"
+                        id="line-form-1"
+                    >
+                        <option
+                            v-for="room in rooms"
+                            :key="room"
+                            :value="room.code"
+                        >
+                            {{ room.code }} ({{ room.effectif }} places)
+                        </option>
+                    </select>
+                </div>
+                <div>
+                    <label for="line-form-2">Semester</label>
+                    <select
+                        class="form-control"
+                        v-model="selectSemester"
+                        id="line-form-2"
+                    >
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                    </select>
+                </div>
+                <button @click.prevent="fetchDatas" class="btn btn-primary">
+                    Search
+                </button>
+            </form>
         </header>
-        <TableDisplayer :courses="courses"></TableDisplayer>
+        <TableDisplayer
+            :courses="courses"
+            :activities="activities"
+        ></TableDisplayer>
     </main>
 </template>
 
@@ -15,80 +49,95 @@ export default {
     components: { TableDisplayer },
     data() {
         return {
+            selectRoom: "",
+            selectSemester: 2,
             activities: [],
-            courses: [
-                {
-                    course: {
-                        code: "string",
-                        semestre: 0,
-                        titre: "string",
-                        id_specialite: 0,
-                        code_classe: "string",
-                        code_filiere: "string",
-                        nom_seance: "TDc",
-                        matricule_enseignant: "19M2222",
-                    },
-                    programmation: {
-                        code_cours: "string",
-                        heure_debut: "01:00:00",
-                        heure_fin: "03:00:00",
-                        code_salle: "string0",
-                        nom_jour: "Tuesday",
-                    },
-                },
-                {
-                    course: {
-                        code: "string",
-                        semestre: 0,
-                        titre: "string",
-                        id_specialite: 0,
-                        code_classe: "string",
-                        code_filiere: "string",
-                        nom_seance: "TD",
-                        matricule_enseignant: "19M2222",
-                    },
-                    programmation: {
-                        code_cours: "string",
-                        heure_debut: "01:00:00",
-                        heure_fin: "03:00:00",
-                        code_salle: "string0",
-                        nom_jour: "Monday",
-                    },
-                },
-                {
-                    course: {
-                        code: "string",
-                        semestre: 0,
-                        titre: "string",
-                        id_specialite: 0,
-                        code_classe: "string",
-                        code_filiere: "string",
-                        nom_seance: "TD",
-                        matricule_enseignant: "19M2223",
-                    },
-                    programmation: {
-                        code_cours: "string",
-                        heure_debut: "01:00:00",
-                        heure_fin: "03:00:00",
-                        code_salle: "string",
-                        nom_jour: "Monday",
-                    },
-                },
-            ],
+            courses: [],
+            // courses: [
+            //     {
+            //         course: {
+            //             code: "INF3046",
+            //             semestre: 0,
+            //             titre: "string",
+            //             id_specialite: 0,
+            //             code_classe: "INFL3",
+            //             code_filiere: "string",
+            //             nom_seance: "TDc",
+            //             matricule_enseignant: "19M2222",
+            //         },
+            //         programmation: {
+            //             code_cours: "string",
+            //             heure_debut: "07:00:00",
+            //             heure_fin: "09:00:00",
+            //             code_salle: "string0",
+            //             nom_jour: "Tuesday",
+            //         },
+            //     },
+            //     {
+            //         course: {
+            //             code: "string",
+            //             semestre: 0,
+            //             titre: "string",
+            //             id_specialite: 0,
+            //             code_classe: "string",
+            //             code_filiere: "string",
+            //             nom_seance: "TD",
+            //             matricule_enseignant: "19M2222",
+            //         },
+            //         programmation: {
+            //             code_cours: "string",
+            //             heure_debut: "10:00:00",
+            //             heure_fin: "13:00:00",
+            //             code_salle: "string0",
+            //             nom_jour: "Monday",
+            //         },
+            //     },
+            //     {
+            //         course: {
+            //             code: "string",
+            //             semestre: 0,
+            //             titre: "string",
+            //             id_specialite: 0,
+            //             code_classe: "string",
+            //             code_filiere: "string",
+            //             nom_seance: "TD",
+            //             matricule_enseignant: "19M2223",
+            //         },
+            //         programmation: {
+            //             code_cours: "string",
+            //             heure_debut: "07:00:00",
+            //             heure_fin: "09:05:00",
+            //             code_salle: "string",
+            //             nom_jour: "Monday",
+            //         },
+            //     },
+            // ],
+            rooms: [],
         };
     },
     mounted() {
-        this.fetchActivities();
-        this.fetchCourses();
+        this.fetchRooms();
     },
     methods: {
+        fetchDatas() {
+            this.fetchActivities();
+            this.fetchCourses();
+        },
+        fetchRooms() {
+            this.axios
+                .get(this.$store.state.requestPaths.room + "/all")
+                .then((response) => {
+                    this.rooms = response.data;
+                });
+        },
         fetchActivities() {
             let requestPath =
                 this.$store.state.requestPaths.table.activity.room;
             this.axios
                 .get(requestPath, {
                     params: {
-                        code: this.$route.params.code,
+                        code: this.selectRoom,
+                        semestre: this.selectSemester,
                     },
                 })
                 .then((response) => {
@@ -100,7 +149,8 @@ export default {
             this.axios
                 .get(requestPath, {
                     params: {
-                        code: this.$route.params.code,
+                        code: this.selectRoom,
+                        semestre: this.selectSemester,
                     },
                 })
                 .then((response) => {
@@ -111,11 +161,44 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 main {
-    background-color: white;
+    background: rgb(255, 255, 255);
+    padding-top: 2rem;
 }
 header {
     text-align: center;
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+form {
+    display: flex;
+    padding: 1rem;
+    max-width: 50rem;
+    width: 100%;
+    gap: 1rem;
+}
+form > div {
+    display: flex;
+    grid-gap: 1rem;
+    align-items: center;
+    width: 100%;
+}
+label {
+    flex-shrink: 0;
+    width: 7rem;
+}
+select {
+    max-width: 15rem;
+}
+@media screen and (max-width: 850px) {
+    form {
+        flex-wrap: wrap;
+    }
+    button {
+        margin-left: 6rem;
+    }
 }
 </style>

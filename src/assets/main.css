@@ -1,5 +1,7 @@
 :root {
     --bg-dark-color: #222;
+    --primary-theme-color: #222;
+    --secondary-theme-color: rgb(68, 68, 68);
     /* --bg-dark-color: rgb(59, 183, 255); */
     --bg-grey-color: rgb(209, 209, 209);
     --bg-grey-color-2: rgb(196, 196, 196);
