@@ -17,7 +17,16 @@ const store = createStore({
             session: "/course_type",
             teacher: "/teacher",
             speciality: "/speciality",
-        }
+            day: "/day",
+            table: {
+                course: {
+                    room: "/timetable/course/room/all",
+                },
+                activity: {
+                    room: "/timetable/activity/room/all",
+                },
+            },
+        },
     },
     mutations: {
         saveUser(state, { access_token, token_type, user }) {
@@ -60,9 +69,9 @@ const store = createStore({
         getTeacherMatricule(state) {
             return state.teacher_matricule;
         },
-        getRequestPaths(state){
-            return state.requestPaths
-        }
+        getRequestPaths(state) {
+            return state.requestPaths;
+        },
         // getDataInsetionCache(){
         //     return state.insertionCache
         // }
