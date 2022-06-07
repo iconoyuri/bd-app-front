@@ -185,7 +185,7 @@ export default {
         updateEntry(entry) {
             this.axios
                 .put(this.$refs.injector.requestPath, this.cache, {
-                    params: { code: entry.code },
+                    params: { id: entry.id },
                 })
                 .then(() => {
                     // entry = this.cache;
@@ -196,7 +196,7 @@ export default {
         deleteEntry(entry) {
             this.axios
                 .delete(this.$refs.injector.requestPath, {
-                    params: { code: entry.code },
+                    params: { id: entry.id },
                 })
                 .then(() => {
                     this.$refs.injector.deleteLine(entry);
