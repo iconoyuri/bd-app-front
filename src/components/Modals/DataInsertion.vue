@@ -13,7 +13,8 @@
                         :class="{ active: option.visible }"
                     >
                         <li @click="setActiveOption(option.title)">
-                            <i class="fas fa-times"></i>
+                            <i :class="option.iclass"></i>
+
                             <span>{{ option.title }}</span>
                         </li>
                     </router-link>
@@ -45,48 +46,57 @@ export default {
                     visible: true,
                     formtype: "sessionform",
                     requestPath: "/course_type",
+                    iclass: "fa-solid fa-person-chalkboard"
                 },
                 {
                     title: "Class Levels",
                     visible: false,
                     formtype: "levelform",
                     requestPath: "",
+                    iclass: "fa-solid fa-graduation-cap"
                 },
                 {
                     title: "Paths",
                     visible: false,
                     formtype: "pathform",
                     requestPath: "",
+                    // iclass: "fa-solid fa-road",
+                    iclass: "fa-solid fa-stamp"
                 },
                 {
                     title: "Rooms",
                     visible: false,
                     formtype: "roomform",
                     requestPath: "",
+                    iclass: "fa-solid fa-building-columns"
                 },
                 {
                     title: "Teachers",
                     visible: false,
                     formtype: "teacherform",
                     requestPath: "",
+                    iclass: "fa-solid fa-chalkboard-user"
                 },
                 {
                     title: "Classes",
                     visible: false,
                     formtype: "classform",
                     requestPath: "",
+                    iclass: "fa-solid fa-users-line"
                 },
                 {
                     title: "Specialities",
                     visible: false,
                     formtype: "specialityform",
                     requestPath: "",
+                    iclass: "fa-solid fa-users-rays"
                 },
                 {
                     title: "Courses",
                     visible: false,
                     formtype: "courseform",
                     requestPath: "",
+                    iclass: "fa-solid fa-book-open"
                 },
             ],
             formtype: "sessionform",
@@ -197,6 +207,7 @@ nav ul li {
     color: var(--bg-grey-color);
 }
 nav ul li i {
+    width: 2.2rem;
     font-size: 1.5em;
 }
 @media screen and (max-width: 760px) {
