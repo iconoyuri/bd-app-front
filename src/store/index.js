@@ -5,8 +5,8 @@ const store = createStore({
         user_type: sessionStorage.getItem("user_type"),
         access_token: sessionStorage.getItem("access_token"),
         token_type: sessionStorage.getItem("token_type"),
-        teacher_matricule: sessionStorage.getItem("teacher_matricule"),
-        // teacher_matricule: "14KDG23",
+        matricule: sessionStorage.getItem("matricule"),
+        // matricule: "14KDG23",
         backend_domain: "https://time-table-app-g14.herokuapp.com",
         requestPaths: {
             classe: "/class",
@@ -33,26 +33,28 @@ const store = createStore({
         dateRoot: "June 9, 2022 ",
     },
     mutations: {
-        saveUser(state, { access_token, token_type, user }) {
+        saveUser(state, { access_token, token_type, user, matricule }) {
             sessionStorage.setItem("access_token", access_token);
             sessionStorage.setItem("user_type", user.toLowerCase());
             sessionStorage.setItem("token_type", token_type);
+            sessionStorage.setItem("matricule", matricule);
 
             state.user_type = sessionStorage.getItem("user_type");
             state.access_token = sessionStorage.getItem("access_token");
             state.token_type = sessionStorage.getItem("token_type");
+            state.matricule = sessionStorage.getItem("matricule");
         },
-        saveTeacherMatricule(state, { matricule }) {
-            sessionStorage.setItem("teacher_matricule", matricule);
-            state.teacher_matricule =
-                sessionStorage.getItem("teacher_matricule");
-        },
+        // saveTeacherMatricule(state, { matricule }) {
+        //     sessionStorage.setItem("matricule", matricule);
+        //     state.matricule =
+        //         sessionStorage.getItem("matricule");
+        // },
         logout(state) {
             sessionStorage.clear();
             state.user_type = "";
             state.access_token = "";
             state.token_type = "";
-            state.teacher_matricule = "";
+            state.matricule = "";
         },
     },
     getters: {
@@ -71,7 +73,7 @@ const store = createStore({
             return state.access_token;
         },
         getTeacherMatricule(state) {
-            return state.teacher_matricule;
+            return state.matricule;
         },
         getRequestPaths(state) {
             return state.requestPaths;

@@ -60,16 +60,16 @@ export default {
                     this.axios.defaults.headers.common = {
                         Authorization: `bearer ${this.$store.getters.getAccessToken}`,
                     };
-                    if (response.data.user == "enseignant") {
-                        // Fetching teacher profile
-                        this.axios.get("/teacher/profile").then((response) => {
-                            this.$store.commit(
-                                "saveTeacherMatricule",
-                                response.data
-                            );
-                        });
-                        // .catch((e) => console.log(e));
-                    }
+                    // if (response.data.user == "enseignant") {
+                    //     // Fetching teacher profile
+                    //     this.axios.get("/teacher/profile").then((response) => {
+                    //         this.$store.commit(
+                    //             "saveTeacherMatricule",
+                    //             response.data
+                    //         );
+                    //     });
+                    //     // .catch((e) => console.log(e));
+                    // }
 
                     this.$refs.pane.closePane();
                 })
