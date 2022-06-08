@@ -19,10 +19,17 @@
             <div><span>22H</span></div>
         </div>
         <div class="columns">
-            <ColumnDisplayer
-                v-for="daysSessions in weekSessions"
+            <!-- <ColumnDisplayer
+                v-for="daysSessions in weekSplitedProgram"
                 :key="daysSessions"
                 :fields="daysSessions"
+            /> -->
+            <ColumnDisplayer
+                v-for="dayProgram in weekSplitedProgram"
+                :key="dayProgram"
+                :dayName="dayProgram.nom"
+                :sessions="dayProgram.sessions"
+                :activities="dayProgram.activities"
             />
         </div>
     </main>
@@ -46,62 +53,69 @@ export default {
             requestPath: this.$store.state.requestPaths,
             Tactivities: [...this.activities],
             Tcourses: [...this.courses],
-            time0: Date.parse("June 9, 2022 07:00:00"),
-            dateRoot: "June 9, 2022 ",
-            sessionTypes: [],
-            weekSessions: {},
-            weekActivities: [],
+            // time0: Date.parse("June 9, 2022 07:00:00"),
+            // dateRoot: "June 9, 2022 ",
+            // sessionTypes: [],
+            weekSplitedProgram: {},
+            // weekActivities: [],
         };
     },
     mounted() {
-        this.transformCourses();
-        this.getWeekSessions();
+        // this.transformCourses();
+        this.getWeekSplitedProgram();
     },
     methods: {
-        transformCourses() {
-            this.Tcourses.forEach((element) => {
-                let startTime = element.programmation.heure_debut;
-                let endTime = element.programmation.heure_fin;
+        // transformCourses() {
+        //     this.Tcourses.forEach((element) => {
+        //         let startTime = element.programmation.heure_debut;
+        //         let endTime = element.programmation.heure_fin;
 
-                let startTimeValue = this.positioningValue(startTime);
-                let endTimeValue = this.positioningValue(endTime);
+        //         let startTimeValue = this.positioningValue(startTime);
+        //         let endTimeValue = this.positioningValue(endTime);
 
-                element.top = this.percentPositioningValue(startTimeValue);
-                element.height = this.percentPositioningValue(
-                    endTimeValue - startTimeValue
-                );
-            });
-        },
-        getWeekSessions() {
+        //         element.top = this.percentPositioningValue(startTimeValue);
+        //         element.height = this.percentPositioningValue(
+        //             endTimeValue - startTimeValue
+        //         );
+        //     });
+        // },
+        getWeekSplitedProgram() {
             this.axios.get(this.requestPath.day + "/all").then((response) => {
                 for (let i = 0; i < response.data.length; i++) {
-                    this.weekSessions[response.data[i].nom] = response.data[i];
-                    this.weekSessions[response.data[i].nom]["sessions"] =
-                        this.selectDay(this.Tcourses, response.data[i].nom);
+                    this.weekSplitedProgram[response.data[i].nom] = response.data[i];
+                    this.weekSplitedProgram[response.data[i].nom]["sessions"] =
+                        this.session_selectDay(this.Tcourses, response.data[i].nom);
+                    this.weekSplitedProgram[response.data[i].nom]["activities"] =
+                        this.activity_selectDay(this.Tactivities, response.data[i].nom);
                 }
             });
         },
-        positioningValue(time) {
-            let numerictime = Date.parse(this.dateRoot + time) - this.time0;
-            return numerictime / 10000;
+        // positioningValue(time) {
+        //     let numerictime = Date.parse(this.dateRoot + time) - this.time0;
+        //     return numerictime / 10000;
+        // },
+        // percentPositioningValue(val) {
+        //     return (val * 100) / this.containerHeight;
+        // },
+        session_selectDay(table, dayName) {
+            return table.filter(
+                (element) => element.programmation.nom_jour == dayName
+            );
         },
-        percentPositioningValue(val) {
-            return (val * 100) / this.containerHeight;
-        },
-        selectDay(table, dayName) {
+        activity_selectDay(table, dayName) {
             return table.filter(
                 (element) => element.programmation.nom_jour == dayName
             );
         },
     },
-    computed: {
-        containerHeight() {
-            return (
-                this.positioningValue("22:00:00") -
-                this.positioningValue("07:00:00")
-            );
-        },
-    },
+    // computed: {
+    //     containerHeight() {
+    //         return (
+    //             this.positioningValue("22:00:00") -
+    //             this.positioningValue("07:00:00")
+    //         );
+    //     },
+    // },
 };
 </script>
 

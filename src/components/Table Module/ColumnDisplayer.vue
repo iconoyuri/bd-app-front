@@ -1,11 +1,16 @@
 <template>
     <section>
-        <h4>{{ fields.nom }}</h4>
+        <h4>{{ dayName }}</h4>
         <div class="wrapper">
             <SessionCell
-                v-for="field in fields.sessions"
-                :key="field"
-                :field="field"
+                v-for="session in sessions"
+                :key="session"
+                :field="session"
+            />
+            <ActivityCell
+                v-for="activity in activities"
+                :key="activity"
+                :field="activity"
             />
         </div>
     </section>
@@ -13,13 +18,20 @@
 
 <script>
 import SessionCell from "./SessionCell.vue";
+import ActivityCell from "./ActivityCell.vue";
 export default {
     props: {
-        fields: {
+        dayName: {
+            default: "Dididi",
+        },
+        sessions: {
+            default: [],
+        },
+        activities: {
             default: [],
         },
     },
-    components: { SessionCell },
+    components: { SessionCell, ActivityCell },
     data() {
         return {
             requestPath: this.$store.state.requestPaths,
