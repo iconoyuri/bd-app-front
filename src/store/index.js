@@ -29,6 +29,8 @@ const store = createStore({
                 },
             },
         },
+        time0: Date.parse("June 9, 2022 07:00:00"),
+        dateRoot: "June 9, 2022 ",
     },
     mutations: {
         saveUser(state, { access_token, token_type, user }) {
