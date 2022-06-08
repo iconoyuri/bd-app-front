@@ -13,7 +13,14 @@ import CloseButton from "./CloseButton.vue";
 export default {
     name: "ModalWindow",
     components: { CloseButton },
-    props: ["title"],
+    props: {
+        title: {
+            default: "Title",
+        },
+        closeRedirect:{
+            default: false
+        }
+    },
     mounted() {
         setTimeout(() => this.$refs.curtain.classList.remove("hidden"), 50);
     },

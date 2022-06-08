@@ -12,13 +12,15 @@
                 :key="activity"
                 :field="activity"
             />
+            <!-- {{sessions}}
+            {{activities}} -->
         </div>
     </section>
 </template>
 
 <script>
-import SessionCell from "./SessionCell.vue";
-import ActivityCell from "./ActivityCell.vue";
+import SessionCell from "./Cells/Session/SessionCell.vue";
+import ActivityCell from "./Cells/Activities/ActivityCell.vue";
 export default {
     props: {
         dayName: {
@@ -32,6 +34,9 @@ export default {
         },
     },
     components: { SessionCell, ActivityCell },
+    // mounted(){
+    //     alert("test")
+    // },
     data() {
         return {
             requestPath: this.$store.state.requestPaths,

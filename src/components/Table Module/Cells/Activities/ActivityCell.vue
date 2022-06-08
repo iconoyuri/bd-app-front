@@ -1,70 +1,75 @@
 <template>
     <article ref="article">
-        <p class="session-type">{{ cache.course.nom_seance }}</p>
+        <p class="session-type">Act</p>
         <div>
-            <p class="course-code">{{ cache.course.code }}</p>
-            <p class="class-code">{{ cache.course.code_classe }}</p>
+            <p class="course-code">{{ cache.nom }}</p>
+            <!-- <p class="class-code">{{ cache.course.code_classe }}</p> -->
         </div>
         <p class="teacher-name">{{ teacherName }}</p>
-        <div v-if="adminLogged" class="buttons">
+        <div v-if="ownerLogged" class="buttons">
             <button @click.prevent="editSession" class="btn btn-danger">
                 <i class="fa-solid fa-pencil"></i>
             </button>
-            <button @click.prevent="deleteSession" class="btn btn-danger">
+            <button @click.prevent="deleteActivity" class="btn btn-danger">
                 <i class="fa-solid fa-trash-can"></i>
             </button>
         </div>
     </article>
-    <SessionCellModifier
+    <ActivityCellModifier
         v-if="modificationFormVisible"
         @stageChanges="refreshCell"
         @abortChanges="endModify"
         :field="cache"
+        :dayName="dayName"
     >
         <slot name="inputs"></slot>
-    </SessionCellModifier>
+    </ActivityCellModifier>
 </template>
 
 <script>
-import SessionCellModifier from "./SessionCellModifier.vue";
+import ActivityCellModifier from "./ActivityCellModifier.vue";
 
 export default {
     props: {
         field: {
-            default: [],
+            default: {},
+        },
+        dayName: {
+            default: "Dididi",
         },
     },
-    components: { SessionCellModifier },
+    components: { ActivityCellModifier },
     data() {
         return {
             requestPath: this.$store.state.requestPaths,
-            adminLogged: this.$store.getters.userIsAdmin,
-            cache: [...field],
+            ownerLogged:
+                this.$store.state.matricule == this.field.matricule_enseignant,
+            cache: { ...field },
             teacherName: "",
-            sessionTypes: [],
+            matricule: this.$store.state.matricule,
             dateRoot: this.$store.state.dateRoot,
             time0: this.$store.state.time0,
         };
     },
     mounted() {
         this.calculatePositioning();
-        this.getSessionTypes();
+        // this.getSessionTypes();
         this.getInformations();
         this.setDimensions();
     },
     methods: {
-        getSessionTypes() {
-            this.axios
-                .get(this.requestPath.session + "/all")
-                .then((response) => {
-                    this.sessionTypes = response.data;
-                });
-        },
+        // getSessionTypes() {
+        //     this.axios
+        //         .get(this.requestPath.session + "/all")
+        //         .then((response) => {
+        //             this.sessionTypes = response.data;
+        //         });
+        // },
         getInformations() {
             this.getTeacher(this.field.course.matricule_enseignant);
         },
         refreshCell(field) {
-            this.cache = [...field];
+            this.cache = { ...field };
         },
         getTeacher(matricule) {
             this.axios
@@ -77,7 +82,16 @@ export default {
                     this.teacherName = response.data.nom;
                 });
         },
-        deleteSession() {},
+        deleteActivity() {
+            this.axios.delete(this.requestPath.table.activity.room, {
+                params: {
+                    matricule_enseignant: field.matricule,
+                    id_plage: field.id_plage,
+                    code_salle: field.code_salle,
+                    nom_jour: field.nom_jour,
+                },
+            });
+        },
         setDimensions() {
             this.$refs.article.style.top = this.field.top + "%";
             this.$refs.article.style.height = this.field.height + "%";
@@ -130,7 +144,7 @@ article {
     justify-content: center;
     gap: 0.5rem;
     padding: 0.8rem 0.8rem 0.7rem 0.5rem;
-    background-color: rgb(92, 157, 255);
+    background-color: rgb(235, 255, 123);
     border-radius: 3px;
     font-size: 0.8em;
     box-shadow: 2px 2px 3px #8885;
@@ -142,7 +156,6 @@ article {
     gap: 0.7rem;
     top: -0.5rem;
     right: -0.5rem;
-    /* border-radius: 8rem; */
 }
 p {
     margin: 0;

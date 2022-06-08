@@ -52,66 +52,104 @@ export default {
             selectRoom: "",
             selectSemester: 2,
             activities: [],
-            courses: [],
-            // courses: [
-            //     {
-            //         course: {
-            //             code: "INF3046",
-            //             semestre: 0,
-            //             titre: "string",
-            //             id_specialite: 0,
-            //             code_classe: "INFL3",
-            //             code_filiere: "string",
-            //             nom_seance: "TDc",
-            //             matricule_enseignant: "19M2222",
-            //         },
-            //         programmation: {
-            //             code_cours: "string",
-            //             heure_debut: "07:00:00",
-            //             heure_fin: "09:00:00",
-            //             code_salle: "string0",
-            //             nom_jour: "Tuesday",
-            //         },
-            //     },
-            //     {
-            //         course: {
-            //             code: "string",
-            //             semestre: 0,
-            //             titre: "string",
-            //             id_specialite: 0,
-            //             code_classe: "string",
-            //             code_filiere: "string",
-            //             nom_seance: "TD",
-            //             matricule_enseignant: "19M2222",
-            //         },
-            //         programmation: {
-            //             code_cours: "string",
-            //             heure_debut: "10:00:00",
-            //             heure_fin: "13:00:00",
-            //             code_salle: "string0",
-            //             nom_jour: "Monday",
-            //         },
-            //     },
-            //     {
-            //         course: {
-            //             code: "string",
-            //             semestre: 0,
-            //             titre: "string",
-            //             id_specialite: 0,
-            //             code_classe: "string",
-            //             code_filiere: "string",
-            //             nom_seance: "TD",
-            //             matricule_enseignant: "19M2223",
-            //         },
-            //         programmation: {
-            //             code_cours: "string",
-            //             heure_debut: "07:00:00",
-            //             heure_fin: "09:05:00",
-            //             code_salle: "string",
-            //             nom_jour: "Monday",
-            //         },
-            //     },
-            // ],
+            // courses: [],
+            courses: [
+                {
+                    course: {
+                        code: "INF3046",
+                        semestre: 0,
+                        titre: "string",
+                        id_specialite: 0,
+                        code_classe: "INFL3",
+                        code_filiere: "string",
+                        nom_seance: "TD",
+                        matricule_enseignant: "19M2222",
+                    },
+                    programmation: {
+                        code_cours: "string",
+                        heure_debut: "07:00:00",
+                        heure_fin: "09:00:00",
+                        code_salle: "string0",
+                        nom_jour: "Tuesday",
+                    },
+                },
+                {
+                    course: {
+                        code: "string",
+                        semestre: 0,
+                        titre: "string",
+                        id_specialite: 0,
+                        code_classe: "string",
+                        code_filiere: "string",
+                        nom_seance: "TD",
+                        matricule_enseignant: "19M2520",
+                    },
+                    programmation: {
+                        code_cours: "string",
+                        heure_debut: "10:00:00",
+                        heure_fin: "13:05:00",
+                        code_salle: "string",
+                        nom_jour: "Monday",
+                    },
+                },
+                {
+                    course: {
+                        code: "string",
+                        semestre: 0,
+                        titre: "string",
+                        id_specialite: 0,
+                        code_classe: "string",
+                        code_filiere: "string",
+                        nom_seance: "TD",
+                        matricule_enseignant: "12345",
+                    },
+                    programmation: {
+                        code_cours: "string",
+                        heure_debut: "07:00:00",
+                        heure_fin: "09:05:00",
+                        code_salle: "string",
+                        nom_jour: "Monday",
+                    },
+                },
+                {
+                    course: {
+                        code: "string",
+                        semestre: 0,
+                        titre: "string",
+                        id_specialite: 0,
+                        code_classe: "string",
+                        code_filiere: "string",
+                        nom_seance: "TD",
+                        matricule_enseignant: "12345",
+                    },
+                    programmation: {
+                        code_cours: "string",
+                        heure_debut: "08:00:00",
+                        heure_fin: "11:05:00",
+                        code_salle: "string",
+                        nom_jour: "Thursday",
+                    },
+                },
+                {
+                    course: {
+                        code: "string",
+                        semestre: 0,
+                        titre: "string",
+                        id_specialite: 0,
+                        code_classe: "string",
+                        code_filiere: "string",
+                        nom_seance: "TD",
+                        matricule_enseignant: "12345",
+                    },
+                    programmation: {
+                        code_cours: "string",
+                        heure_debut: "13:00:00",
+                        heure_fin: "15:05:00",
+                        code_salle: "string",
+                        nom_jour: "Saturday",
+                    },
+                },
+            ],
             rooms: [],
         };
     },
@@ -120,8 +158,9 @@ export default {
     },
     methods: {
         fetchDatas() {
-            this.fetchActivities();
-            this.fetchCourses();
+            // this.fetchActivities();
+            // this.fetchCourses();
+            this.$store.commit("setCurrentRoomCode", this.selectRoom)
         },
         fetchRooms() {
             this.axios

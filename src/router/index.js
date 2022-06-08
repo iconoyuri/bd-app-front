@@ -4,6 +4,8 @@ import ClassTableView from "../views/ClassTableView.vue";
 import RoomTableView from "../views/RoomTableView.vue";
 import TeacherWorkshopView from "../views/TeacherWorkshopView.vue";
 import AdminWorkshopView from "../views/AdminWorkshopView.vue";
+// import ActivityPlanningView from "../views/ActivityPlanningView.vue";
+
 import LoginForm from "../components/Modals/LoginForm.vue";
 import DataInsertion from "../components/Modals/DataInsertion.vue";
 import SessionForm from "../components/Insertionforms/SessionForm.vue";
@@ -75,6 +77,11 @@ const routes = [
             },
         ],
     },
+    // {
+    //     path: "/workshop/activity/",
+    //     name: "activity",
+    //     component: ActivityPlanningView,
+    // },
     {
         path: "/table/class/",
         name: "classtableview",

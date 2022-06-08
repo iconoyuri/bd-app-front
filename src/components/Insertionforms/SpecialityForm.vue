@@ -10,23 +10,24 @@
         @backupEntry="backupEntry"
     >
         <template v-slot:table-headers>
-            <th scope="col">Class</th>
             <th scope="col">Name</th>
             <th scope="col">Students number</th>
+            <th scope="col">Class</th>
+            <th scope="col">id</th>
         </template>
         <template v-slot:inputs>
             <label for="line-form-1">Select owner class</label>
             <select
                 class="form-control"
-                v-model="cache.code_filiere"
+                v-model="cache.code_classe"
                 id="line-form-1"
             >
                 <option
                     v-for="classe in classes"
-                    :key="classe.code_classe"
-                    :value="classe.code_classe"
+                    :key="classe.code"
+                    :value="classe.code"
                 >
-                    {{ classe.code_classe }}
+                    {{ classe.code }}
                 </option>
             </select>
             <label for="line-form-2">Speciality name</label>
@@ -71,7 +72,8 @@ export default {
             this.axios
                 .get(this.requestPath.classe + "/all")
                 .then((response) => {
-                    this.paths = response.data;
+                    this.classes = response.data;
+                    console.log(this.classes);
                 })
                 .catch((e) => console.log(e));
         },

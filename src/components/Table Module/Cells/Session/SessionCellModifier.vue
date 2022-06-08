@@ -22,7 +22,10 @@ export default {
     props: {
         field: {
             default: []
-        }
+        },
+        dayName: {
+            default: "Dididi",
+        },
     },
     data(){
         return{

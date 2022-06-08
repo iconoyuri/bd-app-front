@@ -13,6 +13,8 @@
         <template v-slot:table-headers>
             <th scope="col">Code</th>
             <th scope="col">Effectif</th>
+            <th scope="col">Level code</th>
+            <th scope="col">Path code</th>
         </template>
         <!--  -->
         <template v-slot:inputs>
@@ -38,10 +40,20 @@
         </template>
         <!--  -->
     </ContentInjector>
-    <p>
-        Note : Les classes sont automatiquement générées à partir des niveaux et
-        des filières
-    </p>
+    <div class="texts">
+        <p>
+            Note : Les classes sont automatiquement générées à partir des
+            niveaux et des filières
+        </p>
+        <p>Pour générer ou mettre à jour les classes, cliquez sur le bouton</p>
+        <button
+            @click.prevent="generateClasses"
+            type="button"
+            class="btn btn-outline-primary btn-lg"
+        >
+            Générer les classes
+        </button>
+    </div>
 </template>
 
 <script>
@@ -56,6 +68,11 @@ export default {
         };
     },
     methods: {
+        generateClasses() {
+            this.axios.get("/class/generate_classes").then(() => {
+                this.$refs.injector.getDatas();
+            });
+        },
         updateEntry(entry) {
             this.axios
                 .put(this.$refs.injector.requestPath, this.cache, {
@@ -85,3 +102,9 @@ export default {
     },
 };
 </script>
+
+<style scoped>
+.texts {
+    text-align: center;
+}
+</style>

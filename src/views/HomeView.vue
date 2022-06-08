@@ -15,7 +15,11 @@
             >
                 <button type="button" class="btn btn-dark">My timetable</button>
             </router-link>
-            <button type="button" class="btn btn-dark">Plan an activity</button>
+            <!-- <router-link :to="{ name: 'activity' }">
+                <button type="button" class="btn btn-dark">
+                    Plan an activity
+                </button>
+            </router-link> -->
         </template>
     </HomepageMain>
     <HomepageMain
@@ -24,7 +28,6 @@
         :paragraph="adminTexts.paragraph"
     >
         <template v-slot:buttons>
-            <!-- <p v-for="t in 3" :key="t">t {{ test[t] }}</p> -->
             <router-link :to="{ name: 'datainsertion' }">
                 <button type="button" class="btn btn-dark">
                     Datas Insertion
@@ -35,7 +38,11 @@
                     Build timetable
                 </button>
             </router-link>
-            <button type="button" class="btn btn-dark">Plan an activity</button>
+            <!-- <router-link :to="{ name: 'activity' }">
+                <button type="button" class="btn btn-dark">
+                    Plan an activity
+                </button>
+            </router-link> -->
         </template>
     </HomepageMain>
     <HomepageMain

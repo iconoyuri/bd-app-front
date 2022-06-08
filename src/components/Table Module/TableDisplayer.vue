@@ -19,11 +19,6 @@
             <div><span>22H</span></div>
         </div>
         <div class="columns">
-            <!-- <ColumnDisplayer
-                v-for="daysSessions in weekSplitedProgram"
-                :key="daysSessions"
-                :fields="daysSessions"
-            /> -->
             <ColumnDisplayer
                 v-for="dayProgram in weekSplitedProgram"
                 :key="dayProgram"
@@ -31,6 +26,7 @@
                 :sessions="dayProgram.sessions"
                 :activities="dayProgram.activities"
             />
+            <!-- {{courses}} -->
         </div>
     </main>
 </template>
@@ -62,6 +58,7 @@ export default {
     },
     mounted() {
         // this.transformCourses();
+        // alert("test")
         this.getWeekSplitedProgram();
     },
     methods: {
@@ -87,6 +84,7 @@ export default {
                         this.session_selectDay(this.Tcourses, response.data[i].nom);
                     this.weekSplitedProgram[response.data[i].nom]["activities"] =
                         this.activity_selectDay(this.Tactivities, response.data[i].nom);
+                    // console.log(this.weekSplitedProgram)
                 }
             });
         },
@@ -104,7 +102,7 @@ export default {
         },
         activity_selectDay(table, dayName) {
             return table.filter(
-                (element) => element.programmation.nom_jour == dayName
+                (element) => element.nom_jour == dayName
             );
         },
     },
