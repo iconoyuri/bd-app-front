@@ -50,6 +50,7 @@ export default {
             dateRoot: "June 9, 2022 ",
             sessionTypes: [],
             weekSessions: {},
+            weekActivities: [],
         };
     },
     mounted() {

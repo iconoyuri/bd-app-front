@@ -20,12 +20,12 @@ const store = createStore({
             day: "/day",
             table: {
                 course: {
-                    room: "/timetable/course/room/all",
-                    teacher: "/timetable/course/teacher/all"
+                    room: "/timetable/course/room",
+                    teacher: "/timetable/course/teacher",
                 },
                 activity: {
-                    room: "/timetable/activity/room/all",
-                    teacher: "/timetable/activity/teacher/all"
+                    room: "/timetable/activity/room",
+                    teacher: "/timetable/activity/teacher",
                 },
             },
         },
@@ -58,7 +58,7 @@ const store = createStore({
             return getters.userIsAdmin || getters.userIsTeacher;
         },
         userIsAdmin(state) {
-            // return true;
+            return true;
             return state.user_type == "administrateur";
         },
         userIsTeacher(state) {

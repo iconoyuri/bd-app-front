@@ -103,7 +103,7 @@ export default {
         },
         fetchActivities() {
             let requestPath =
-                this.$store.state.requestPaths.table.activity.room;
+                this.$store.state.requestPaths.table.activity.room + "/all";
             this.axios
                 .get(requestPath, {
                     params: {
@@ -116,7 +116,7 @@ export default {
                 });
         },
         fetchCourses() {
-            let requestPath = this.$store.state.requestPaths.table.course.room;
+            let requestPath = this.$store.state.requestPaths.table.course.room + "/all";
             this.axios
                 .get(requestPath, {
                     params: {
