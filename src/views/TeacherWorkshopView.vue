@@ -67,6 +67,7 @@ export default {
     methods: {
         displayActivityPlanningForm() {
             this.activityPlanDisplay = true;
+            this.viewTimeTable = true
         },
         hideActivityPlanningForm() {
             this.activityPlanDisplay = false;
@@ -74,7 +75,6 @@ export default {
         fetchDatas() {
             this.fetchActivities();
             this.fetchCourses();
-            this.viewTimeTable = true
         },
         fetchActivities() {
             let requestPath =
