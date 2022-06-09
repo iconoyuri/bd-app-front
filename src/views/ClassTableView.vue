@@ -53,6 +53,7 @@
             </form>
         </header>
         <TableDisplayer
+            v-if="viewTimeTable"
             :courses="courses"
             :activities="activities"
         ></TableDisplayer>
