@@ -1,19 +1,19 @@
 <template>
-    <article ref="article">
+    <article ref="article" oncontextmenu="alert('test')" contextmenu="mymenu">
         <p class="session-type">{{ cache.course.nom_seance }}</p>
         <div>
             <p class="course-code">{{ cache.course.code }}</p>
             <p class="class-code">{{ cache.course.code_classe }}</p>
         </div>
         <p class="teacher-name">{{ teacherName }}</p>
-        <!-- <div v-if="adminLogged" class="buttons">
-            <button @click.prevent="editSession" class="btn btn-danger">
+        <div v-if="adminLogged" class="buttons">
+            <button @click.prevent="editSession" class="btn btn-primary">
                 <i class="fa-solid fa-pencil"></i>
             </button>
             <button @click.prevent="deleteSession" class="btn btn-danger">
                 <i class="fa-solid fa-trash-can"></i>
             </button>
-        </div> -->
+        </div>
     </article>
     <SessionCellModifier
         v-if="modificationFormVisible"
@@ -45,7 +45,7 @@ export default {
             adminLogged: this.$store.getters.userIsAdmin,
             cache: { ...this.field },
             teacherName: "",
-            sessionTypes: [],
+            // sessionTypes: [],
             dateRoot: this.$store.state.dateRoot,
             time0: this.$store.state.time0,
             modificationFormVisible: false,
@@ -53,23 +53,23 @@ export default {
     },
     mounted() {
         this.calculatePositioning();
-        this.getSessionTypes();
+        // this.getSessionTypes();
         this.getInformations();
         this.setDimensions();
     },
     methods: {
-        getSessionTypes() {
-            this.axios
-                .get(this.requestPath.session + "/all")
-                .then((response) => {
-                    this.sessionTypes = response.data;
-                });
-        },
+        // getSessionTypes() {
+        //     this.axios
+        //         .get(this.requestPath.session + "/all")
+        //         .then((response) => {
+        //             this.sessionTypes = response.data;
+        //         });
+        // },
         getInformations() {
             this.getTeacher(this.field.course.matricule_enseignant);
         },
         refreshCell(field) {
-            this.cache = [...field];
+            this.cache = { ...field };
         },
         getTeacher(matricule) {
             this.axios
@@ -82,7 +82,16 @@ export default {
                     this.teacherName = response.data.nom;
                 });
         },
-        deleteSession() {},
+        deleteSession() {
+            this.axios.delete(this.requestPath.course, {
+                params: {
+                    matricule_enseignant: this.field.matricule,
+                    id_plage: this.field.id_plage,
+                    code_salle: this.field.code_salle,
+                    nom_jour: this.field.nom_jour,
+                },
+            });
+        },
         setDimensions() {
             this.$refs.article.style.top = this.cache.top + "%";
             this.$refs.article.style.height = this.cache.height + "%";
@@ -99,7 +108,7 @@ export default {
 
             let startTimeValue = this.positioningValue(startTime);
             let endTimeValue = this.positioningValue(endTime);
-            console.log(startTimeValue,endTimeValue)
+            // console.log(startTimeValue, endTimeValue);
 
             this.cache.top = this.percentPositioningValue(startTimeValue);
             this.cache.height = this.percentPositioningValue(
@@ -141,7 +150,7 @@ article {
     justify-content: center;
     gap: 0.5rem;
     padding: 0.8rem 0.8rem 0.7rem 0.5rem;
-    background-color: rgb(92, 157, 255);
+    background-color: rgb(195, 219, 255);
     border-radius: 3px;
     font-size: 0.8em;
     box-shadow: 2px 2px 3px #8885;
@@ -150,10 +159,21 @@ article {
     position: absolute;
     display: flex;
     align-items: center;
-    gap: 0.7rem;
-    top: -0.5rem;
-    right: -0.5rem;
-    /* border-radius: 8rem; */
+    gap: 0.2rem;
+    top: -1rem;
+    right: -2rem;
+}
+.buttons button {
+    padding: 0;
+}
+.buttons i {
+    font-size: 0.8rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 1.3rem;
+    height: 1.3rem;
 }
 p {
     margin: 0;

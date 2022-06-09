@@ -12,8 +12,6 @@
                 :key="activity"
                 :field="activity"
             />
-            <!-- {{sessions}}
-            {{activities}} -->
         </div>
     </section>
 </template>

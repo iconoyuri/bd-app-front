@@ -49,33 +49,13 @@ export default {
             requestPath: this.$store.state.requestPaths,
             Tactivities: [...this.activities],
             Tcourses: [...this.courses],
-            // time0: Date.parse("June 9, 2022 07:00:00"),
-            // dateRoot: "June 9, 2022 ",
-            // sessionTypes: [],
             weekSplitedProgram: {},
-            // weekActivities: [],
         };
     },
     mounted() {
-        // this.transformCourses();
-        // alert("test")
         this.getWeekSplitedProgram();
     },
     methods: {
-        // transformCourses() {
-        //     this.Tcourses.forEach((element) => {
-        //         let startTime = element.programmation.heure_debut;
-        //         let endTime = element.programmation.heure_fin;
-
-        //         let startTimeValue = this.positioningValue(startTime);
-        //         let endTimeValue = this.positioningValue(endTime);
-
-        //         element.top = this.percentPositioningValue(startTimeValue);
-        //         element.height = this.percentPositioningValue(
-        //             endTimeValue - startTimeValue
-        //         );
-        //     });
-        // },
         getWeekSplitedProgram() {
             this.axios.get(this.requestPath.day + "/all").then((response) => {
                 for (let i = 0; i < response.data.length; i++) {
@@ -85,16 +65,11 @@ export default {
                     this.weekSplitedProgram[response.data[i].nom]["activities"] =
                         this.activity_selectDay(this.Tactivities, response.data[i].nom);
                     // console.log(this.weekSplitedProgram)
+                    // console.log(this.Tactivities)
                 }
             });
+            console.log(this.weekSplitedProgram)
         },
-        // positioningValue(time) {
-        //     let numerictime = Date.parse(this.dateRoot + time) - this.time0;
-        //     return numerictime / 10000;
-        // },
-        // percentPositioningValue(val) {
-        //     return (val * 100) / this.containerHeight;
-        // },
         session_selectDay(table, dayName) {
             return table.filter(
                 (element) => element.programmation.nom_jour == dayName
@@ -106,14 +81,6 @@ export default {
             );
         },
     },
-    // computed: {
-    //     containerHeight() {
-    //         return (
-    //             this.positioningValue("22:00:00") -
-    //             this.positioningValue("07:00:00")
-    //         );
-    //     },
-    // },
 };
 </script>
 

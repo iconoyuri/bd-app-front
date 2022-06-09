@@ -2,12 +2,12 @@
     <article ref="article">
         <p class="session-type">Act</p>
         <div>
-            <p class="course-code">{{ cache.nom }}</p>
+            <p class="course-code">{{ cache.course.nom_seance }}</p>
             <!-- <p class="class-code">{{ cache.course.code_classe }}</p> -->
         </div>
         <p class="teacher-name">{{ teacherName }}</p>
         <div v-if="ownerLogged" class="buttons">
-            <button @click.prevent="editSession" class="btn btn-danger">
+            <button @click.prevent="editActivity" class="btn btn-primary">
                 <i class="fa-solid fa-pencil"></i>
             </button>
             <button @click.prevent="deleteActivity" class="btn btn-danger">
@@ -42,13 +42,15 @@ export default {
     data() {
         return {
             requestPath: this.$store.state.requestPaths,
-            ownerLogged:
-                this.$store.state.matricule == this.field.matricule_enseignant,
-            cache: { ...field },
+            // ownerLogged:
+            //     this.$store.state.matricule == this.field.matricule_enseignant,
+            ownerLogged: true,
+            cache: { ...this.field },
             teacherName: "",
             matricule: this.$store.state.matricule,
             dateRoot: this.$store.state.dateRoot,
             time0: this.$store.state.time0,
+            modificationFormVisible: false,
         };
     },
     mounted() {
@@ -83,18 +85,18 @@ export default {
                 });
         },
         deleteActivity() {
-            this.axios.delete(this.requestPath.table.activity.room, {
+            this.axios.delete(this.requestPath.activity, {
                 params: {
-                    matricule_enseignant: field.matricule,
-                    id_plage: field.id_plage,
-                    code_salle: field.code_salle,
-                    nom_jour: field.nom_jour,
+                    matricule_enseignant: this.field.matricule,
+                    id_plage: this.field.id_plage,
+                    code_salle: this.field.code_salle,
+                    nom_jour: this.field.nom_jour,
                 },
             });
         },
         setDimensions() {
-            this.$refs.article.style.top = this.field.top + "%";
-            this.$refs.article.style.height = this.field.height + "%";
+            this.$refs.article.style.top = this.cache.top + "%";
+            this.$refs.article.style.height = this.cache.height + "%";
         },
         startModify() {
             this.modificationFormVisible = true;
@@ -103,14 +105,14 @@ export default {
             this.modificationFormVisible = false;
         },
         calculatePositioning() {
-            let startTime = cache.programmation.heure_debut;
-            let endTime = cache.programmation.heure_fin;
+            let startTime = this.cache.programmation.heure_debut;
+            let endTime = this.cache.programmation.heure_fin;
 
             let startTimeValue = this.positioningValue(startTime);
             let endTimeValue = this.positioningValue(endTime);
 
-            cache.top = this.percentPositioningValue(startTimeValue);
-            cache.height = this.percentPositioningValue(
+            this.cache.top = this.percentPositioningValue(startTimeValue);
+            this.cache.height = this.percentPositioningValue(
                 endTimeValue - startTimeValue
             );
         },
@@ -133,6 +135,7 @@ export default {
 };
 </script>
 
+
 <style scoped>
 article {
     position: absolute;
@@ -153,9 +156,21 @@ article {
     position: absolute;
     display: flex;
     align-items: center;
-    gap: 0.7rem;
-    top: -0.5rem;
-    right: -0.5rem;
+    gap: 0.2rem;
+    top: -1rem;
+    right: -2rem;
+}
+.buttons button {
+    padding: 0;
+}
+.buttons i {
+    font-size: 0.8rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 1.3rem;
+    height: 1.3rem;
 }
 p {
     margin: 0;

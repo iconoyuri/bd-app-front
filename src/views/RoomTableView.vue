@@ -51,7 +51,27 @@ export default {
         return {
             selectRoom: "",
             selectSemester: 2,
-            activities: [],
+            activities: [
+                {
+                    course: {
+                        code: "INF3046",
+                        semestre: 0,
+                        titre: "string",
+                        id_specialite: 0,
+                        code_classe: "INFL3",
+                        code_filiere: "string",
+                        nom_seance: "TD",
+                        matricule_enseignant: "19M2222",
+                    },
+                    programmation: {
+                        code_cours: "string",
+                        heure_debut: "12:00:00",
+                        heure_fin: "15:00:00",
+                        code_salle: "string0",
+                    },
+                    nom_jour: "Tuesday",
+                },
+            ],
             // courses: [],
             courses: [
                 {
@@ -160,7 +180,7 @@ export default {
         fetchDatas() {
             // this.fetchActivities();
             // this.fetchCourses();
-            this.$store.commit("setCurrentRoomCode", this.selectRoom)
+            this.$store.commit("setCurrentRoomCode", this.selectRoom);
         },
         fetchRooms() {
             this.axios
@@ -184,7 +204,8 @@ export default {
                 });
         },
         fetchCourses() {
-            let requestPath = this.$store.state.requestPaths.table.course.room + "/all";
+            let requestPath =
+                this.$store.state.requestPaths.table.course.room + "/all";
             this.axios
                 .get(requestPath, {
                     params: {
