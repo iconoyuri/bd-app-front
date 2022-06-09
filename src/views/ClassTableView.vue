@@ -7,14 +7,14 @@
                     <label for="line-form-1">Path</label>
                     <select
                         class="form-control"
-                        v-model="selectPath"
+                        v-model="selectedPath"
+                        @change="fetchClasses"
                         id="line-form-1"
                     >
                         <option
                             v-for="path in paths"
-                            :key="path"
+                            :key="path.code"
                             :value="path.code"
-                            @change="fetchClasses"
                         >
                             {{ path.nom }}
                         </option>
@@ -24,7 +24,7 @@
                     <label for="line-form-2">Class</label>
                     <select
                         class="form-control"
-                        v-model="selectClass"
+                        v-model="selectedClass"
                         id="line-form-2"
                     >
                         <option
@@ -40,7 +40,7 @@
                     <label for="line-form-3">Semester</label>
                     <select
                         class="form-control"
-                        v-model="selectSemester"
+                        v-model="selectedSemester"
                         id="line-form-3"
                     >
                         <option value="1">1</option>
@@ -55,6 +55,7 @@
         <TableDisplayer
             :courses="courses"
             :activities="activities"
+            :addingEnabled="true"
         ></TableDisplayer>
     </main>
 </template>
@@ -66,9 +67,9 @@ export default {
     components: { TableDisplayer },
     data() {
         return {
-            selectPath: "",
-            selectClass: "",
-            selectSemester: 2,
+            selectedPath: "",
+            selectedClass: "",
+            selectedSemester: null,
             activities: [],
             courses: [],
             paths: [],
@@ -94,7 +95,7 @@ export default {
             this.axios
                 .get(this.$store.state.requestPaths.classe + "/all", {
                     params: {
-                        code: this.selectPath,
+                        code: this.selectedPath,
                     },
                 })
                 .then((response) => {
@@ -107,8 +108,8 @@ export default {
             this.axios
                 .get(requestPath, {
                     params: {
-                        code: this.selectRoom,
-                        semestre: this.selectSemester,
+                        code: this.selectedRoom,
+                        semestre: this.selectedSemester,
                     },
                 })
                 .then((response) => {
@@ -116,12 +117,13 @@ export default {
                 });
         },
         fetchCourses() {
-            let requestPath = this.$store.state.requestPaths.table.course.room + "/all";
+            let requestPath =
+                this.$store.state.requestPaths.table.course.room + "/all";
             this.axios
                 .get(requestPath, {
                     params: {
-                        code: this.selectRoom,
-                        semestre: this.selectSemester,
+                        code: this.selectedRoom,
+                        semestre: this.selectedSemester,
                     },
                 })
                 .then((response) => {
