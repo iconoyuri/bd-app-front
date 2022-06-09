@@ -38,6 +38,7 @@
         <TableDisplayer
             :courses="courses"
             :activities="activities"
+            :addingEnabled="false"
         ></TableDisplayer>
     </main>
 </template>
@@ -85,7 +86,7 @@ export default {
                     heure_fin: "09:00:00",
                     code_salle: "string0",
                     nom_jour: "Tuesday",
-                    id_plage: 1
+                    id_plage: 1,
                 },
                 {
                     code: "string",
@@ -101,7 +102,7 @@ export default {
                     heure_fin: "13:05:00",
                     code_salle: "string",
                     nom_jour: "Monday",
-                    id_plage: 1
+                    id_plage: 1,
                 },
                 {
                     code: "string",
@@ -117,7 +118,7 @@ export default {
                     heure_fin: "09:05:00",
                     code_salle: "string",
                     nom_jour: "Monday",
-                    id_plage: 1
+                    id_plage: 1,
                 },
                 {
                     code: "string",
@@ -133,7 +134,7 @@ export default {
                     heure_fin: "11:05:00",
                     code_salle: "string",
                     nom_jour: "Thursday",
-                    id_plage: 1
+                    id_plage: 1,
                 },
                 {
                     code: "string",
@@ -149,7 +150,7 @@ export default {
                     heure_fin: "15:05:00",
                     code_salle: "string",
                     nom_jour: "Saturday",
-                    id_plage: 1
+                    id_plage: 1,
                 },
             ],
             rooms: [],

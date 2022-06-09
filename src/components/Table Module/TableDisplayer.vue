@@ -25,6 +25,7 @@
                 :dayName="dayProgram.nom"
                 :sessions="dayProgram.sessions"
                 :activities="dayProgram.activities"
+                :addingEnabled="addingEnabled"
             />
             <!-- {{courses}} -->
         </div>
@@ -41,6 +42,9 @@ export default {
         },
         courses: {
             default: [],
+        },
+        addingEnabled: {
+            default: true,
         },
     },
     components: { ColumnDisplayer },
@@ -59,26 +63,30 @@ export default {
         getWeekSplitedProgram() {
             this.axios.get(this.requestPath.day + "/all").then((response) => {
                 for (let i = 0; i < response.data.length; i++) {
-                    this.weekSplitedProgram[response.data[i].nom] = response.data[i];
+                    this.weekSplitedProgram[response.data[i].nom] =
+                        response.data[i];
                     this.weekSplitedProgram[response.data[i].nom]["sessions"] =
-                        this.session_selectDay(this.Tcourses, response.data[i].nom);
-                    this.weekSplitedProgram[response.data[i].nom]["activities"] =
-                        this.activity_selectDay(this.Tactivities, response.data[i].nom);
+                        this.session_selectDay(
+                            this.Tcourses,
+                            response.data[i].nom
+                        );
+                    this.weekSplitedProgram[response.data[i].nom][
+                        "activities"
+                    ] = this.activity_selectDay(
+                        this.Tactivities,
+                        response.data[i].nom
+                    );
                     // console.log(this.weekSplitedProgram)
                     // console.log(this.Tactivities)
                 }
             });
-            console.log(this.weekSplitedProgram)
+            console.log(this.weekSplitedProgram);
         },
         session_selectDay(table, dayName) {
-            return table.filter(
-                (element) => element.nom_jour == dayName
-            );
+            return table.filter((element) => element.nom_jour == dayName);
         },
         activity_selectDay(table, dayName) {
-            return table.filter(
-                (element) => element.nom_jour == dayName
-            );
+            return table.filter((element) => element.nom_jour == dayName);
         },
     },
 };
