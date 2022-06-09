@@ -44,11 +44,7 @@
               <div class="form-group">
                 <label for="line-form-1">Code Salle</label>
                 <select class="form-control" id="exampleFormControlSelect1">
-                  <option>class 1</option>
-                  <option>class 2</option>
-                  <option>class 3</option>
-                  <option>class 4</option>
-                  <option>class 5</option>
+                  <option v-for="classe in classes">{{classe.code}}</option>
                 </select>
               </div>
         </form>
@@ -95,6 +91,15 @@ export default {
         this.axios.get(this.requestPath.day + "/all").then((response) => {
             this.days = response.data;
         });
+        this.axios.get(this.$store.state.backend_domain + '/room/all')
+            .then((res) => {
+                console.log(res.data)
+                this.classes = res.data
+            })
+            .catch((res) => {
+                console.log(res)
+                    return res
+            })
     },
     data() {
         return {
@@ -102,6 +107,7 @@ export default {
             matricule: this.$store.state.matricule,
             cache: { ...this.field },
             days: [],
+            classes: [],
         };
     },
     methods: {
@@ -137,11 +143,8 @@ export default {
         },
     },
     computed: {
-        getFreeClasses(){
-            this.axios
-        },
     }
-    /room/all 
+     
 };
 </script>
 
