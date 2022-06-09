@@ -1,6 +1,11 @@
 <template>
     <!-- <slot></slot> -->
     <ModalWindow title="Activity Form">
+        <div class="alert alert-danger" v-if="errors">
+            <ul>
+                <li v-for="err in errors" >{{err}}</li>
+            </ul>
+        </div>
         <form>
             <label for="line-form-1">Activity name</label>
             <input
@@ -40,16 +45,23 @@
                 required
                 id="line-form-3"
             />
+
+            <div class="form-group">
+                <label for="line-form-1">Jours</label>
+                <select class="form-control" v-model="cache.nom_jour" id="exampleFormControlSelect1">
+                  <option v-for="day in days">{{day.nom}}</option>
+                </select>
+              </div>
             
               <div class="form-group">
                 <label for="line-form-1">Code Salle</label>
-                <select class="form-control" id="exampleFormControlSelect1">
+                <select class="form-control" v-model="cache.code_salle" id="exampleFormControlSelect1">
                   <option v-for="classe in classes">{{classe.code}}</option>
                 </select>
               </div>
         </form>
         <div class="buttons" @dblclick.self="abort">
-            <button @click.prevent="updateCell" class="btn btn-outline-success">
+            <button @click.prevent="setActivity" class="btn btn-outline-success">
                 <i class="fas fa-check"></i>
             </button>
             <button
@@ -93,12 +105,10 @@ export default {
         });
         this.axios.get(this.$store.state.backend_domain + '/room/all')
             .then((res) => {
-                console.log(res.data)
                 this.classes = res.data
             })
-            .catch((res) => {
-                console.log(res)
-                    return res
+            .catch((err) => {
+                return err
             })
     },
     data() {
@@ -108,13 +118,14 @@ export default {
             cache: { ...this.field },
             days: [],
             classes: [],
+            errors: undefined
         };
     },
     methods: {
-        updateCell() {
+        setActivity() {
             this.axios
-                .put(
-                    this.requestPath.table.activity.room,
+                .post(
+                    this.$store.state.backend_domain  + '/timetable/activity',
                     {
                         nom: this.cache.nom,
                         date_act: this.cache.date_act,
@@ -122,19 +133,18 @@ export default {
                         heure_debut: this.cache.heure_debut,
                         heure_fin: this.cache.heure_fin,
                         code_salle: this.cache.code_salle,
-                        nom_jour: this.getDayName(this.cache.date_act),
-                    },
-                    {
-                        params: {
-                            matricule_enseignant: this.field.matricule,
-                            id_plage: this.field.id_plage,
-                            code_salle: this.field.code_salle,
-                            nom_jour: this.field.nom_jour,
-                        },
+                        nom_jour: this.cache.nom_jour,
                     }
                 )
                 .then((response) => {
-                    this.$emit("stageChanges", response.data);
+                    //this.$emit("stageChanges", response.data);
+                    return response.data
+                })
+                .catch((err) => {
+                    if(err.response.data !== undefined){
+                     this.errors = err.response.data.detail
+                 }
+
                 });
         },
         getDayName(date) {

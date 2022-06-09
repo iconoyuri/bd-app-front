@@ -36,6 +36,7 @@
             </form>
         </header>
         <TableDisplayer
+            v-if="viewTimeTable"
             :courses="courses"
             :activities="activities"
         ></TableDisplayer>
@@ -51,6 +52,7 @@ export default {
         return {
             selectRoom: "",
             selectSemester: 2,
+            viewTimeTable: false,
             activities: [],
             // courses: [],
             courses: [
@@ -161,6 +163,7 @@ export default {
             // this.fetchActivities();
             // this.fetchCourses();
             this.$store.commit("setCurrentRoomCode", this.selectRoom)
+            this.viewTimeTable = true
         },
         fetchRooms() {
             this.axios
