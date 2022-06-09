@@ -26,8 +26,9 @@
                 v-model="cache.code_salle"
                 id="line-form-2"
             >
-                <option v-for="room in rooms" :key="room.nom" :value="room.nom">
-                    {{ room.nom }}
+                <option v-for="room in rooms" :key="room.code" :value="room.code">
+                    {{ room.code }}
+                    <!-- {{room}} -->
                 </option>
             </select>
             <label for="line-form-3">Start time</label>
@@ -88,13 +89,14 @@ export default {
         },
     },
     mounted() {
+        console.log(this.currentClasse.code);
         this.axios.get(this.requestPath.day + "/all").then((response) => {
             this.days = response.data;
         });
         this.axios
             .get(this.requestPath.course + "/all/classe", {
                 params: {
-                    code_classe: this.classe.code,
+                    code_classe: this.currentClasse.code,
                 },
             })
             .then((response) => {
@@ -103,11 +105,12 @@ export default {
         this.axios
             .get(this.requestPath.room + "/all_possible_occupations", {
                 params: {
-                    effectif: "test",
+                    effectif: this.currentClasse.effectif,
                 },
             })
             .then((response) => {
-                this.rooms = this.classe.effectif;
+                this.rooms = response.data;
+                console.log(this.rooms)
             });
     },
     data() {
@@ -119,6 +122,7 @@ export default {
             rooms: [],
             days: [],
             classcode: "",
+            currentClasse: this.$store.state.currentClass,
         };
     },
     methods: {

@@ -18,8 +18,8 @@ const store = createStore({
             teacher: "/teacher",
             speciality: "/speciality",
             day: "/day",
-            activity: "/timetable/activity",
-            course: "/timetable/course",
+            Tactivity: "/timetable/activity",
+            Tcourse: "/timetable/course",
             table: {
                 course: {
                     room: "/timetable/course/room",
@@ -34,6 +34,7 @@ const store = createStore({
         time0: Date.parse("June 9, 2022 07:00:00"),
         dateRoot: "June 9, 2022 ",
         currentRoomCode: "",
+        currentClass: {},
     },
     mutations: {
         saveUser(state, { access_token, token_type, user, matricule }) {
@@ -47,14 +48,12 @@ const store = createStore({
             state.token_type = sessionStorage.getItem("token_type");
             state.matricule = sessionStorage.getItem("matricule");
         },
-        setCurrentRoomCode(state, code){
-            state.currentRoomCode = code
+        setCurrentRoomCode(state, code) {
+            state.currentRoomCode = code;
         },
-        // saveTeacherMatricule(state, { matricule }) {
-        //     sessionStorage.setItem("matricule", matricule);
-        //     state.matricule =
-        //         sessionStorage.getItem("matricule");
-        // },
+        saveCurrentClass(state, classe) {
+            state.currentClass = { ...classe };
+        },
         logout(state) {
             sessionStorage.clear();
             state.user_type = "";
@@ -62,6 +61,7 @@ const store = createStore({
             state.token_type = "";
             state.matricule = "";
             state.currentRoomCode = "";
+            state.currentClass = "";
         },
     },
     getters: {

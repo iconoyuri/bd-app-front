@@ -24,13 +24,13 @@
                     <label for="line-form-2">Class</label>
                     <select
                         class="form-control"
-                        v-model="selectedClass"
                         id="line-form-2"
+                        v-model="selectedClass"
                     >
                         <option
                             v-for="classe in classes"
                             :key="classe"
-                            :value="classe.code"
+                            :value="classe"
                         >
                             {{ classe.code }}
                         </option>
@@ -68,14 +68,129 @@ export default {
     components: { TableDisplayer },
     data() {
         return {
-            selectPath: "",
-            selectClass: "",
-            selectSemester: 2,
+            selectedPath: "",
+            selectedClass: "",
+            selectedSemester: 2,
             viewTimeTable: false,
             activities: [],
             courses: [],
             paths: [],
-            classes: [],
+            
+            courses: [
+                {
+                    code: "INF3176",
+                    semestre: 0,
+                    titre: "string",
+                    id_specialite: 0,
+                    code_classe: "INFL3",
+                    code_filiere: "string",
+                    nom_seance: "TD",
+                    matricule_enseignant: "11",
+                    code_cours: "string",
+                    heure_debut: "07:00:00",
+                    heure_fin: "10:00:00",
+                    code_salle: "string0",
+                    nom_jour: "Tuesday",
+                    id_plage: 1,
+                },
+                {
+                    code: "INF3196",
+                    semestre: 0,
+                    titre: "string",
+                    id_specialite: 0,
+                    code_classe: "INFL3",
+                    code_filiere: "string",
+                    nom_seance: "TD",
+                    matricule_enseignant: "12",
+                    code_cours: "string",
+                    heure_debut: "16:00:00",
+                    heure_fin: "18:00:00",
+                    code_salle: "string0",
+                    nom_jour: "Tuesday",
+                    id_plage: 1,
+                },
+                {
+                    code: "INF3186",
+                    semestre: 0,
+                    titre: "string",
+                    id_specialite: 0,
+                    code_classe: "INFL3",
+                    code_filiere: "string",
+                    nom_seance: "TD",
+                    matricule_enseignant: "4",
+                    code_cours: "string",
+                    heure_debut: "10:00:00",
+                    heure_fin: "13:00:00",
+                    code_salle: "string",
+                    nom_jour: "Monday",
+                    id_plage: 1,
+                },
+                {
+                    code: "INF3036",
+                    semestre: 0,
+                    titre: "string",
+                    id_specialite: 0,
+                    code_classe: "INFL3",
+                    code_filiere: "string",
+                    nom_seance: "TD",
+                    matricule_enseignant: "1",
+                    code_cours: "string",
+                    heure_debut: "13:00:00",
+                    heure_fin: "16:00:00",
+                    code_salle: "string",
+                    nom_jour: "Monday",
+                    id_plage: 1,
+                },
+                {
+                    code: "INF3046",
+                    semestre: 0,
+                    titre: "string",
+                    id_specialite: 0,
+                    code_classe: "INFL3",
+                    code_filiere: "string",
+                    nom_seance: "TD",
+                    matricule_enseignant: "5",
+                    code_cours: "string",
+                    heure_debut: "08:00:00",
+                    heure_fin: "11:05:00",
+                    code_salle: "string",
+                    nom_jour: "Thursday",
+                    id_plage: 1,
+                },
+                // {
+                //     code: "GEOS1512",
+                //     semestre: 0,
+                //     titre: "string",
+                //     id_specialite: 0,
+                //     code_classe: "INFL1",
+                //     code_filiere: "string",
+                //     nom_seance: "TD",
+                //     matricule_enseignant: "10",
+                //     code_cours: "string",
+                //     heure_debut: "11:00:00",
+                //     heure_fin: "13:05:00",
+                //     code_salle: "string",
+                //     nom_jour: "Friday",
+                //     id_plage: 1,
+                // },
+                // {
+                //     code: "INF3136",
+                //     semestre: 0,
+                //     titre: "string",
+                //     id_specialite: 0,
+                //     code_classe: "INF4628",
+                //     code_filiere: "string",
+                //     nom_seance: "TD",
+                //     matricule_enseignant: "7",
+                //     code_cours: "string",
+                //     heure_debut: "13:00:00",
+                //     heure_fin: "15:05:00",
+                //     code_salle: "string",
+                //     nom_jour: "Saturday",
+                //     id_plage: 1,
+                // },
+            ],
+            // classes: [],
         };
     },
     mounted() {
@@ -83,8 +198,11 @@ export default {
     },
     methods: {
         fetchDatas() {
+            // console.log("searching")
             this.fetchActivities();
-            this.fetchCourses();
+            // this.fetchCourses();
+            this.$store.commit("saveCurrentClass", this.selectedClass);
+            // console.log(this.$store.state.currentClass);
             this.viewTimeTable = true;
         },
         fetchPaths() {

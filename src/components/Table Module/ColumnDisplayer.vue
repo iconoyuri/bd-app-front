@@ -61,6 +61,7 @@ export default {
         },
         hideAddingForm() {
             this.visibleCellModifier = false;
+            console.log(this.visibleCellModifier)
         },
         addSession() {},
     },

@@ -173,11 +173,11 @@ export default {
         getDayName(date) {
             let fdate = new Date(date);
             if (this.days[fdate.getDay()]) {
-                console.log(
-                    fdate,
-                    this.days[fdate.getDay()].nom,
-                    fdate.getDay()
-                );
+                // console.log(
+                //     fdate,
+                //     this.days[fdate.getDay() + 1].nom,
+                //     fdate.getDay()
+                // );
                 this.cache.nom_jour = this.days[fdate.getDay()].nom;
                 return this.days[fdate.getDay()].nom;
             }

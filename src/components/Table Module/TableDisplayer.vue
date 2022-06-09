@@ -46,6 +46,9 @@ export default {
         addingEnabled: {
             default: true,
         },
+        // selectedClass:{
+        //     default: ""
+        // }
     },
     components: { ColumnDisplayer },
     data() {

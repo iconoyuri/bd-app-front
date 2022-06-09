@@ -11,13 +11,14 @@
     >
         <template v-slot:table-headers>
             <th scope="col">Code</th>
-            <th scope="col">Title</th>
             <th scope="col">Semester</th>
-            <th scope="col">Session type</th>
-            <th scope="col">Teacher</th>
-            <th scope="col">Path</th>
+            <th scope="col">Title</th>
+            <th scope="col">Id</th>
             <th scope="col">Class</th>
-            <th scope="col">Speciality</th>
+            <th scope="col">Path</th>
+            <th scope="col">Session type</th>
+            <th scope="col">Teacher Id</th>
+            <th scope="col">Speciality Id</th>
         </template>
         <!--  -->
         <template v-slot:inputs>
