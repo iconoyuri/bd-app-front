@@ -72,7 +72,7 @@ export default {
         },
         session_selectDay(table, dayName) {
             return table.filter(
-                (element) => element.programmation.nom_jour == dayName
+                (element) => element.nom_jour == dayName
             );
         },
         activity_selectDay(table, dayName) {

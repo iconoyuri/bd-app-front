@@ -2,7 +2,7 @@
     <article ref="article">
         <p class="session-type">Act</p>
         <div>
-            <p class="course-code">{{ cache.course.nom_seance }}</p>
+            <p class="course-code">{{ cache.nom_seance }}</p>
             <!-- <p class="class-code">{{ cache.course.code_classe }}</p> -->
         </div>
         <p class="teacher-name">{{ teacherName }}</p>
@@ -68,7 +68,7 @@ export default {
         //         });
         // },
         getInformations() {
-            this.getTeacher(this.field.course.matricule_enseignant);
+            this.getTeacher(this.field.matricule_enseignant);
         },
         refreshCell(field) {
             this.cache = { ...field };
@@ -85,14 +85,16 @@ export default {
                 });
         },
         deleteActivity() {
-            this.axios.delete(this.requestPath.activity, {
-                params: {
-                    matricule_enseignant: this.field.matricule,
-                    id_plage: this.field.id_plage,
-                    code_salle: this.field.code_salle,
-                    nom_jour: this.field.nom_jour,
-                },
-            });
+            this.axios
+                .delete(this.requestPath.activity, {
+                    params: {
+                        matricule_enseignant: this.field.matricule_enseignant,
+                        id_plage: this.field.id_plage,
+                        code_salle: this.field.code_salle,
+                        nom_jour: this.field.nom_jour,
+                    },
+                })
+                .catch((e) => alert("Désolé. Seul le propriétaire de cette activité peut la supprimer"));
         },
         setDimensions() {
             this.$refs.article.style.top = this.cache.top + "%";
@@ -105,8 +107,8 @@ export default {
             this.modificationFormVisible = false;
         },
         calculatePositioning() {
-            let startTime = this.cache.programmation.heure_debut;
-            let endTime = this.cache.programmation.heure_fin;
+            let startTime = this.cache.heure_debut;
+            let endTime = this.cache.heure_fin;
 
             let startTimeValue = this.positioningValue(startTime);
             let endTimeValue = this.positioningValue(endTime);
@@ -134,7 +136,6 @@ export default {
     },
 };
 </script>
-
 
 <style scoped>
 article {

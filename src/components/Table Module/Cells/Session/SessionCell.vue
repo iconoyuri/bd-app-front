@@ -1,9 +1,9 @@
 <template>
-    <article ref="article" oncontextmenu="alert('test')" contextmenu="mymenu">
-        <p class="session-type">{{ cache.course.nom_seance }}</p>
+    <article ref="article">
+        <p class="session-type">{{ cache.nom_seance }}</p>
         <div>
-            <p class="course-code">{{ cache.course.code }}</p>
-            <p class="class-code">{{ cache.course.code_classe }}</p>
+            <p class="course-code">{{ cache.code }}</p>
+            <p class="class-code">{{ cache.code_classe }}</p>
         </div>
         <p class="teacher-name">{{ teacherName }}</p>
         <div v-if="adminLogged" class="buttons">
@@ -66,7 +66,7 @@ export default {
         //         });
         // },
         getInformations() {
-            this.getTeacher(this.field.course.matricule_enseignant);
+            this.getTeacher(this.field.matricule_enseignant);
         },
         refreshCell(field) {
             this.cache = { ...field };
@@ -83,14 +83,20 @@ export default {
                 });
         },
         deleteSession() {
-            this.axios.delete(this.requestPath.course, {
-                params: {
-                    matricule_enseignant: this.field.matricule,
-                    id_plage: this.field.id_plage,
-                    code_salle: this.field.code_salle,
-                    nom_jour: this.field.nom_jour,
-                },
-            });
+            this.axios
+                .delete(this.requestPath.course, {
+                    params: {
+                        id_cours: this.field.code_cours,
+                        id_plage: this.field.id_plage,
+                        code_salle: this.field.code_salle,
+                        nom_jour: this.field.nom_jour,
+                    },
+                })
+                .catch((e) =>
+                    alert(
+                        e.response.data.detail
+                    )
+                );
         },
         setDimensions() {
             this.$refs.article.style.top = this.cache.top + "%";
@@ -103,22 +109,16 @@ export default {
             this.modificationFormVisible = false;
         },
         calculatePositioning() {
-            let startTime = this.cache.programmation.heure_debut;
-            let endTime = this.cache.programmation.heure_fin;
+            let startTime = this.cache.heure_debut;
+            let endTime = this.cache.heure_fin;
 
             let startTimeValue = this.positioningValue(startTime);
             let endTimeValue = this.positioningValue(endTime);
-            // console.log(startTimeValue, endTimeValue);
 
             this.cache.top = this.percentPositioningValue(startTimeValue);
             this.cache.height = this.percentPositioningValue(
                 endTimeValue - startTimeValue
             );
-            // console.log(this.$refs.article)
-            // this.$refs.article.style.top = this.percentPositioningValue(startTimeValue);
-            // this.$refs.article.style.height = this.percentPositioningValue(
-            //     endTimeValue - startTimeValue
-            // );
         },
         positioningValue(time) {
             let numerictime = Date.parse(this.dateRoot + time) - this.time0;
