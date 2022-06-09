@@ -33,11 +33,11 @@
                     Datas Insertion
                 </button>
             </router-link>
-            <router-link :to="{ name: 'adminworkshop' }">
+            <!-- <router-link :to="{ name: 'adminworkshop' }">
                 <button type="button" class="btn btn-primary">
                     Build timetable
                 </button>
-            </router-link>
+            </router-link> -->
             <!-- <router-link :to="{ name: 'activity' }">
                 <button type="button" class="btn btn-dark">
                     Plan an activity

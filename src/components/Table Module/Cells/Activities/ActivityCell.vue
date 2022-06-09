@@ -42,8 +42,6 @@ export default {
     data() {
         return {
             requestPath: this.$store.state.requestPaths,
-            // ownerLogged:
-            //     this.$store.state.matricule == this.field.matricule_enseignant,
             ownerLogged: true,
             cache: { ...this.field },
             teacherName: "",
@@ -55,18 +53,10 @@ export default {
     },
     mounted() {
         this.calculatePositioning();
-        // this.getSessionTypes();
         this.getInformations();
         this.setDimensions();
     },
     methods: {
-        // getSessionTypes() {
-        //     this.axios
-        //         .get(this.requestPath.session + "/all")
-        //         .then((response) => {
-        //             this.sessionTypes = response.data;
-        //         });
-        // },
         getInformations() {
             this.getTeacher(this.field.matricule_enseignant);
         },
@@ -83,6 +73,9 @@ export default {
                 .then((response) => {
                     this.teacherName = response.data.nom;
                 });
+        },
+        editActivity(){
+            this.startModify();
         },
         deleteActivity() {
             this.axios

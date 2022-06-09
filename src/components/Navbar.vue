@@ -7,11 +7,16 @@
             </span>
         </router-link>
         <div class="options">
-            <router-link v-if="notUserLogged" :to="{ name: 'login' }">
-                <button class="btn btn-outline-light my-2 my-sm-0" type="submit">
-                    Log In
-                </button>
-            </router-link>
+            <!-- <router-link  :to="{ name: 'login' }"> -->
+            <button
+                v-if="notUserLogged"
+                class="btn btn-outline-light my-2 my-sm-0"
+                type="submit"
+                @click="showLoginForm"
+            >
+                Log In
+            </button>
+            <!-- </router-link> -->
             <div v-else class="user-options">
                 <router-link
                     class="user-icon"
@@ -46,22 +51,33 @@
             </div>
         </div>
     </nav>
+    <LoginForm v-if="loginFormVisible" @closeModal="hideLoginForm" />
 </template>
 
 <script>
+import LoginForm from "./Modals/LoginForm.vue";
+
 export default {
-    name: "Navbar",
+    components: { LoginForm },
     data() {
-        return {};
+        return {
+            loginFormVisible: false,
+        };
     },
     methods: {
+        showLoginForm() {
+            this.loginFormVisible = true;
+        },
+        hideLoginForm() {
+            this.loginFormVisible = false;
+        },
         logout() {
-            console.log("Sending backend logout request");
-            this.axios
-                .delete("/logout", {
-                    params: { token: this.$store.getters.getAccessToken },
-                })
-                .then(() => {});
+            // console.log("Sending backend logout request");
+            // this.axios
+            //     .delete("/logout", {
+            //         params: { token: this.$store.getters.getAccessToken },
+            //     })
+            //     .then(() => {});
             this.$store.commit("logout");
             this.$router.push("/");
         },

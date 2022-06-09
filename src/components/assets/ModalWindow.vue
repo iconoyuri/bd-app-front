@@ -28,9 +28,7 @@ export default {
     methods: {
         closePane() {
             this.$refs.curtain.classList.add("hidden");
-            this.$emit("closeModal");
-            if (!this.closeRedirect) return;
-            setTimeout(() => this.$router.push({ name: "home" }), 200);
+            setTimeout(() => this.$emit("closeModal"), 350);
         },
     },
 };

@@ -71,6 +71,7 @@ export default {
                     nom_jour: "Tuesday",
                 },
             ],
+            viewTimeTable: false,
             // courses: [],
             courses: [
                 {
@@ -164,8 +165,8 @@ export default {
         fetchDatas() {
             // this.fetchActivities();
             // this.fetchCourses();
-            this.$store.commit("setCurrentRoomCode", this.selectRoom)
-            this.viewTimeTable = true
+            this.$store.commit("setCurrentRoomCode", this.selectRoom);
+            this.viewTimeTable = true;
         },
         fetchRooms() {
             this.axios

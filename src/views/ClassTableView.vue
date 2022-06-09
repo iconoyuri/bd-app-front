@@ -84,7 +84,7 @@ export default {
         fetchDatas() {
             this.fetchActivities();
             this.fetchCourses();
-            this.viewTimeTable = true
+            this.viewTimeTable = true;
         },
         fetchPaths() {
             this.axios
@@ -95,9 +95,9 @@ export default {
         },
         fetchClasses() {
             this.axios
-                .get(this.$store.state.requestPaths.classe + "/all", {
+                .get(this.$store.state.requestPaths.classe + "/all/filieres", {
                     params: {
-                        code: this.selectedPath,
+                        code_filiere: this.selectedPath,
                     },
                 })
                 .then((response) => {

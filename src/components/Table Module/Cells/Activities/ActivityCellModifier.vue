@@ -1,9 +1,9 @@
 <template>
     <!-- <slot></slot> -->
-    <ModalWindow title="Activity Form">
+    <ModalWindow @closeModal="$emit('abortChanges')" title="Activity Form">
         <div class="alert alert-danger" v-if="errors">
             <ul>
-                <li v-for="err in errors" >{{err}}</li>
+                <li v-for="err in errors" :key="err">{{ err }}</li>
             </ul>
         </div>
         <form>
@@ -48,20 +48,35 @@
 
             <div class="form-group">
                 <label for="line-form-1">Jours</label>
-                <select class="form-control" v-model="cache.nom_jour" id="exampleFormControlSelect1">
-                  <option v-for="day in days">{{day.nom}}</option>
+                <select
+                    class="form-control"
+                    v-model="cache.nom_jour"
+                    id="exampleFormControlSelect1"
+                >
+                    <option v-for="day in days" :key="day">
+                        {{ day.nom }}
+                    </option>
                 </select>
-              </div>
-            
-              <div class="form-group">
+            </div>
+
+            <div class="form-group">
                 <label for="line-form-1">Code Salle</label>
-                <select class="form-control" v-model="cache.code_salle" id="exampleFormControlSelect1">
-                  <option v-for="classe in classes">{{classe.code}}</option>
+                <select
+                    class="form-control"
+                    v-model="cache.code_salle"
+                    id="exampleFormControlSelect1"
+                >
+                    <option v-for="classe in classes" :key="classe">
+                        {{ classe.code }}
+                    </option>
                 </select>
-              </div>
+            </div>
         </form>
         <div class="buttons" @dblclick.self="abort">
-            <button @click.prevent="setActivity" class="btn btn-outline-success">
+            <button
+                @click.prevent="setActivity"
+                class="btn btn-outline-success"
+            >
                 <i class="fas fa-check"></i>
             </button>
             <button
@@ -103,13 +118,14 @@ export default {
         this.axios.get(this.requestPath.day + "/all").then((response) => {
             this.days = response.data;
         });
-        this.axios.get(this.$store.state.backend_domain + '/room/all')
+        this.axios
+            .get(this.$store.state.backend_domain + "/room/all")
             .then((res) => {
-                this.classes = res.data
+                this.classes = res.data;
             })
             .catch((err) => {
-                return err
-            })
+                return err;
+            });
     },
     data() {
         return {
@@ -118,14 +134,14 @@ export default {
             cache: { ...this.field },
             days: [],
             classes: [],
-            errors: undefined
+            errors: undefined,
         };
     },
     methods: {
         setActivity() {
             this.axios
                 .post(
-                    this.$store.state.backend_domain  + '/timetable/activity',
+                    this.$store.state.backend_domain + "/timetable/activity",
                     {
                         nom: this.cache.nom,
                         date_act: this.cache.date_act,
@@ -138,13 +154,12 @@ export default {
                 )
                 .then((response) => {
                     //this.$emit("stageChanges", response.data);
-                    return response.data
+                    return response.data;
                 })
                 .catch((err) => {
-                    if(err.response.data !== undefined){
-                     this.errors = err.response.data.detail
-                 }
-
+                    if (err.response.data !== undefined) {
+                        this.errors = err.response.data.detail;
+                    }
                 });
         },
         getDayName(date) {
@@ -152,9 +167,7 @@ export default {
             return this.days[fdate.getDay()];
         },
     },
-    computed: {
-    }
-     
+    computed: {},
 };
 </script>
 
