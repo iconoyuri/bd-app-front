@@ -67,9 +67,10 @@ export default {
     components: { TableDisplayer },
     data() {
         return {
-            selectedPath: "",
-            selectedClass: "",
-            selectedSemester: null,
+            selectPath: "",
+            selectClass: "",
+            selectSemester: 2,
+            viewTimeTable: false,
             activities: [],
             courses: [],
             paths: [],
@@ -83,6 +84,7 @@ export default {
         fetchDatas() {
             this.fetchActivities();
             this.fetchCourses();
+            this.viewTimeTable = true
         },
         fetchPaths() {
             this.axios

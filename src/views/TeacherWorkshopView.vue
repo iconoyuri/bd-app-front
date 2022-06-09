@@ -36,11 +36,13 @@
                 <ActivityCellModifier v-if="activityPlanDisplay" />
             </section>
         </main>
-        <h1>Classroom timetable</h1>
-        <TableDisplayer
-            :courses="courses"
-            :activities="activities"
-        ></TableDisplayer>
+        <div v-if="viewTimeTable">
+            <h1>Classroom timetable</h1>
+            <TableDisplayer
+                :courses="courses"
+                :activities="activities"
+            ></TableDisplayer>
+        </div>
     </main>
 </template>
 
@@ -54,6 +56,7 @@ export default {
         return {
             selectRoom: "",
             selectSemester: 2,
+            viewTimeTable: false,
             activities: [],
             activityPlanDisplay: false,
         };
@@ -71,6 +74,7 @@ export default {
         fetchDatas() {
             this.fetchActivities();
             this.fetchCourses();
+            this.viewTimeTable = true
         },
         fetchActivities() {
             let requestPath =
