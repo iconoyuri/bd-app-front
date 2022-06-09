@@ -1,6 +1,10 @@
 <template>
     <!-- <slot></slot> -->
-    <ModalWindow @closeModal="$emit('abortChanges')" :closeRedirect="false" title="Session Form">
+    <ModalWindow
+        @closeModal="$emit('abortChanges')"
+        :closeRedirect="false"
+        title="Session Form"
+    >
         <form>
             <label for="line-form-1">Select Course</label>
             <select
@@ -36,7 +40,10 @@
             />
         </form>
         <div class="buttons" @dblclick.self="abort">
-            <button @click.prevent="updateCell" class="btn btn-outline-success">
+            <button
+                @click.prevent="commitChanges"
+                class="btn btn-outline-success"
+            >
                 <i class="fas fa-check"></i>
             </button>
             <button
@@ -70,9 +77,15 @@ export default {
         dayName: {
             default: "Dididi",
         },
-        // operation: {
-        //     default: "post",
-        // },
+        operation: {
+            default: "post",
+        },
+        classe: {
+            default: {
+                code: "",
+                effectif: 0,
+            },
+        },
     },
     mounted() {
         this.axios.get(this.requestPath.day + "/all").then((response) => {
@@ -81,7 +94,7 @@ export default {
         this.axios
             .get(this.requestPath.course + "/all/classe", {
                 params: {
-                    code_classe: "test",
+                    code_classe: this.classe.code,
                 },
             })
             .then((response) => {
@@ -94,7 +107,7 @@ export default {
                 },
             })
             .then((response) => {
-                this.rooms = response.data;
+                this.rooms = this.classe.effectif;
             });
     },
     data() {
@@ -109,28 +122,41 @@ export default {
         };
     },
     methods: {
-        updateCell() {
+        commitChanges() {
+            if (this.operation == operation.default) this.postChanges();
+            else this.updateChanges();
+        },
+        updateChanges() {
             this.axios
                 .put(
-                    this.requestPath.table.activity.room,
+                    this.requestPath.table.course.room,
                     {
-                        nom: this.cache.nom,
-                        date_act: this.cache.date_act,
-                        matricule_enseignant: this.matricule,
+                        id_cours: this.cache.code_cours,
                         heure_debut: this.cache.heure_debut,
-                        heure_fin: this.cache.heure_fin,
                         code_salle: this.cache.code_salle,
-                        nom_jour: this.getDayName(this.cache.date_act),
+                        nom_jour: this.dayName,
                     },
                     {
                         params: {
-                            matricule_enseignant: this.field.matricule,
+                            id_cours: this.field.matricule,
                             id_plage: this.field.id_plage,
                             code_salle: this.field.code_salle,
                             nom_jour: this.field.nom_jour,
                         },
                     }
                 )
+                .then((response) => {
+                    this.$emit("stageChanges", response.data);
+                });
+        },
+        postChanges() {
+            this.axios
+                .post(this.requestPath.table.course.room, {
+                    id_cours: this.cache.code_cours,
+                    heure_debut: this.cache.heure_debut,
+                    code_salle: this.cache.code_salle,
+                    nom_jour: this.dayName,
+                })
                 .then((response) => {
                     this.$emit("stageChanges", response.data);
                 });

@@ -164,12 +164,8 @@ export default {
         fetchDatas() {
             // this.fetchActivities();
             // this.fetchCourses();
-<<<<<<< HEAD
-            this.$store.commit("setCurrentRoomCode", this.selectRoom);
-=======
             this.$store.commit("setCurrentRoomCode", this.selectRoom)
             this.viewTimeTable = true
->>>>>>> dd18305ecc44972f70c275919ecdd05603223a10
         },
         fetchRooms() {
             this.axios

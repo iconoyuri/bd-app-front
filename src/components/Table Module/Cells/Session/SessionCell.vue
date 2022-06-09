@@ -45,7 +45,6 @@ export default {
             adminLogged: this.$store.getters.userIsAdmin,
             cache: { ...this.field },
             teacherName: "",
-            // sessionTypes: [],
             dateRoot: this.$store.state.dateRoot,
             time0: this.$store.state.time0,
             modificationFormVisible: false,
@@ -53,18 +52,10 @@ export default {
     },
     mounted() {
         this.calculatePositioning();
-        // this.getSessionTypes();
         this.getInformations();
         this.setDimensions();
     },
     methods: {
-        // getSessionTypes() {
-        //     this.axios
-        //         .get(this.requestPath.session + "/all")
-        //         .then((response) => {
-        //             this.sessionTypes = response.data;
-        //         });
-        // },
         getInformations() {
             this.getTeacher(this.field.matricule_enseignant);
         },
@@ -82,6 +73,9 @@ export default {
                     this.teacherName = response.data.nom;
                 });
         },
+        editSession() {
+            this.startModify()
+        },
         deleteSession() {
             this.axios
                 .delete(this.requestPath.course, {
@@ -92,11 +86,7 @@ export default {
                         nom_jour: this.field.nom_jour,
                     },
                 })
-                .catch((e) =>
-                    alert(
-                        e.response.data.detail
-                    )
-                );
+                .catch((e) => alert(e.response.data.detail));
         },
         setDimensions() {
             this.$refs.article.style.top = this.cache.top + "%";
