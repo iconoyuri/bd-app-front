@@ -18,6 +18,8 @@ const store = createStore({
             teacher: "/teacher",
             speciality: "/speciality",
             day: "/day",
+            activity: "/timetable/activity",
+            course: "/timetable/course",
             table: {
                 course: {
                     room: "/timetable/course/room",
