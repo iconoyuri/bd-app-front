@@ -5,11 +5,22 @@
             <ul>
                 <li v-for="err in errors" :key="err">{{ err }}</li>
             </ul>
-            <button @click="disableError" class="inline-block alert py-0 px-2 alert-danger"><i class="fas fa-times"></i></button>
+            <button
+                @click="disableError"
+                class="inline-block alert py-0 px-2 alert-danger"
+            >
+                <i class="fas fa-times"></i>
+            </button>
         </div>
         <div class="alert alert-success" v-if="success">
-            Activité programmer le {{cache.nom_jour}} {{cache.date_act}} de {{cache.heure_debut}} à {{cache.heure_fin}}
-            <button @click="disableSuccess" class="inline-block alert py-0 px-2 alert-success"><i class="fas fa-times"></i></button>
+            Activité programmée le {{ cache.nom_jour }} {{ cache.date_act }} de
+            {{ cache.heure_debut }} à {{ cache.heure_fin }}
+            <button
+                @click="disableSuccess"
+                class="inline-block alert py-0 px-2 alert-success"
+            >
+                <i class="fas fa-times"></i>
+            </button>
         </div>
         <form>
             <label for="line-form-1">Activity name</label>
@@ -51,7 +62,7 @@
                 id="line-form-3"
             />
 
-              <div class="form-group">
+            <div class="form-group">
                 <label for="line-form-1">Code Salle</label>
                 <select
                     class="form-control"
@@ -128,7 +139,7 @@ export default {
             classes: [],
             success: false,
             error: false,
-            errors: undefined
+            errors: undefined,
         };
     },
     methods: {
@@ -148,32 +159,35 @@ export default {
                 )
                 .then((response) => {
                     //this.$emit("stageChanges", response.data);
-                    console.log(response.data)
-                    this.success = true
-                    return response.data
+                    console.log(response.data);
+                    this.success = true;
+                    return response.data;
                 })
                 .catch((err) => {
-                    if(err.response.data !== undefined){
-                        this.error = true
-                        this.errors = err.response.data.detail
-                 }
-
+                    if (err.response.data !== undefined) {
+                        this.error = true;
+                        this.errors = err.response.data.detail;
+                    }
                 });
         },
         getDayName(date) {
             let fdate = new Date(date);
-            if(this.days[fdate.getDay()]){
-                console.log(fdate, this.days[fdate.getDay()].nom, fdate.getDay())
+            if (this.days[fdate.getDay()]) {
+                console.log(
+                    fdate,
+                    this.days[fdate.getDay()].nom,
+                    fdate.getDay()
+                );
                 this.cache.nom_jour = this.days[fdate.getDay()].nom;
                 return this.days[fdate.getDay()].nom;
             }
         },
-        disableError(){
-            this.error = !this.error
+        disableError() {
+            this.error = !this.error;
         },
-        disableSuccess(){
-            this.success = !this.success
-        }
+        disableSuccess() {
+            this.success = !this.success;
+        },
     },
     computed: {},
 };

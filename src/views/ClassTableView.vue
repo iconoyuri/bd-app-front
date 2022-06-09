@@ -56,7 +56,7 @@
             v-if="viewTimeTable"
             :courses="courses"
             :activities="activities"
-            :addingEnabled="true"
+            :addingEnabled="this.$store.getters.userIsAdmin"
         ></TableDisplayer>
     </main>
 </template>
