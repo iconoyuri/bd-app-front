@@ -40,6 +40,17 @@
                 required
                 id="line-form-3"
             />
+            
+              <div class="form-group">
+                <label for="line-form-1">Code Salle</label>
+                <select class="form-control" id="exampleFormControlSelect1">
+                  <option>class 1</option>
+                  <option>class 2</option>
+                  <option>class 3</option>
+                  <option>class 4</option>
+                  <option>class 5</option>
+                </select>
+              </div>
         </form>
         <div class="buttons" @dblclick.self="abort">
             <button @click.prevent="updateCell" class="btn btn-outline-success">
@@ -125,6 +136,12 @@ export default {
             return this.days[fdate.getDay()];
         },
     },
+    computed: {
+        getFreeClasses(){
+            this.axios
+        },
+    }
+    /room/all 
 };
 </script>
 
